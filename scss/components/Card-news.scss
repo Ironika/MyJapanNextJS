@@ -1,0 +1,47 @@
+.card-news {
+    @media screen and (max-width: $xs) {
+        width: calc(100% - 20px);
+    }
+    @media screen and (min-width: $xs) and (max-width: $md) {
+        width: calc(50% - 20px);
+    }
+    @media screen and (min-width: $md) and (max-width: $lg) {
+        width: calc(30% - 20px);
+    }
+    @media screen and (min-width: $lg) {
+        width: calc(25% - 20px);
+    }
+
+    box-shadow: 5px 5px 5px $main-color;
+    margin: 10px;
+    background-color: $second-color;
+    transition: 0.4s;
+    &:hover {
+        transform: scale(0.9, 0.9);
+    }
+    a {
+        text-decoration: none;
+        color: inherit;
+    }
+    img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+    }
+    &-content {
+        padding: 10px;
+        .date {
+            margin: 0;
+            float: right;
+            font-size: 12px;
+        }
+        button {
+            background-color: $main-color;
+            border-radius: 100px;
+            padding: 10px 20px;
+            border: white;
+            color: white;
+            font-weight: bold;
+        }
+    }
+}

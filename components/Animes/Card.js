@@ -1,0 +1,17 @@
+import React from 'react';
+import Tilt from 'react-tilt';
+
+const Card = (props) => {
+    return (
+        <Tilt className="tilt-anime">
+            <div className="card-anime" style={{ backgroundImage: 'url(' + props.item.img + ')' }} onClick={() => window.open(props.item.link, '_blank')}>
+                <a href={props.item.link} className="card-anime-content" target="_blank" rel="noopener noreferrer">
+                    <h3>{props.item.title}</h3>
+                    <button>{props.item.site}</button>
+                </a>
+            </div>
+        </Tilt>
+    )
+};
+
+export default Card;

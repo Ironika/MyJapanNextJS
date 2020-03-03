@@ -1,0 +1,31 @@
+$main-color: #f6bfbc;
+$second-color: #e4d2d8;
+$third-color: #e9dfe5;
+$fourd-color: #fdeff2;
+$five-color: #fef4f4;
+
+$font: 'Kaushan Script', cursive;
+
+$xs : 575px;
+$md : 767px;
+$lg : 991px;
+$xlg : 1199px;
+
+body {
+    background-color: $five-color;
+    font-family: $font;
+    height: 100%;
+    margin: 0;
+}
+
+.parallax-outer {
+    z-index: -1;
+}
+
+.banner {
+    .parallax-banner-layer-0 {
+        @media screen and (max-width: $xs) {
+            background-position: center right !important;
+        }
+    }
+}
