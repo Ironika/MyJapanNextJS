@@ -1,9 +1,8 @@
 import Axios from 'axios';
-import { API } from '../api'
 
 export const getApiDatas = async(path) => {
     try {
-        const {data } = await Axios.get(`${API}${path}`)
+        const {data } = await Axios.get(`${process.env.api}${path}`)
         return data
     } catch(e) {
         console.log(e)

@@ -64,8 +64,11 @@ const News = (props) => {
 }
 
 News.getInitialProps = async ({req}) => {
-    const news = await getApiDatas('news');
-    return {news}
+    if(req) {
+        const news = await getApiDatas('news');
+        return {news}
+    }
+    return {}
 }
 
 export default News;

@@ -55,9 +55,11 @@ const Animes = (props) => {
                 {deepLoader && <Loader style={{marginTop: '20px'}} />}
                 <div className="card-container">
                     {   loader ? <Loader /> :
-                        displayedAnimes.map((item, index) =>
-                            <Card key={index} item={item} />
-                        )
+                        displayedAnimes.length > 0 ?
+                            displayedAnimes.map((item, index) =>
+                                <Card key={index} item={item} />
+                            ) :
+                            <div>No Results Found</div>
                     }
                 </div>
             </ParallaxProvider>
@@ -66,8 +68,11 @@ const Animes = (props) => {
 }
 
 Animes.getInitialProps = async ({req}) => {
-    const animes = await getApiDatas('animes');
-    return { animes }
+    if(req) {
+        const animes = await getApiDatas('animes');
+        return { animes }
+    }
+    return {}
 }
 
 export default Animes;

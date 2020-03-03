@@ -13,21 +13,29 @@ import homescreen from '../public/img/homescreen.jpg'
 import homescreen2 from '../public/img/homescreen2.jpg'
 import homescreen3 from '../public/img/homescreen3.jpg'
 
-const content1 = <p> 
-  I will share with you through this site, various news, photos, music, manga or anime.
-  <br/>
-  In addition, this site will allow me to experiment some web technologies and will serve me as a portfolio for the future.
-  <br/>
-  I hope that the experience will please you, and wish you a pleasant visit.
-</p>
+const content1 = () => {
+  return(
+    <p> 
+      I will share with you through this site, various news, photos, music, manga or anime.
+      <br/>
+      In addition, this site will allow me to experiment some web technologies and will serve me as a portfolio for the future.
+      <br/>
+      I hope that the experience will please you, and wish you a pleasant visit.
+    </p>
+  )
+}
 
-const content2 = <p> 
-Some pages may be long to load during the visit.
-  <br/>
-  IronikaSpace simply scraps data on other websites and lists them.
-  <br/>
-  *if the Dev talk to you, this site is exclusively develop with React
-</p>
+const content2 = () => {
+  return (
+    <p> 
+      Some pages may be long to load during the visit.
+      <br/>
+      IronikaSpace simply scraps data on other websites and lists them.
+      <br/>
+      *if the Dev talk to you, this site is exclusively develop with React
+    </p>
+  )
+}
 
 const Index = (props) => {
     const [news, setNews] = useState(props.news || []);
@@ -40,7 +48,7 @@ const Index = (props) => {
         setNews(_news)
         setLoader(false)
       }
-
+      
       fetchDatas()
     }, []);
 
@@ -53,14 +61,14 @@ const Index = (props) => {
           </ParallaxBanner>
           <Text 
             title={'Welcome on IronikaSpace'}
-            content={content1}
+            content={content1()}
             citationJap={'猿も木から落ちる'}
             citationTrad={'Even the monkey falls from the tree'}
           />
           <ParallaxBanner className="homescreen" layers={[{ image: homescreen2, amount: 0.5 }]} style={{ height: '450px' }}></ParallaxBanner>
           <Text 
             title={'My Bad !'}
-            content={content2}
+            content={content2()}
             citationJap={'堪忍は一生の宝'}
             citationTrad={'Patience is a treasure of life'}
           />
@@ -70,9 +78,11 @@ const Index = (props) => {
               <h2>Last News</h2>
               <div className="card-container">
                 {loader ? <Loader /> :
-                  news.map((item, index) =>
-                    <Card key={index} news={item} />
-                  )
+                  news.length > 0 ?
+                    news.map((item, index) =>
+                      <Card key={index} news={item} />
+                    ) :
+                    <div>No Results Found</div>
                 }
               </div>
               <div className="cta">
@@ -87,9 +97,12 @@ const Index = (props) => {
     );
   }
 
-Index.getInitialProps = async (context) => {
-  const news = getApiDatas('news');
-  return {news}
+Index.getInitialProps = async ({req}) => {
+    if(req) {
+      const news = await getApiDatas('news');
+      return {news}
+    }
+    return {}
 }
 
-export default Index;
+export default Index

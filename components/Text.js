@@ -4,7 +4,7 @@ const Text = (props) => {
     return (
         <div className="text">
             <h2>{props.title}</h2>
-            <p>{props.content}</p>
+            {props.content}
             <blockquote>{props.citationJap} <br/> "{props.citationTrad}"</blockquote>
         </div>
     )

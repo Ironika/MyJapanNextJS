@@ -71,11 +71,13 @@ const Scans = (props) => {
                     <div className="left">
                         <div className="card-container">
                             {loader ? <Loader /> :
-                                scans.map((item, index) =>
-                                    <LazyLoad key={index} placeholder={<Loader />}>
-                                        <Card news={item} />
-                                    </LazyLoad>
-                                )
+                                scans.length > 0 ?
+                                    scans.map((item, index) =>
+                                        <LazyLoad key={index} placeholder={<Loader />}>
+                                            <Card news={item} />
+                                        </LazyLoad>
+                                    ) :
+                                    <div>No Results Found</div>
                             }
                         </div>
                     </div>
@@ -83,11 +85,13 @@ const Scans = (props) => {
                         {deepLoader && <Loader style={{ marginTop: '20px' }} />}
                         <div className="card-container">
                             {loaderVa ? <Loader /> :
-                                displayedScansVa.map((item, index) =>
-                                    <LazyLoad key={index} placeholder={<Loader />}>
-                                        <CardVa item={item} />
-                                    </LazyLoad>
-                                )
+                                displayedScansVa.length > 0 ?
+                                    displayedScansVa.map((item, index) =>
+                                        <LazyLoad key={index} placeholder={<Loader />}>
+                                            <CardVa item={item} />
+                                        </LazyLoad>
+                                    ) :
+                                    <div>No Results Found</div>
                             }
                         </div>
                     </div>
@@ -98,9 +102,12 @@ const Scans = (props) => {
 }
 
 Scans.getInitialProps = async ({req}) => {
-    const scans = await getApiDatas('scans');
-    const scansVa = await getApiDatas('scansva');
-    return {scans, scansVa}
+    if(req) {
+        const scans = await getApiDatas('scans');
+        const scansVa = await getApiDatas('scansva');
+        return {scans, scansVa}
+    }
+    return {}
 }
 
 export default Scans;
