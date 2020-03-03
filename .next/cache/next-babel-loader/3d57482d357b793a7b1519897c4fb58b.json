@@ -1,1 +1,0 @@
-{"ast":null,"code":"export var API = 'http://localhost:3000';","map":{"version":3,"sources":["/Users/kevhoque/Documents/MyTest/myJapan/api.js"],"names":["API"],"mappings":"AAAA,OAAO,IAAMA,GAAG,GAAG,uBAAZ","sourcesContent":["export const API = 'http://localhost:3000'"]},"metadata":{},"sourceType":"module"}
