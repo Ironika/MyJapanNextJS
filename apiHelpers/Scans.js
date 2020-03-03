@@ -4,17 +4,14 @@ const { isInList, fetchRss } = require('./Shared');
 const { SCANTRAD, MANGAFOX } = require('../rss');
 
 async function getScans() {
-    let scans = []
-    const scantrad = await getScantrad()
-    scans = scans.concat(scantrad)
+    let scans = await getScantrad()
     scans.sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate))
     return scans
 }
 
 async function getScansVA() {
-    let scansVa = []
-    const mangaFox = await getMangaFox()
-    scansVa = scansVa.concat(mangaFox)
+    let scansVa = await getMangaFox()
+    scansVa.sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate))
     return scansVa
 }
 

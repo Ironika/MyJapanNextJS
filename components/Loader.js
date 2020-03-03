@@ -1,7 +1,7 @@
 import React from 'react';
 
 // import loaderPng from '../../assets/img/loader.png';
-import loader from '../../public/img/loader.gif';
+import loader from '../public/img/loader.gif';
 
 // const LoaderPng = () => (
 //     <div className="loader">

@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
-import Link from '../Link/Link';
-import { useRouter } from 'next/router'
+import Link from './Link';
 
-import logo from '../../public/img/cerisier.png'
+import logo from '../public/img/cerisier.png'
 
 const Header = () => {
     const [menuIsOpen, setMenuIsOpen] = useState(false);
-    const router = useRouter()
 
     return (
         <nav className="header">
@@ -27,39 +25,39 @@ const Header = () => {
                     <Link href={'/animes'}><a>Animes</a></Link>
                 </li>
                 <li className="burger" onClick={(e) => setMenuIsOpen(!menuIsOpen)}>
-                    <i className="fas fa-bars"></i>
+                    <i className="fa fa-bars"></i>
                 </li>
             </ul>
             <ul className={menuIsOpen ? 'nav-mobile menuIsOpen' : 'nav-mobile'}>
-                <li>
-                    <Link href={'/'} exact={true} onClick={(e) => setMenuIsOpen(false)}>
+                <li onClick={(e) => setMenuIsOpen(false)}>
+                    <Link href={'/'}>
                         <a>
                             Home
-                            <i className="fas fa-arrow-right"></i>
+                            <i className="fa fa-arrow-right"></i>
                         </a>
                     </Link>
                 </li>
-                <li>
-                    <Link href={'/news'} onClick={(e) => setMenuIsOpen(false)}>
+                <li onClick={(e) => setMenuIsOpen(false)}>
+                    <Link href={'/news'}>
                         <a>
                             News
-                            <i className="fas fa-arrow-right"></i>
+                            <i className="fa fa-arrow-right"></i>
                         </a>
                     </Link>
                 </li>
-                <li>
-                    <Link href={'/scans'} onClick={(e) => setMenuIsOpen(false)}>
+                <li onClick={(e) => setMenuIsOpen(false)}>
+                    <Link href={'/scans'}>
                         <a>
                             Scans
-                            <i className="fas fa-arrow-right"></i>
+                            <i className="fa fa-arrow-right"></i>
                         </a>
                     </Link>
                 </li>
-                <li>
-                    <Link href={'/animes'} onClick={(e) => setMenuIsOpen(false)}>
+                <li onClick={(e) => setMenuIsOpen(false)}>
+                    <Link href={'/animes'}>
                         <a>
                             Animes
-                            <i className="fas fa-arrow-right"></i>
+                            <i className="fa fa-arrow-right"></i>
                         </a>
                     </Link>
                 </li>

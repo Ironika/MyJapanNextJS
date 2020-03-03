@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { getApiAnimes } from '../helpers/Animes'
+import { getApiDatas } from '../helpers'
 import debounce from "lodash.debounce";
 import { ParallaxProvider } from 'react-scroll-parallax';
 import { ParallaxBanner } from 'react-scroll-parallax';
-import Card from '../components/Animes/Card'
-import Loader from '../components/Loader/Loader'
+import Card from '../components/CardAnime'
+import Loader from '../components/Loader'
 import banner from '../public/img/banner.jpg'
 
 const Animes = (props) => {
@@ -26,7 +26,7 @@ const Animes = (props) => {
 
     useEffect(() => {
         const fetchDatas = async () => {
-            const _animes = await getApiAnimes()
+            const _animes = await getApiDatas('animes')
             setAnimes(_animes)
             setDisplayedAnimes(_animes.slice(0, pageToDisplay))
             setLoader(false)
@@ -66,11 +66,8 @@ const Animes = (props) => {
 }
 
 Animes.getInitialProps = async ({req}) => {
-    if(req) {
-        const animes = await getApiAnimes();
-        return { animes }
-    }
-    return {}
+    const animes = await getApiDatas('animes');
+    return { animes }
 }
 
 export default Animes;

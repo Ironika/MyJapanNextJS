@@ -7,7 +7,7 @@ async function getNews() {
     const nautijon = await getNautijonNews()
     const mangasNews = await getMangasNews()
 
-    news = news.concat(adala, nautijon, mangasNews)
+    news = [...adala, ...nautijon, ...mangasNews]
 
     news.sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate))
 

@@ -82,6 +82,7 @@ export const animeList = [
     'HAIKYU',
     'KAGUYA-SAMA',
     'KIMETSU NO YAIBA',
+    'MADE IN ABYSS',
     'MY HERO ACADEMIA',
     'NANATSU NO TAIZAI',
     'ONE PIECE',

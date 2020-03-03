@@ -1,7 +1,7 @@
 import React from 'react';
 import Tilt from 'react-tilt';
 
-const Card = (props) => {
+const CardAnime = (props) => {
     return (
         <Tilt className="tilt-anime">
             <div className="card-anime" style={{ backgroundImage: 'url(' + props.item.img + ')' }} onClick={() => window.open(props.item.link, '_blank')}>
@@ -14,4 +14,4 @@ const Card = (props) => {
     )
 };
 
-export default Card;
+export default CardAnime;

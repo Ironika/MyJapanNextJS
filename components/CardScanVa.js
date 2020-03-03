@@ -1,7 +1,7 @@
 import React from 'react';
 import Tilt from 'react-tilt';
 
-const CardVa = (props) => {
+const CardScanVa = (props) => {
     return (
         <Tilt className="tilt tilt-va">
             <div className="card-scans-va" style={{ backgroundImage: 'url(' + props.item.img + ')' }} onClick={() => window.open(props.item.link, '_blank')}>
@@ -15,4 +15,4 @@ const CardVa = (props) => {
     )
 };
 
-export default CardVa;
+export default CardScanVa;

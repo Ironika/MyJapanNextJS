@@ -3,10 +3,10 @@ import debounce from "lodash.debounce";
 import LazyLoad from 'react-lazyload';
 import { ParallaxProvider } from 'react-scroll-parallax';
 import { ParallaxBanner } from 'react-scroll-parallax';
-import { getApiScans, getApiScansVA } from '../helpers/Scans'
-import Loader from '../components/Loader/Loader'
-import CardVa from '../components/Scans/CardVa'
-import Card from '../components/Scans/Card'
+import { getApiDatas } from '../helpers'
+import Loader from '../components/Loader'
+import CardVa from '../components/CardScanVa'
+import Card from '../components/CardScan'
 import banner from '../public/img/banner.jpg'
 
 const Scans = (props) => {
@@ -31,12 +31,12 @@ const Scans = (props) => {
 
     useEffect(() => {
         const fetchScans = async () => {
-            const _scans = await getApiScans()
+            const _scans = await getApiDatas('scans')
             setScans(_scans)
             setLoader(false)
         }
         const fetchScansVa = async (flag) => {
-            const _scansVa = await getApiScansVA()
+            const _scansVa = await getApiDatas('scansva')
             setScansVa(_scansVa)
             setDisplayedScansVa(_scansVa.slice(0, nbToDisplay))
             setLoaderVa(false)
@@ -98,12 +98,9 @@ const Scans = (props) => {
 }
 
 Scans.getInitialProps = async ({req}) => {
-    if(req) {
-        const scans = await getApiScans();
-        const scansVa = await getApiScansVA();
-        return {scans, scansVa}
-    }
-    return {}
+    const scans = await getApiDatas('scans');
+    const scansVa = await getApiDatas('scansva');
+    return {scans, scansVa}
 }
 
 export default Scans;

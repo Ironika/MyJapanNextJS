@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { getApiNews } from '../helpers/News'
+import { getApiDatas } from '../helpers'
 import debounce from "lodash.debounce";
 import { ParallaxProvider } from 'react-scroll-parallax';
 import { ParallaxBanner } from 'react-scroll-parallax';
-import Card from '../components/News/Card'
-import Loader from '../components/Loader/Loader'
+import Card from '../components/CardNews'
+import Loader from '../components/Loader'
 import banner from '../public/img/banner.jpg'
 
 const News = (props) => {
@@ -25,7 +25,7 @@ const News = (props) => {
 
     useEffect(() => {
         const fetchDatas = async () => {
-            const _news = await getApiNews()
+            const _news = await getApiDatas('news')
             setNews(_news)
             setDisplayedNews(_news.slice(0, pageToDisplay))
             setLoader(false)
@@ -51,9 +51,11 @@ const News = (props) => {
                 </ParallaxBanner>
                 <div className="card-container">
                     {   loader ? <Loader /> :
-                        displayedNews.map((item, index) =>
-                            <Card key={index} news={item} />
-                        )
+                        displayedNews.length > 0 ?
+                            displayedNews.map((item, index) =>
+                                <Card key={index} news={item} />
+                            ) :
+                            <div>No Results founds.</div>
                     }
                 </div>
             </ParallaxProvider>
@@ -62,11 +64,8 @@ const News = (props) => {
 }
 
 News.getInitialProps = async ({req}) => {
-    if(req) {
-        const news = await getApiNews();
-        return {news}
-    }
-    return {}
+    const news = await getApiDatas('news');
+    return {news}
 }
 
 export default News;

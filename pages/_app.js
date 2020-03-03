@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import Head from 'next/head'
-import Header from '../components/Header/Header'
+import Header from '../components/Header'
 import favicon from '../public/img/favicon.png'
 import '../styles.scss'
 

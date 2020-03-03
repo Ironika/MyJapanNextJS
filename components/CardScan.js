@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Card = (props) => {
+const CardScan = (props) => {
     let pubDate = new Date(props.news.pubDate)
         pubDate = pubDate.toLocaleDateString()
 
@@ -18,4 +18,4 @@ const Card = (props) => {
     )
 };
 
-export default Card;
+export default CardScan;
