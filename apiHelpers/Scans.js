@@ -23,7 +23,7 @@ async function getScantrad() {
 
 async function getMangaFox() {
     let datas = []
-    for(let i = 1; i <= 15; i++) {
+    for(let i = 1; i <= 8; i++) {
         const json = await axios.get(MANGAFOX + i + '.html')
         let data = formatJsonMangaFox(json)
         datas = [...datas, ...data]
