@@ -5,32 +5,37 @@ const { isInList } = require('./Shared');
 const { ANIME_SEIKOU, UNIVERSANIMEIZ } = require('../rss');
 
 async function getAnimes() {
-    let animes = []
-    await getAnimeSeikou(animes)
-    await getUniversAnimeiz(animes)
+    const animeSeikou = await getAnimeSeikou()
+    const UniversAnimeiz = await getUniversAnimeiz()
 
+    const animes = [...animeSeikou, ...UniversAnimeiz]
     animes.sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate))
 
     return animes
 }
 
-async function getAnimeSeikou(array) {
+async function getAnimeSeikou() {
+    let datas = []
     for(let i = 1; i <= 2; i++) {
-        let json = await axios.get(ANIME_SEIKOU + i + '/')
-        formatJsonAnimeSeikou(json, array)
+        const json = await axios.get(ANIME_SEIKOU + i + '/')
+        const data = formatJsonAnimeSeikou(json)
+        datas = [...datas, ...data]
     }
-    return array
+    return datas
 }
 
-async function getUniversAnimeiz(array) {
+async function getUniversAnimeiz() {
+    let datas = []
     for(let i = 1; i <= 2; i++) {
-        let json = await axios.get(UNIVERSANIMEIZ + i + '/')
-        formatJsonUniversAnimeiz(json, array)
+        const json = await axios.get(UNIVERSANIMEIZ + i + '/')
+        const data = formatJsonUniversAnimeiz(json)
+        datas = [...datas, ...data]
     }
-    return array
+    return datas
 }
 
-function formatJsonAnimeSeikou(json, array) {
+function formatJsonAnimeSeikou(json) {
+    let array = []
     const $ = cheerio.load(json.data)
     const items = $('.slide-entry')
     for(let i = 0; i < items.length; i++) {
@@ -53,9 +58,11 @@ function formatJsonAnimeSeikou(json, array) {
                 array.push(item)
         }
     }
+    return array
 }
 
-function formatJsonUniversAnimeiz(json, array) {
+function formatJsonUniversAnimeiz(json) {
+    let array = []
     const $ = cheerio.load(json.data)
     const items = $('.post')
     for(let i = 0; i < items.length; i++) {
@@ -79,6 +86,7 @@ function formatJsonUniversAnimeiz(json, array) {
                 array.push(item)
         }
     }
+    return array
 }
 
 function isInArray(item, array) {

@@ -30,16 +30,16 @@ const content2 = () => {
     <p> 
       Some pages may be long to load during the visit.
       <br/>
-      IronikaSpace simply scraps data on other websites and lists them.
+      IronikaSpace is a datas scrapper, so it get datas on other websites and lists them, the process can be long.
       <br/>
-      *if the Dev talk to you, this site is exclusively develop with React
+      *if the Dev talk to you, this website is Serverless and work with a React & NextJs
     </p>
   )
 }
 
 const Index = (props) => {
     const [news, setNews] = useState(props.news || []);
-    const [loader, setLoader] = useState(true);
+    const [loader, setLoader] = useState(props.news ? false : true);
 
     useEffect(() => {
       const fetchDatas = async () => {
@@ -100,6 +100,7 @@ const Index = (props) => {
 Index.getInitialProps = async ({req}) => {
     if(req) {
       const news = await getApiDatas('news');
+      news.length = 4
       return {news}
     }
     return {}

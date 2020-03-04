@@ -10,10 +10,9 @@ import banner from '../public/img/banner.jpg'
 const Animes = (props) => {
     const pageToDisplay = 9
     const [animes, setAnimes] = useState(props.animes || [])
-    const [displayedAnimes, setDisplayedAnimes] = useState([])
+    const [displayedAnimes, setDisplayedAnimes] = useState((props.animes instanceof Array && props.animes.slice(0, pageToDisplay)) || [])
     const [hasMore, setHasMore] = useState(true)
-    const [loader, setLoader] = useState(true)
-    const [deepLoader, setDeepLoader] = useState(false)
+    const [loader, setLoader] = useState(props.animes ? false : true)
 
     useEffect(() => {
         window.onscroll = debounce(() => {
@@ -30,12 +29,9 @@ const Animes = (props) => {
             setAnimes(_animes)
             setDisplayedAnimes(_animes.slice(0, pageToDisplay))
             setLoader(false)
-            if(deepLoader) {
-                setDeepLoader(false)
-            }
         }
         fetchDatas()
-    }, [deepLoader]);
+    }, []);
 
     const loadItems = () => {
         let nbToDisplay = displayedAnimes.length + pageToDisplay
@@ -52,7 +48,6 @@ const Animes = (props) => {
                 <ParallaxBanner className="homescreen banner" layers={[{ image: banner, amount: 0.5 }]} style={{ height: '300px' }}>
                     <h1 className="title">ANIMES</h1>
                 </ParallaxBanner>
-                {deepLoader && <Loader style={{marginTop: '20px'}} />}
                 <div className="card-container">
                     {   loader ? <Loader /> :
                         displayedAnimes.length > 0 ?

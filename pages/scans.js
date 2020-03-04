@@ -11,14 +11,12 @@ import banner from '../public/img/banner.jpg'
 
 const Scans = (props) => {
     const pageToDisplay = 12
-    const [nbToDisplay, setNbToDisplay] = useState(12)
     const [scans, setScans] = useState(props.scans || [])
     const [scansVa, setScansVa] = useState(props.scansVa || [])
-    const [displayedScansVa, setDisplayedScansVa] = useState([])
+    const [displayedScansVa, setDisplayedScansVa] = useState((props.scansVa instanceof Array && props.scansVa.slice(0, pageToDisplay)) || [])
     const [hasMore, setHasMore] = useState(true)
-    const [loader, setLoader] = useState(true)
-    const [loaderVa, setLoaderVa] = useState(true)
-    const [deepLoader, setDeepLoader] = useState(false)
+    const [loader, setLoader] = useState(props.scans ? false : true)
+    const [loaderVa, setLoaderVa] = useState(props.scansVa ? false : true)
 
     useEffect(() => {
         window.onscroll = debounce(() => {
@@ -35,30 +33,24 @@ const Scans = (props) => {
             setScans(_scans)
             setLoader(false)
         }
-        const fetchScansVa = async (flag) => {
+        const fetchScansVa = async () => {
             const _scansVa = await getApiDatas('scansva')
             setScansVa(_scansVa)
-            setDisplayedScansVa(_scansVa.slice(0, nbToDisplay))
+            setDisplayedScansVa(_scansVa.slice(0, pageToDisplay))
             setLoaderVa(false)
-            if (flag) {
-                setHasMore(true)
-                setDeepLoader(false)
-            }
         }
 
         fetchScans()
         fetchScansVa()
-
-    }, [deepLoader, nbToDisplay]);
+    }, []);
 
     const loadItems = () => {
-        let currentNbToDisplay = displayedScansVa.length + pageToDisplay
-        if (currentNbToDisplay > scansVa.length) {
-            currentNbToDisplay = scansVa.length
+        let nbToDisplay = displayedScansVa.length + pageToDisplay
+        if(nbToDisplay > scansVa.length) {
+            nbToDisplay = scansVa.length
             setHasMore(false)
         }
-        setNbToDisplay(currentNbToDisplay)
-        setDisplayedScansVa(scansVa.slice(0, currentNbToDisplay))
+        setDisplayedScansVa(scansVa.slice(0, nbToDisplay))
     }
 
     return (
@@ -82,7 +74,6 @@ const Scans = (props) => {
                         </div>
                     </div>
                     <div className="right">
-                        {deepLoader && <Loader style={{ marginTop: '20px' }} />}
                         <div className="card-container">
                             {loaderVa ? <Loader /> :
                                 displayedScansVa.length > 0 ?

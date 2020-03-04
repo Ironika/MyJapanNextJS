@@ -10,9 +10,9 @@ import banner from '../public/img/banner.jpg'
 const News = (props) => {
     const pageToDisplay = 12
     const [news, setNews] = useState(props.news || [])
-    const [displayedNews, setDisplayedNews] = useState([])
+    const [displayedNews, setDisplayedNews] = useState((props.news instanceof Array && props.news.slice(0, pageToDisplay)) || [])
     const [hasMore, setHasMore] = useState(true)
-    const [loader, setLoader] = useState(true)
+    const [loader, setLoader] = useState(props.news ? false : true)
 
     useEffect(() => {
         window.onscroll = debounce(() => {

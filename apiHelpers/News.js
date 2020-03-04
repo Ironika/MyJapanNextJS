@@ -2,13 +2,11 @@ const { fetchRss } = require('./Shared');
 const { ADALA, NAUTIJON, MANGASNEWS } = require('../rss');
 
 async function getNews() {
-    let news = []
     const adala = await getAdalaNews()
     const nautijon = await getNautijonNews()
     const mangasNews = await getMangasNews()
 
-    news = [...adala, ...nautijon, ...mangasNews]
-
+    const news = [...adala, ...nautijon, ...mangasNews]
     news.sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate))
 
     return news
