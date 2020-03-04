@@ -13,9 +13,11 @@ const Scans = (props) => {
     const pageToDisplay = 12
     const [scans, setScans] = useState(props.scans || [])
     const [scansVa, setScansVa] = useState(props.scansVa || [])
+    const [scansWebtoons, setScansWebtoons] = useState(props.scansWebtoons || [])
     const [displayedScansVa, setDisplayedScansVa] = useState((props.scansVa instanceof Array && props.scansVa.slice(0, pageToDisplay)) || [])
     const [hasMore, setHasMore] = useState(true)
     const [loader, setLoader] = useState(props.scans ? false : true)
+    const [loaderWebtoons, setLoaderWebtoons] = useState(props.scansWebtoons ? false : true)
     const [loaderVa, setLoaderVa] = useState(props.scansVa ? false : true)
 
     useEffect(() => {
@@ -33,6 +35,11 @@ const Scans = (props) => {
             setScans(_scans)
             setLoader(false)
         }
+        const fetchScansWebtoons = async () => {
+            const _scansWebtoons = await getApiDatas('scanswebtoons')
+            setScansWebtoons(_scansWebtoons)
+            setLoaderWebtoons(false)
+        }
         const fetchScansVa = async () => {
             const _scansVa = await getApiDatas('scansva')
             setScansVa(_scansVa)
@@ -41,6 +48,7 @@ const Scans = (props) => {
         }
 
         fetchScans()
+        fetchScansWebtoons()
         fetchScansVa()
     }, []);
 
@@ -73,13 +81,26 @@ const Scans = (props) => {
                             }
                         </div>
                     </div>
-                    <div className="right">
+                    <div className="center">
                         <div className="card-container">
                             {loaderVa ? <Loader /> :
                                 displayedScansVa.length > 0 ?
                                     displayedScansVa.map((item, index) =>
                                         <LazyLoad key={index} placeholder={<Loader />}>
                                             <CardVa item={item} />
+                                        </LazyLoad>
+                                    ) :
+                                    <div>No Results Found</div>
+                            }
+                        </div>
+                    </div>
+                    <div className="right">
+                        <div className="card-container">
+                            {loader ? <Loader /> :
+                                scansWebtoons.length > 0 ?
+                                    scansWebtoons.map((item, index) =>
+                                        <LazyLoad key={index} placeholder={<Loader />}>
+                                            <Card news={item} />
                                         </LazyLoad>
                                     ) :
                                     <div>No Results Found</div>
@@ -95,8 +116,9 @@ const Scans = (props) => {
 Scans.getInitialProps = async ({req}) => {
     if(req) {
         const scans = await getApiDatas('scans');
+        const scansWebtoons = await getApiDatas('scanswebtoons');
         const scansVa = await getApiDatas('scansva');
-        return {scans, scansVa}
+        return {scans, scansWebtoons, scansVa}
     }
     return {}
 }

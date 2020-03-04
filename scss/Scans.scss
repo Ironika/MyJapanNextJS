@@ -18,9 +18,19 @@
             display: flex;
         }
         .left {
-            flex: 30%;
+            flex: 20%;
             .card-container {
-                padding: 20px;
+                padding: 10px;
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: flex-start;
+            }
+        }
+        .center {
+            flex: 60%;
+            .card-container {
+                padding: 0 10px;
                 display: flex;
                 flex-direction: row;
                 flex-wrap: wrap;
@@ -28,9 +38,9 @@
             }
         }
         .right {
-            flex: 70%;
+            flex: 20%;
             .card-container {
-                padding: 20px;
+                padding: 10px;
                 display: flex;
                 flex-direction: row;
                 flex-wrap: wrap;
