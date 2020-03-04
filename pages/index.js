@@ -15,7 +15,7 @@ import homescreen3 from '../public/img/homescreen3.jpg'
 
 const content1 = () => {
   return(
-    <p> 
+    <p>
       I will share with you through this site, various news, photos, music, manga or anime.
       <br/>
       In addition, this site will allow me to experiment some web technologies and will serve me as a portfolio for the future.
@@ -27,8 +27,8 @@ const content1 = () => {
 
 const content2 = () => {
   return (
-    <p> 
-      Some pages may be long to load during the visit.
+    <p>
+      Some pages may be long to load during the visit & somes images may be ugly.
       <br/>
       IronikaSpace is a datas scrapper, so it get datas on other websites and lists them, the process can be long.
       <br/>
@@ -48,7 +48,7 @@ const Index = (props) => {
         setNews(_news)
         setLoader(false)
       }
-      
+
       fetchDatas()
     }, []);
 
@@ -59,14 +59,14 @@ const Index = (props) => {
           <ParallaxBanner className="homescreen banner" layers={[{ image: banner, amount: 0.5 }]} style={{ height: '300px' }}>
             <h1 className="title">HOME</h1>
           </ParallaxBanner>
-          <Text 
+          <Text
             title={'Welcome on IronikaSpace'}
             content={content1()}
             citationJap={'猿も木から落ちる'}
             citationTrad={'Even the monkey falls from the tree'}
           />
           <ParallaxBanner className="homescreen" layers={[{ image: homescreen2, amount: 0.5 }]} style={{ height: '450px' }}></ParallaxBanner>
-          <Text 
+          <Text
             title={'My Bad !'}
             content={content2()}
             citationJap={'堪忍は一生の宝'}
