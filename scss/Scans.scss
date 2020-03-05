@@ -17,6 +17,13 @@
         @media screen and (min-width: $md) {
             display: flex;
         }
+        h2 {
+            color: $second-color;
+            font-weight: bold;
+            font-size: 34px;
+            text-align: center;
+            text-shadow: black 0.5px 0.5px;
+        }
         .left {
             flex: 20%;
             .card-container {

@@ -1,6 +1,6 @@
 const axios = require('axios');
 const cheerio = require('cheerio');
-const { isInList, fetchRss } = require('./Shared');
+const { isInList, fetchRss, makeArrayPage } = require('./Shared');
 const { SCANTRAD,
         MANGAFOX,
         UNORDINARY,
@@ -16,8 +16,8 @@ async function getScans() {
     return scans
 }
 
-async function getScansVA() {
-    const scansVa = await getMangaFox()
+async function getScansVA(page, prevPage) {
+    const scansVa = await getMangaFox(page, prevPage)
     scansVa.sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate))
     return scansVa
 }
@@ -34,12 +34,15 @@ async function getScantrad() {
     return datas
 }
 
-async function getMangaFox() {
+async function getMangaFox(page, prevPage) {
+    const arrayMap = makeArrayPage(page, prevPage)
+    const responseDatas = await Promise.all(
+        arrayMap.map((item) => axios.get(`${MANGAFOX}${item}.html`))
+    )
+
     let datas = []
-    for(let i = 1; i <= 8; i++) {
-        const json = await axios.get(MANGAFOX + i + '.html')
-        let data = formatJsonMangaFox(json)
-        datas = [...datas, ...data]
+    for(let data of responseDatas) {
+        datas = [...datas, ...formatJsonMangaFox(data)]
     }
 
     return datas

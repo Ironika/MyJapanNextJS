@@ -2,6 +2,13 @@
 export const ADALA = 'https://adala-news.fr/feed/';
 export const NAUTIJON = 'https://www.nautiljon.com/actualite/rss.php';
 export const MANGASNEWS = 'https://www.manga-news.com/index.php/feed/news';
+export const DEVELOPPEZ = 'https://web.developpez.com/index/rss';
+export const JSFEEDS = 'https://jsfeeds.com/feed';
+export const ECHOJS = 'https://www.echojs.com/rss';
+export const REDDIT_JS = 'https://www.reddit.com/r/javascript/.rss?format=xml';
+export const REDDIT_REACT = 'https://www.reddit.com/r/reactjs/.rss?format=xml';
+export const SITEPOINT_JS = 'https://www.sitepoint.com/javascript/feed/';
+export const JEUXVIDEO = 'http://www.jeuxvideo.com/rss/rss.xml';
 
 // SCANS
 export const SCANTRAD = 'https://scantrad.net/rss/';

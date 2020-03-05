@@ -20,7 +20,23 @@ const isInList = (title, type) => {
     return isInList
 }
 
+const makeArrayPage = (page, prevPage) => {
+    let arrayMap = []
+    if(prevPage) {
+        for(let i = Number(prevPage) + 1; i <= page; i++) {
+            arrayMap.push(i)
+        }
+    } else {
+        for(let i = 1; i <= page; i++) {
+            arrayMap.push(i)
+        }
+    }
+
+    return arrayMap
+}
+
 module.exports = {
     fetchRss,
-    isInList
+    isInList,
+    makeArrayPage
 };
