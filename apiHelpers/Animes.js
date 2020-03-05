@@ -1,36 +1,44 @@
 const axios = require('axios');
 const accents = require('remove-accents');
 const cheerio = require('cheerio');
-const { isInList } = require('./Shared');
+const { isInList, makeArrayPage } = require('./Shared');
 const { ANIME_SEIKOU, UNIVERSANIMEIZ } = require('../rss');
 
-async function getAnimes() {
-    const animeSeikou = await getAnimeSeikou()
-    const UniversAnimeiz = await getUniversAnimeiz()
+async function getAnimes(page, prevPage) {
+    const animeSeikou = await getAnimeSeikou(page, prevPage)
+    const universAnimeiz = await getUniversAnimeiz(page, prevPage)
 
-    const animes = [...animeSeikou, ...UniversAnimeiz]
+    const animes = [...animeSeikou, ...universAnimeiz]
     animes.sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate))
 
     return animes
 }
 
-async function getAnimeSeikou() {
+async function getAnimeSeikou(page, prevPage) {
+    const arrayMap = makeArrayPage(page, prevPage)
+    const responseDatas = await Promise.all(
+        arrayMap.map((item) => axios.get(`${ANIME_SEIKOU}${item}`))
+    )
+
     let datas = []
-    for(let i = 1; i <= 2; i++) {
-        const json = await axios.get(ANIME_SEIKOU + i + '/')
-        const data = formatJsonAnimeSeikou(json)
-        datas = [...datas, ...data]
+    for(let data of responseDatas) {
+        datas = [...datas, ...formatJsonAnimeSeikou(data)]
     }
+
     return datas
 }
 
-async function getUniversAnimeiz() {
+async function getUniversAnimeiz(page, prevPage) {
+    const arrayMap = makeArrayPage(page, prevPage)
+    const responseDatas = await Promise.all(
+        arrayMap.map((item) => axios.get(`${UNIVERSANIMEIZ}${item}`))
+    )
+
     let datas = []
-    for(let i = 1; i <= 2; i++) {
-        const json = await axios.get(UNIVERSANIMEIZ + i + '/')
-        const data = formatJsonUniversAnimeiz(json)
-        datas = [...datas, ...data]
+    for(let data of responseDatas) {
+        datas = [...datas, ...formatJsonUniversAnimeiz(data)]
     }
+
     return datas
 }
 

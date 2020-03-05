@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import debounce from "lodash.debounce"
 import PropTypes from 'prop-types'
 import { getApiDatas } from '../helpers'
-import { Loader, CardScanVa, CardScan } from '../components'
+import { Loader, ListPaginate, CardScan } from '../components'
 
 const List = (props) => {
     const [loader, setLoader] = useState(props.datas ? false : true)
@@ -34,76 +33,6 @@ const List = (props) => {
     )
 }
 
-const ListPaginate = (props) => {
-    const itemToDisplay = 8
-    const callPageBy = 4
-    const [currentPage, setCurrentPage] = useState(2)
-    const [datas, setDatas] = useState(props.datas || [])
-    const [displayedDatas, setDisplayedDatas] = useState((props.datas instanceof Array && props.datas.slice(0, itemToDisplay)) || [])
-    const [hasMore, setHasMore] = useState(true)
-    const [loader, setLoader] = useState(props.datas ? false : true)
-    const [loadMore, setLoadMore] = useState(false)
-    const [isOpen, setIsOpen] = useState(true)
-
-    useEffect(() => {
-        const fetchDatas = async () => {
-            let _datas = await getApiDatas('scansva', currentPage)
-            setDatas(_datas)
-            setDisplayedDatas(_datas.slice(0, itemToDisplay))
-            setLoader(false)
-        }
-        fetchDatas()
-    }, [])
-
-    const loadItems = async() => {
-        let _itemToDisplay = displayedDatas.length + itemToDisplay
-        if(_itemToDisplay > datas.length) {
-            if(datas.length >= 100) {
-                _itemToDisplay = datas.length
-                setHasMore(false)
-                setDisplayedDatas(datas.slice(0, _itemToDisplay))
-            } else {
-                setLoadMore(true)
-                const _currentPage = currentPage + callPageBy
-                const _datas = await getApiDatas('scansva', _currentPage, currentPage)
-                const newDatas = [...datas, ..._datas]
-                setDatas(newDatas)
-                setCurrentPage(_currentPage)
-                setDisplayedDatas(newDatas.slice(0, _itemToDisplay))
-                setLoadMore(false)
-            }
-        } else
-            setDisplayedDatas(datas.slice(0, _itemToDisplay))
-    }
-
-    if (process.browser) {
-        window.onscroll = debounce(() => {
-            if (!hasMore) return
-            let scroll = window.innerHeight + document.documentElement.scrollTop
-            if (scroll === document.documentElement.offsetHeight) {
-                loadItems()
-            }
-        }, 100)
-    }
-
-    return (
-        <>
-            <h2 onClick={() => setIsOpen(!isOpen)}>MangaFox<i className={isOpen ? "fa fa-chevron-down" : "fa fa-chevron-right"}></i></h2>
-            <div className={isOpen ? "card-container open" : "card-container"}>
-                {loader ? <Loader /> :
-                    displayedDatas.length > 0 ?
-                        displayedDatas.map((item, index) =>
-                            <CardScanVa key={index} data={item} />
-                        ) :
-                        <div>No Scans Found</div>
-                }
-                {loadMore && <Loader />}
-            </div>
-        </>
-    )
-}
-
-
 const Scans = (props) => {
     return (
         <div className="Scans">
@@ -112,7 +41,7 @@ const Scans = (props) => {
                     <List datas={props.scans} title={'Scantrad'} type={'scans'} />
                 </div>
                 <div className="center">
-                    <ListPaginate datas={props.scansVa}/>
+                    <ListPaginate datas={props.scansVa} title={'MangaFox'} type={'scansva'} />
                 </div>
                 <div className="right">
                     <List datas={props.scansWebtoons} title={'Webtoons'} type={'scanswebtoons'} />
@@ -136,10 +65,6 @@ Scans.propTypes = {
     scans: PropTypes.array,
     scansWebtoons: PropTypes.array,
     scansVa: PropTypes.array
-}
-
-ListPaginate.propTypes = {
-    datas: PropTypes.array
 }
 
 List.propTypes = {

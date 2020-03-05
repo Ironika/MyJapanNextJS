@@ -8,6 +8,7 @@ import Header from './Header'
 import Link from './Link'
 import Loader from './Loader'
 import Text from './Text'
+import ListPaginate from './ListPaginate'
 
 export {
     Banner,
@@ -19,5 +20,6 @@ export {
     Header,
     Link,
     Loader,
-    Text
+    Text,
+    ListPaginate
 }

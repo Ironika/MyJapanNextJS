@@ -14,9 +14,11 @@ const content1 = () => {
         <p>
             I will share with you through this site, various news, photos, music, manga or anime.
             <br />
-            In addition, this site will allow me to experiment some web technologies and will serve me as a portfolio for the future.
+            In addition, this site will allow me to experiment some web technologies.
             <br />
             I hope that the experience will please you, and wish you a pleasant visit.
+            <br />
+            You can <a href="mailto:kevin.hoquet@gmail.com?subject=CONTACT IronikaSpace">contact me</a> if you need.
         </p>
     )
 }
@@ -28,7 +30,7 @@ const content2 = () => {
             <br />
             IronikaSpace is a datas scrapper, so it get datas on other websites and lists them, the process can be long.
             <br />
-            *if the Dev talk to you, this website is Serverless and work with a React & NextJs
+            This website is Serverless and work with a React & NextJs
         </p>
     )
 }
