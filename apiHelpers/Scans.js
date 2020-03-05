@@ -93,7 +93,7 @@ function formatJsonMangaFox(json) {
     for(let i = 0; i < items.length; i++) {
         let title = $('.manga-list-4-list > li > .manga-list-4-item-title > a')[i].children[0].data
         if(isInList(title.toUpperCase(), 'scans')) {
-            const img = $('.manga-list-4-list > li > a > img')[i].attribs.src
+            const img = $('.manga-list-4-list > li > a > img')[i].attribs.alt === title ? $('.manga-list-4-list > li > a > img')[i].attribs.src : $('.manga-list-4-list > li > a > img')[i + 1].attribs.src
             const date = $('.manga-list-4-list > li > .manga-list-4-item-subtitle > span')[i].children[0].data
             const chapt = $('.manga-list-4-list > li > .manga-list-4-item-part > li:first-child > a')[i].children[0].data ? $('.manga-list-4-list > li > .manga-list-4-item-part > li:first-child > a')[i].children[0].data.replace('Ch.', '') : ''
             const link = $('.manga-list-4-list > li > .manga-list-4-item-part > li:first-child > a')[i].attribs.href ? $('.manga-list-4-list > li > .manga-list-4-item-part > li:first-child > a')[i].attribs.href : $('.manga-list-4-list > li > a')[i].attribs.href

@@ -16,7 +16,7 @@ const CardNews = (props) => {
                     <button>{props.data.site}</button>
                     <span className="date">{pubDate.toLocaleString('fr-FR')}</span>
                     <h3>{props.data.title}</h3>
-                    <p>{(props.data.desc && props.data.desc.length > 200) ? props.data.desc.substring(0,150) + '...' : props.data.desc}</p>
+                    <p>{(props.data.desc && props.data.desc.length > 150) ? props.data.desc.substring(0,150) + '...' : props.data.desc}</p>
                 </div>
             </a>
         </div>
