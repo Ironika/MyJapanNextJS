@@ -1,5 +1,4 @@
 const axios = require('axios');
-const accents = require('remove-accents');
 const cheerio = require('cheerio');
 const { isInList, makeArrayPage } = require('./Shared');
 const { ANIME_SEIKOU, UNIVERSANIMEIZ } = require('../rss');
@@ -50,7 +49,7 @@ function formatJsonAnimeSeikou(json) {
         let title = $('.slide-entry .hidden span[itemprop="mainEntityOfPage"] span[itemprop="name"]')[i].children[0].data
         title = title.replace('VOSTFR', '')
         title = title.replace('vostfr', '')
-        if(isInList(title.toUpperCase(), 'animes')) {
+        if(title && isInList(title.toUpperCase(), 'animes')) {
             const img = $('.slide-entry .slide-image > img')[i].attribs.src
             const date = $('.slide-entry .hidden > span[itemprop="datePublished"]')[i].children[0].data
             const link = $('.slide-entry .slide-image')[i].attribs.href
@@ -78,12 +77,13 @@ function formatJsonUniversAnimeiz(json) {
         title = title.replace('VOSTFR', '')
         title = title.replace('vostfr', '')
         if(isInList(title.toUpperCase(), 'animes') && !title.includes('VF')) {
-            const episode = $('.post .post-content p')[i].children[0].data
-            const img = $('.post .post-thumb a img')[i].attribs.src
-            const link = $('.post .post-thumb a')[i].attribs.href
-            const date = $('.post .meta-date')[i].children[0].data
+            const episode = $('.post .post-content p')[i] && $('.post .post-content p')[i].children[0].data
+            const img = $('.post .post-thumb a img')[i] && $('.post .post-thumb a img')[i].attribs.src
+            const link = $('.post .post-thumb a')[i] && $('.post .post-thumb a')[i].attribs.href
+            const date = $('.post .meta-date')[i] && $('.post .meta-date')[i].children[0].data
+            const _title = episode ? title + ' ' + episode.replace('Épisode ', '') : title
             const item = {
-                title: title + ' ' + episode.replace('Épisode ', ''),
+                title: _title,
                 link: link,
                 pubDate: makeDate(date),
                 site: 'Univers Animeiz',
