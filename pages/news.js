@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react'
+import PropTypes from 'prop-types'
 import { getApiDatas } from '../helpers'
-import debounce from "lodash.debounce";
+import debounce from "lodash.debounce"
 import { CardNews, Loader } from '../components'
 
 const News = (props) => {
@@ -45,7 +46,7 @@ const News = (props) => {
                 {   loader ? <Loader /> :
                     displayedNews.length > 0 ?
                         displayedNews.map((item, index) =>
-                            <CardNews key={index} news={item} />
+                            <CardNews key={index} data={item} />
                         ) :
                         <div>No Results founds.</div>
                 }
@@ -56,10 +57,14 @@ const News = (props) => {
 
 News.getInitialProps = async ({req}) => {
     if(req) {
-        const news = await getApiDatas('news');
+        const news = await getApiDatas('news')
         return {news}
     }
     return {}
 }
 
-export default News;
+News.propTypes = {
+    news: PropTypes.array
+}
+
+export default News

@@ -1,5 +1,6 @@
 import React from 'react'
 import Head from 'next/head'
+import PropTypes from 'prop-types'
 import { ParallaxProvider } from 'react-scroll-parallax'
 import { useRouter } from 'next/router'
 import { Header, Banner } from '../components'
@@ -38,6 +39,11 @@ const App = ({ Component, pageProps }) => {
       </ParallaxProvider>
     </>
   )
+}
+
+App.propTypes = {
+  Component: PropTypes.func.isRequired,
+  pageProps: PropTypes.object.isRequired
 }
 
 export default App

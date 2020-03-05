@@ -1,4 +1,5 @@
-import React from 'react';
+import React from 'react'
+import PropTypes from 'prop-types'
 
 const Text = (props) => {
     return (
@@ -8,6 +9,14 @@ const Text = (props) => {
             <blockquote>{props.citationJap} <br/> "{props.citationTrad}"</blockquote>
         </div>
     )
-};
+}
 
-export default Text;
+Text.propTypes = {
+    title: PropTypes.string.isRequired,
+    content: PropTypes.node.isRequired,
+    citationJap: PropTypes.string.isRequired,
+    citationTrad: PropTypes.string.isRequired
+}
+
+
+export default Text

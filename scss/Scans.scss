@@ -9,36 +9,31 @@
             font-size: 34px;
             text-align: center;
             text-shadow: black 0.5px 0.5px;
+            cursor: pointer;
+            i {
+                margin-left: 20px;
+                font-size: 25px;
+            }
+        }
+        .card-container {
+            padding: 10px;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+            display: none;
+        }
+        .open {
+            display: flex;
         }
         .left {
             flex: 20%;
-            .card-container {
-                padding: 10px;
-                display: flex;
-                flex-direction: row;
-                flex-wrap: wrap;
-                justify-content: flex-start;
-            }
         }
         .center {
             flex: 60%;
-            .card-container {
-                padding: 0 10px;
-                display: flex;
-                flex-direction: row;
-                flex-wrap: wrap;
-                justify-content: flex-start;
-            }
         }
         .right {
             flex: 20%;
-            .card-container {
-                padding: 10px;
-                display: flex;
-                flex-direction: row;
-                flex-wrap: wrap;
-                justify-content: flex-start;
-            }
         }
     }
 }

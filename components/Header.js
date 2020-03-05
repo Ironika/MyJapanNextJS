@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import Link from './Link';
+import React, { useState } from 'react'
+import Link from './Link'
 
 import logo from '../public/img/cerisier.png'
 
 const Header = () => {
-    const [menuIsOpen, setMenuIsOpen] = useState(false);
+    const [menuIsOpen, setMenuIsOpen] = useState(false)
 
     return (
         <nav className="header">
@@ -64,6 +64,6 @@ const Header = () => {
             </ul>
         </nav>
     )
-};
+}
 
-export default Header;
+export default Header

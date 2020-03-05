@@ -1,5 +1,6 @@
 import React from 'react'
-import { ParallaxBanner } from 'react-scroll-parallax';
+import PropTypes from 'prop-types'
+import { ParallaxBanner } from 'react-scroll-parallax'
 import banner from '../public/img/banner.jpg'
 
 const Banner = (props) => {
@@ -8,6 +9,10 @@ const Banner = (props) => {
             <h1 className="title">{props.title}</h1>
         </ParallaxBanner>
     )
+}
+
+Banner.propTypes = {
+    title: PropTypes.string.isRequired
 }
 
 export default Banner

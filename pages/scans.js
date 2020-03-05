@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import debounce from "lodash.debounce";
+import React, { useState, useEffect } from 'react'
+import debounce from "lodash.debounce"
+import PropTypes from 'prop-types'
 import { getApiDatas } from '../helpers'
 import { Loader, CardScanVa, CardScan } from '../components'
 
 const List = (props) => {
     const [loader, setLoader] = useState(props.datas ? false : true)
     const [datas, setDatas] = useState(props.datas || [])
+    const [isOpen, setIsOpen] = useState(true)
 
     useEffect(() => {
         const fetchDatas = async () => {
@@ -18,15 +20,15 @@ const List = (props) => {
 
     return (
         <>
-            <h2>{props.title}</h2>
-            <div className="card-container">
-                {loader ? <Loader /> :
-                    datas.length > 0 ?
-                        datas.map((item, index) =>
-                            <CardScan key={index} data={item} />
-                        ) :
-                        <div>No Scans Found</div>
-                }
+            <h2 onClick={() => setIsOpen(!isOpen)}>{props.title}<i className={isOpen ? "fa fa-chevron-down" : "fa fa-chevron-right"}></i></h2>
+            <div className={isOpen ? "card-container open" : "card-container"}>
+            {loader ? <Loader /> :
+                datas.length > 0 ?
+                    datas.map((item, index) =>
+                        <CardScan key={index} data={item} />
+                    ) :
+                    <div>No Scans Found</div>
+            }
             </div>
         </>
     )
@@ -41,6 +43,7 @@ const ListPaginate = (props) => {
     const [hasMore, setHasMore] = useState(true)
     const [loader, setLoader] = useState(props.datas ? false : true)
     const [loadMore, setLoadMore] = useState(false)
+    const [isOpen, setIsOpen] = useState(true)
 
     useEffect(() => {
         const fetchDatas = async () => {
@@ -50,7 +53,7 @@ const ListPaginate = (props) => {
             setLoader(false)
         }
         fetchDatas()
-    }, []);
+    }, [])
 
     const loadItems = async() => {
         let _itemToDisplay = displayedDatas.length + itemToDisplay
@@ -80,17 +83,17 @@ const ListPaginate = (props) => {
             if (scroll === document.documentElement.offsetHeight) {
                 loadItems()
             }
-        }, 100);
+        }, 100)
     }
 
     return (
         <>
-            <h2>MangaFox</h2>
-            <div className="card-container">
+            <h2 onClick={() => setIsOpen(!isOpen)}>MangaFox<i className={isOpen ? "fa fa-chevron-down" : "fa fa-chevron-right"}></i></h2>
+            <div className={isOpen ? "card-container open" : "card-container"}>
                 {loader ? <Loader /> :
                     displayedDatas.length > 0 ?
                         displayedDatas.map((item, index) =>
-                            <CardScanVa key={index} item={item} />
+                            <CardScanVa key={index} data={item} />
                         ) :
                         <div>No Scans Found</div>
                 }
@@ -116,17 +119,31 @@ const Scans = (props) => {
                 </div>
             </div>
         </div>
-    );
+    )
 }
 
 Scans.getInitialProps = async ({req}) => {
     if(req) {
-        const scans = await getApiDatas('scans');
-        const scansWebtoons = await getApiDatas('scanswebtoons');
-        const scansVa = await getApiDatas('scansva', 2);
+        const scans = await getApiDatas('scans')
+        const scansWebtoons = await getApiDatas('scanswebtoons')
+        const scansVa = await getApiDatas('scansva', 2)
         return {scans, scansWebtoons, scansVa}
     }
     return {}
 }
 
-export default Scans;
+Scans.propTypes = {
+    scans: PropTypes.array,
+    scansWebtoons: PropTypes.array,
+    scansVa: PropTypes.array
+}
+
+ListPaginate.propTypes = {
+    datas: PropTypes.array
+}
+
+List.propTypes = {
+    datas: PropTypes.array
+}
+
+export default Scans

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link.js'
-
+import PropTypes from 'prop-types'
 import { getApiDatas } from '../helpers'
 import { Loader, CardNews, Text } from '../components'
 import { ParallaxBanner } from 'react-scroll-parallax'
@@ -54,7 +54,7 @@ const List = (props) => {
                 {loader ? <Loader /> :
                     datas.length > 0 ?
                     datas.map((item, index) =>
-                        <CardNews key={index} news={item} />
+                        <CardNews key={index} data={item} />
                     ) :
                     <div>No News Found</div>
                 }
@@ -96,6 +96,14 @@ Index.getInitialProps = async ({ req }) => {
         return { news }
     }
     return {}
+}
+
+Index.propTypes = {
+    news: PropTypes.array
+}
+
+List.propTypes = {
+    datas: PropTypes.array.isRequired
 }
 
 export default Index

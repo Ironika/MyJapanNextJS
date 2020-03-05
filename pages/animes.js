@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react'
+import PropTypes from 'prop-types'
 import { getApiDatas } from '../helpers'
-import debounce from "lodash.debounce";
+import debounce from "lodash.debounce"
 import { CardAnime, Loader } from '../components'
 
 const Animes = (props) => {
@@ -44,7 +45,7 @@ const Animes = (props) => {
                 {   loader ? <Loader /> :
                     displayedAnimes.length > 0 ?
                         displayedAnimes.map((item, index) =>
-                            <CardAnime key={index} item={item} />
+                            <CardAnime key={index} data={item} />
                         ) :
                         <div>No Results Found</div>
                 }
@@ -61,4 +62,8 @@ Animes.getInitialProps = async ({req}) => {
     return {}
 }
 
-export default Animes;
+Animes.propTypes = {
+    animes: PropTypes.array
+}
+
+export default Animes

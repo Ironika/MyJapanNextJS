@@ -1,4 +1,5 @@
-import React from 'react';
+import React from 'react'
+import PropTypes from 'prop-types'
 
 const CardScan = (props) => {
     let pubDate = new Date(props.data.pubDate)
@@ -16,6 +17,10 @@ const CardScan = (props) => {
             </a>
         </div>
     )
-};
+}
 
-export default CardScan;
+CardScan.propTypes = {
+    data: PropTypes.object.isRequired
+}
+
+export default CardScan
