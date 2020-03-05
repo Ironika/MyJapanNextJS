@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { getApiDatas } from '../helpers'
 import debounce from "lodash.debounce";
-import { ParallaxProvider } from 'react-scroll-parallax';
-import { ParallaxBanner } from 'react-scroll-parallax';
-import Card from '../components/CardAnime'
-import Loader from '../components/Loader'
-import banner from '../public/img/banner.jpg'
+import { CardAnime, Loader } from '../components'
 
 const Animes = (props) => {
     const pageToDisplay = 9
@@ -44,20 +40,15 @@ const Animes = (props) => {
 
     return (
         <div className="Animes">
-            <ParallaxProvider>
-                <ParallaxBanner className="homescreen banner" layers={[{ image: banner, amount: 0.5 }]} style={{ height: '300px' }}>
-                    <h1 className="title">ANIMES</h1>
-                </ParallaxBanner>
-                <div className="card-container">
-                    {   loader ? <Loader /> :
-                        displayedAnimes.length > 0 ?
-                            displayedAnimes.map((item, index) =>
-                                <Card key={index} item={item} />
-                            ) :
-                            <div>No Results Found</div>
-                    }
-                </div>
-            </ParallaxProvider>
+            <div className="card-container">
+                {   loader ? <Loader /> :
+                    displayedAnimes.length > 0 ?
+                        displayedAnimes.map((item, index) =>
+                            <CardAnime key={index} item={item} />
+                        ) :
+                        <div>No Results Found</div>
+                }
+            </div>
         </div>
     );
 }

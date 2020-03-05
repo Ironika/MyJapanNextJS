@@ -1,27 +1,77 @@
 import React, { useState, useEffect } from 'react';
 import debounce from "lodash.debounce";
-import LazyLoad from 'react-lazyload';
-import { ParallaxProvider } from 'react-scroll-parallax';
-import { ParallaxBanner } from 'react-scroll-parallax';
 import { getApiDatas } from '../helpers'
-import Loader from '../components/Loader'
-import CardVa from '../components/CardScanVa'
-import Card from '../components/CardScan'
-import banner from '../public/img/banner.jpg'
+import { Loader, CardScanVa, CardScan } from '../components'
 
-const Scans = (props) => {
+const List = (props) => {
+    const [loader, setLoader] = useState(props.datas ? false : true)
+    const [datas, setDatas] = useState(props.datas || [])
+
+    useEffect(() => {
+        const fetchDatas = async () => {
+            const _datas = await getApiDatas(props.type)
+            setDatas(_datas)
+            setLoader(false)
+        }
+        fetchDatas()
+    }, []);
+
+    return (
+        <>
+            <h2>{props.title}</h2>
+            <div className="card-container">
+                {loader ? <Loader /> :
+                    datas.length > 0 ?
+                        datas.map((item, index) =>
+                            <CardScan key={index} data={item} />
+                        ) :
+                        <div>No Scans Found</div>
+                }
+            </div>
+        </>
+    )
+}
+
+const ListPaginate = (props) => {
     const itemToDisplay = 8
     const callPageBy = 4
     const [currentPage, setCurrentPage] = useState(2)
-    const [scans, setScans] = useState(props.scans || [])
-    const [scansVa, setScansVa] = useState(props.scansVa || [])
-    const [scansWebtoons, setScansWebtoons] = useState(props.scansWebtoons || [])
-    const [displayedScansVa, setDisplayedScansVa] = useState((props.scansVa instanceof Array && props.scansVa.slice(0, itemToDisplay)) || [])
+    const [datas, setDatas] = useState(props.datas || [])
+    const [displayedDatas, setDisplayedDatas] = useState((props.datas instanceof Array && props.datas.slice(0, itemToDisplay)) || [])
     const [hasMore, setHasMore] = useState(true)
-    const [loader, setLoader] = useState(props.scans ? false : true)
-    const [loaderWebtoons, setLoaderWebtoons] = useState(props.scansWebtoons ? false : true)
-    const [loaderVa, setLoaderVa] = useState(props.scansVa ? false : true)
+    const [loader, setLoader] = useState(props.datas ? false : true)
     const [loadMore, setLoadMore] = useState(false)
+
+    useEffect(() => {
+        const fetchDatas = async () => {
+            let _datas = await getApiDatas('scansva', currentPage)
+            setDatas(_datas)
+            setDisplayedDatas(_datas.slice(0, itemToDisplay))
+            setLoader(false)
+        }
+        fetchDatas()
+    }, []);
+
+    const loadItems = async() => {
+        let _itemToDisplay = displayedDatas.length + itemToDisplay
+        if(_itemToDisplay > datas.length) {
+            if(datas.length >= 100) {
+                _itemToDisplay = datas.length
+                setHasMore(false)
+                setDisplayedDatas(datas.slice(0, _itemToDisplay))
+            } else {
+                setLoadMore(true)
+                const _currentPage = currentPage + callPageBy
+                const _datas = await getApiDatas('scansva', _currentPage, currentPage)
+                const newScanVa = [...datas, ..._datas]
+                setDatas(newScanVa)
+                setCurrentPage(_currentPage)
+                setDisplayedDatas(newScanVa.slice(0, _itemToDisplay))
+                setLoadMore(false)
+            }
+        } else
+            setDisplayedDatas(datas.slice(0, _itemToDisplay))
+    }
 
     if (process.browser) {
         window.onscroll = debounce(() => {
@@ -33,96 +83,38 @@ const Scans = (props) => {
         }, 100);
     }
 
-    useEffect(() => {
-        const fetchScans = async () => {
-            const _scans = await getApiDatas('scans')
-            setScans(_scans)
-            setLoader(false)
-        }
-        const fetchScansWebtoons = async () => {
-            const _scansWebtoons = await getApiDatas('scanswebtoons')
-            setScansWebtoons(_scansWebtoons)
-            setLoaderWebtoons(false)
-        }
-        const fetchScansVa = async () => {
-            let _scansVa = await getApiDatas('scansva', currentPage)
-            setScansVa(_scansVa)
-            setDisplayedScansVa(_scansVa.slice(0, itemToDisplay))
-            setLoaderVa(false)
-        }
+    return (
+        <>
+            <h2>MangaFox</h2>
+            <div className="card-container">
+                {loader ? <Loader /> :
+                    displayedDatas.length > 0 ?
+                        displayedDatas.map((item, index) =>
+                            <CardScanVa key={index} item={item} />
+                        ) :
+                        <div>No Scans Found</div>
+                }
+                {loadMore && <Loader />}
+            </div>
+        </>
+    )
+}
 
-        fetchScans()
-        fetchScansWebtoons()
-        fetchScansVa()
-    }, []);
 
-    const loadItems = async() => {
-        let _itemToDisplay = displayedScansVa.length + itemToDisplay
-        if(_itemToDisplay > scansVa.length) {
-            if(scansVa.length >= 100) {
-                _itemToDisplay = scansVa.length
-                setHasMore(false)
-                setDisplayedScansVa(scansVa.slice(0, _itemToDisplay))
-            } else {
-                setLoadMore(true)
-                const _currentPage = currentPage + callPageBy
-                const _scansVa = await getApiDatas('scansva', _currentPage, currentPage)
-                const newScanVa = [...scansVa, ..._scansVa]
-                setScansVa(newScanVa)
-                setCurrentPage(_currentPage)
-                setDisplayedScansVa(newScanVa.slice(0, _itemToDisplay))
-                setLoadMore(false)
-            }
-        } else 
-            setDisplayedScansVa(scansVa.slice(0, _itemToDisplay))
-    }
-
+const Scans = (props) => {
     return (
         <div className="Scans">
-            <ParallaxProvider>
-                <ParallaxBanner className="homescreen banner" layers={[{ image: banner, amount: 0.5 }]} style={{ height: '300px' }}>
-                    <h1 className="title">SCANS</h1>
-                </ParallaxBanner>
-                <div className="container">
-                    <div className="left">
-                        <h2>Scantrad</h2>
-                        <div className="card-container">
-                            {loader ? <Loader /> :
-                                scans.length > 0 ?
-                                    scans.map((item, index) =>
-                                        <Card key={index} news={item} />
-                                    ) :
-                                    <div>No Results Found</div>
-                            }
-                        </div>
-                    </div>
-                    <div className="center">
-                        <h2>MangaFox</h2>
-                        <div className="card-container">
-                            {loaderVa ? <Loader /> :
-                                displayedScansVa.length > 0 ?
-                                    displayedScansVa.map((item, index) =>
-                                        <CardVa key={index} item={item} />
-                                    ) :
-                                    <div>No Results Found</div>
-                            }
-                            {loadMore && <Loader />}
-                        </div>
-                    </div>
-                    <div className="right">
-                        <h2>Webtoons</h2>
-                        <div className="card-container">
-                            {loaderWebtoons ? <Loader /> :
-                                scansWebtoons.length > 0 ?
-                                    scansWebtoons.map((item, index) =>
-                                        <Card key={index} news={item} />
-                                    ) :
-                                    <div>No Results Found</div>
-                            }
-                        </div>
-                    </div>
+            <div className="container">
+                <div className="left">
+                    <List datas={props.scans} title={'Scantrad'} type={'scans'} />
                 </div>
-            </ParallaxProvider>
+                <div className="center">
+                    <ListPaginate datas={props.scansVa}/>
+                </div>
+                <div className="right">
+                    <List datas={props.scansWebtoons} title={'Webtoons'} type={'scanswebtoons'} />
+                </div>
+            </div>
         </div>
     );
 }

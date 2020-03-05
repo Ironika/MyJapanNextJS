@@ -1,18 +1,4 @@
 .Scans {
-    .title {
-        color: white;
-        font-weight: bold;
-        font-size: 40px;
-        text-align: center;
-        text-shadow: black 4px 3px;
-        margin-top: 40%;
-        @media screen and (min-width: $md) and (max-width: $lg) {
-            margin-top: 20%;
-        }
-        @media screen and (min-width: $lg) {
-            margin-top: 12%;
-        }
-    }
     .container {
         @media screen and (min-width: $md) {
             display: flex;

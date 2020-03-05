@@ -1,8 +1,11 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import Head from 'next/head'
-import Header from '../components/Header'
+import { ParallaxProvider } from 'react-scroll-parallax'
+import { useRouter } from 'next/router'
+import { Header, Banner } from '../components'
 import favicon from '../public/img/favicon.png'
 import '../styles.scss'
+
 
 const CustomHead = () => {
   return (
@@ -22,15 +25,17 @@ const CustomHead = () => {
 }
 
 const App = ({ Component, pageProps }) => {
-  useEffect(() => {
-    if(!localStorage.getItem('cache'))
-      localStorage.setItem('cache', JSON.stringify({}))
-  }, [])
+  const { pathname } = useRouter()
+  const title = (pathname === '/') ? 'Home' : pathname.replace('/', '')
+
   return (
     <>
       <CustomHead />
       <Header />
-      <Component {...pageProps} />
+      <ParallaxProvider>
+        <Banner title={title}/>
+        <Component {...pageProps} />
+      </ParallaxProvider>
     </>
   )
 }

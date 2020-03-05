@@ -1,17 +1,17 @@
 import React from 'react';
 
 const CardScan = (props) => {
-    let pubDate = new Date(props.news.pubDate)
+    let pubDate = new Date(props.data.pubDate)
         pubDate = pubDate.toLocaleDateString()
 
     return (
         <div className="card-scans">
-            <a href={props.news.link} className="card-scans-container" target="_blank" rel="noopener noreferrer">
-                <img src={props.news.img} alt={props.news.title}/>
+            <a href={props.data.link} className="card-scans-container" target="_blank" rel="noopener noreferrer">
+                <img src={props.data.img} alt={props.data.title}/>
                 <div className="card-scans-container-content">
                     <p className="date">{pubDate}</p>
-                    <h3>{props.news.title}</h3>
-                    <button>{props.news.lang}</button>
+                    <h3>{props.data.title}</h3>
+                    <button>{props.data.lang}</button>
                 </div>
             </a>
         </div>

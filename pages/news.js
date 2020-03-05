@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { getApiDatas } from '../helpers'
 import debounce from "lodash.debounce";
-import { ParallaxProvider } from 'react-scroll-parallax';
-import { ParallaxBanner } from 'react-scroll-parallax';
-import Card from '../components/CardNews'
-import Loader from '../components/Loader'
-import banner from '../public/img/banner.jpg'
+import { CardNews, Loader } from '../components'
 
 const News = (props) => {
     const pageToDisplay = 12
@@ -45,20 +41,15 @@ const News = (props) => {
 
     return (
         <div className="News">
-            <ParallaxProvider>
-                <ParallaxBanner className="homescreen banner" layers={[{ image: banner, amount: 0.5 }]} style={{ height: '300px' }}>
-                    <h1 className="title">NEWS</h1>
-                </ParallaxBanner>
-                <div className="card-container">
-                    {   loader ? <Loader /> :
-                        displayedNews.length > 0 ?
-                            displayedNews.map((item, index) =>
-                                <Card key={index} news={item} />
-                            ) :
-                            <div>No Results founds.</div>
-                    }
-                </div>
-            </ParallaxProvider>
+            <div className="card-container">
+                {   loader ? <Loader /> :
+                    displayedNews.length > 0 ?
+                        displayedNews.map((item, index) =>
+                            <CardNews key={index} news={item} />
+                        ) :
+                        <div>No Results founds.</div>
+                }
+            </div>
         </div>
     );
 }
