@@ -39,14 +39,14 @@ function formatJsonAnimeSeikou(json) {
     const $ = cheerio.load(json.data)
     const items = $('.slide-entry')
     for(let i = 0; i < items.length; i++) {
-        let title = $('.slide-entry > .hidden > span[itemprop="mainEntityOfPage"] > span[itemprop="name"]')[i].children[0].data
+        let title = $('.slide-entry .hidden span[itemprop="mainEntityOfPage"] span[itemprop="name"]')[i].children[0].data
         title = title.replace('VOSTFR', '')
         title = title.replace('vostfr', '')
         if(isInList(title.toUpperCase(), 'animes')) {
-            let img = $('.slide-entry > .slide-image > img')[i].attribs.src
-            let date = $('.slide-entry > .hidden > span[itemprop="datePublished"]')[i].children[0].data
-            let link = $('.slide-entry > .slide-image')[i].attribs.href
-            let item = {
+            const img = $('.slide-entry .slide-image > img')[i].attribs.src
+            const date = $('.slide-entry .hidden > span[itemprop="datePublished"]')[i].children[0].data
+            const link = $('.slide-entry .slide-image')[i].attribs.href
+            const item = {
                 title: title,
                 link: link,
                 pubDate: new Date(date),
@@ -66,18 +66,18 @@ function formatJsonUniversAnimeiz(json) {
     const $ = cheerio.load(json.data)
     const items = $('.post')
     for(let i = 0; i < items.length; i++) {
-        let title = $('.post > .post-content > h2 > a')[i].children[0].data
+        let title = $('.post .post-content h2 a')[i].children[0].data
         title = title.replace('VOSTFR', '')
         title = title.replace('vostfr', '')
         if(isInList(title.toUpperCase(), 'animes') && !title.includes('VF')) {
-            let episode = $('.post > .post-content > p')[i].children[0].data
-            let img = $('.post > .post-thumb > a > img')[i].attribs.src
-            let link = $('.post > .post-thumb > a')[i].attribs.href
-            let date = $('.post > .post-content > .post-meta > .meta-date')[i].children[0].data
-            let item = {
+            const episode = $('.post .post-content p')[i].children[0].data
+            const img = $('.post .post-thumb a img')[i].attribs.src
+            const link = $('.post .post-thumb a')[i].attribs.href
+            const date = $('.post .meta-date')[i].children[0].data
+            const item = {
                 title: title + ' ' + episode.replace('Épisode ', ''),
                 link: link,
-                pubDate: new Date(accents.remove(date)),
+                pubDate: makeDate(date),
                 site: 'Univers Animeiz',
                 img: img,
                 lang: 'VOSTFR'
@@ -96,6 +96,26 @@ function isInArray(item, array) {
             return isInArray = true
     }
     return isInArray
+}
+
+function makeDate(stringDate) {
+    const month = {
+        'janvier': 00,
+        'février': 01,
+        'mars': 02,
+        'avril': 03,
+        'mai': 04,
+        'juin': 05,
+        'juillet': 06,
+        'août': 07,
+        'septembre': 08,
+        'octobre': 09,
+        'novembre': 10,
+        'décembre': 11
+    }
+    const split = stringDate.split(' ')
+    const date = new Date(split[2], month[split[1]], split[0])
+    return date
 }
 
 module.exports = getAnimes;

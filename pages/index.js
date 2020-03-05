@@ -103,7 +103,7 @@ Index.propTypes = {
 }
 
 List.propTypes = {
-    datas: PropTypes.array.isRequired
+    datas: PropTypes.array
 }
 
 export default Index
