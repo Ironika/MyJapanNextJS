@@ -66,10 +66,10 @@ const ListPaginate = (props) => {
                 setLoadMore(true)
                 const _currentPage = currentPage + callPageBy
                 const _datas = await getApiDatas('scansva', _currentPage, currentPage)
-                const newScanVa = [...datas, ..._datas]
-                setDatas(newScanVa)
+                const newDatas = [...datas, ..._datas]
+                setDatas(newDatas)
                 setCurrentPage(_currentPage)
-                setDisplayedDatas(newScanVa.slice(0, _itemToDisplay))
+                setDisplayedDatas(newDatas.slice(0, _itemToDisplay))
                 setLoadMore(false)
             }
         } else
