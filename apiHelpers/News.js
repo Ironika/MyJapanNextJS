@@ -58,7 +58,7 @@ function formatJsonNautijon(json) {
         const tag = $('.une_actu .stats_actu .fright a:last-child')[i] && $('.une_actu .stats_actu .fright a:last-child')[i].children[0].data.toUpperCase()
         const desc = $('.une_actu p')[i] && $('.une_actu p')[i].children[0].data
         const img = $('.une_actu .fleft')[i] && 'https://www.nautiljon.com' + $('.une_actu .fleft')[i].attribs.src.replace('mini', 'medium')
-        const link = $('.une_actu h3 a')[i] && $('.une_actu h3 a')[i].attribs.href
+        const link = $('.une_actu h3 a')[i] && 'https://www.nautiljon.com' + $('.une_actu h3 a')[i].attribs.href
         const item = {title, link, desc, img, tag, site: 'Nautijon', pubDate: date.setMinutes(-i - 2)}
         array.push(item)
     }
