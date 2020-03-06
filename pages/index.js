@@ -41,9 +41,11 @@ const List = (props) => {
 
     useEffect(() => {
         const fetchDatas = async () => {
-            let _datas = await getApiDatas('news')
-            _datas.length = 4
-            setDatas(_datas)
+            if(!props.datas) {
+                let _datas = await getApiDatas('news')
+                _datas.length = 4
+                setDatas(_datas)
+            }
             setLoader(false)
         }
         fetchDatas()

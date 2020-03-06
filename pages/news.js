@@ -24,10 +24,15 @@ const News = (props) => {
 
     useEffect(() => {
         const fetchDatas = async () => {
-            const _news = await getApiDatas('news')
-            setNews(_news)
-            setTags(getTags(_news))
-            setDisplayedNews(filteredNews(_news).slice(0, pageToDisplay))
+            if(!props.news) {
+                const _news = await getApiDatas('news')
+                setNews(_news)
+                setTags(getTags(_news))
+                setDisplayedNews(filteredNews(_news).slice(0, pageToDisplay))
+            } else {
+                setTags(getTags(props.news))
+                setDisplayedNews(filteredNews(props.news).slice(0, pageToDisplay))
+            }
             setLoader(false)
         }
 

@@ -17,9 +17,13 @@ const ListPaginate = (props) => {
 
     useEffect(() => {
         const fetchDatas = async () => {
-            let _datas = await getApiDatas(props.type, currentPage)
-            setDatas(_datas)
-            setDisplayedDatas(_datas.slice(0, itemToDisplay))
+            if(!props.datas) {
+                let _datas = await getApiDatas(props.type, currentPage)
+                setDatas(_datas)
+                setDisplayedDatas(_datas.slice(0, itemToDisplay))
+            } else {
+                setDisplayedDatas(props.datas.slice(0, itemToDisplay))
+            }
             setLoader(false)
         }
         fetchDatas()

@@ -10,8 +10,10 @@ const List = (props) => {
 
     useEffect(() => {
         const fetchDatas = async () => {
-            const _datas = await getApiDatas(props.type)
-            setDatas(_datas)
+            if(!props.datas) {
+                const _datas = await getApiDatas(props.type)
+                setDatas(_datas)
+            }
             setLoader(false)
         }
         fetchDatas()
