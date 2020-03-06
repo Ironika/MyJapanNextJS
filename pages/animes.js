@@ -13,7 +13,7 @@ const Animes = (props) => {
 
 Animes.getInitialProps = async ({req}) => {
     if(req) {
-        const animes = await getApiDatas('animes', 2);
+        const animes = await getApiDatas('animes', 1);
         return { animes }
     }
     return {}

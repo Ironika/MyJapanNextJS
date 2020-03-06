@@ -7,7 +7,7 @@ import { Loader, CardScanVa, CardAnime } from './'
 const ListPaginate = (props) => {
     const itemToDisplay = props.type === 'scansva' ? 8 : 10
     const callPageBy = props.type === 'scansva' ? 4 : 2
-    const [currentPage, setCurrentPage] = useState(2)
+    const [currentPage, setCurrentPage] = useState(props.type === 'scansva' ? 2 : 1)
     const [datas, setDatas] = useState(props.datas || [])
     const [displayedDatas, setDisplayedDatas] = useState((props.datas instanceof Array && props.datas.slice(0, itemToDisplay)) || [])
     const [hasMore, setHasMore] = useState(true)
@@ -32,7 +32,7 @@ const ListPaginate = (props) => {
     const loadItems = async() => {
         let _itemToDisplay = displayedDatas.length + itemToDisplay
         if(_itemToDisplay > datas.length) {
-            if(datas.length >= 100) {
+            if(datas.length >= 50) {
                 _itemToDisplay = datas.length
                 setHasMore(false)
                 setDisplayedDatas(datas.slice(0, _itemToDisplay))
@@ -69,7 +69,7 @@ const ListPaginate = (props) => {
                         displayedDatas.map((item, index) => {
                             return props.type === 'scansva' ? <CardScanVa key={index} data={item} /> : <CardAnime key={index} data={item} />
                         }) :
-                        <div>No Results Found</div>
+                        <div>A Timeout occured, please refresh</div>
                 }
                 {loadMore && <Loader />}
             </div>
