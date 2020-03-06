@@ -9,6 +9,7 @@ import Link from './Link'
 import Loader from './Loader'
 import Text from './Text'
 import ListPaginate from './ListPaginate'
+import Tags from './Tags'
 
 export {
     Banner,
@@ -21,5 +22,6 @@ export {
     Link,
     Loader,
     Text,
-    ListPaginate
+    ListPaginate,
+    Tags
 }

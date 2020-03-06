@@ -13,7 +13,7 @@ const CardNews = (props) => {
                 </LazyLoad>
                 <div className="card-news-content">
                     <button>{props.data.tag}</button>
-                    <span className="date">{pubDate.toLocaleString('fr-FR')}</span>
+                    <span className="date">{pubDate.toLocaleDateString('fr-FR')}</span>
                     <h3>{props.data.title}</h3>
                     <p>{(props.data.desc && props.data.desc.length > 150) ? props.data.desc.substring(0,150) + '...' : props.data.desc}</p>
                 </div>
