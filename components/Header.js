@@ -1,10 +1,21 @@
 import React, { useState } from 'react'
 import Link from './Link'
-
+import debounce from "lodash.debounce"
 import logo from '../public/img/cerisier.png'
 
 const Header = () => {
     const [menuIsOpen, setMenuIsOpen] = useState(false)
+    const [isMini, setIsMini] = useState(false)
+
+    if (process.browser) {
+        window.onscroll = debounce(() => {
+            let scroll = document.documentElement.scrollTop
+            if(scroll > 0 && !isMini)
+                setIsMini(true)
+            else if (scroll === 0 && isMini)
+                setIsMini(false)
+        }, 0)
+    }
 
     return (
         <nav className="header">
@@ -16,7 +27,7 @@ const Header = () => {
                     <Link href={'/news'}><a>News</a></Link>
                 </li>
 
-                <li className="logo bounceIn"><img src={logo} alt="logo" /></li>
+                <li className="logo"><img src={logo} className={isMini ? 'mini': ''} alt="logo" /></li>
 
                 <li>
                     <Link href={'/scans'}><a>Scans</a></Link>

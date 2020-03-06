@@ -48,13 +48,18 @@
             &:hover {
                 background-color: transparent;
             }
+            .mini {
+              width: 27px;
+              top: 0;
+            }
             img {
                 position: absolute;
                 top: 5px;
                 width: 50px;
+                transition: width, 0.5s;
                 @media screen and (min-width: $md) {
                   left: 0;
-                  width: 70px;
+                  // width: 70px;
                 }
             }
         }
