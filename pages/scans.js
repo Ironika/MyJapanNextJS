@@ -34,7 +34,6 @@ const List = (props) => {
 }
 
 const Scans = (props) => {
-    console.log(props.scansVa)
     return (
         <div className="Scans">
             <div className="container">

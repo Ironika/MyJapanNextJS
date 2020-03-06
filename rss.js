@@ -1,7 +1,7 @@
 // NEWS
-export const ADALA = 'https://adala-news.fr/feed/';
-export const NAUTIJON = 'https://www.nautiljon.com/actualite/rss.php';
-export const MANGASNEWS = 'https://www.manga-news.com/index.php/feed/news';
+export const ADALA = 'https://adala-news.fr/';
+export const NAUTIJON = 'https://www.nautiljon.com/actualite/';
+export const MANGASNEWS = 'https://www.manga-news.com/index.php/actus/';
 export const DEVELOPPEZ = 'https://web.developpez.com/index/rss';
 export const JSFEEDS = 'https://jsfeeds.com/feed';
 export const ECHOJS = 'https://www.echojs.com/rss';

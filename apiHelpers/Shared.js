@@ -35,8 +35,29 @@ const makeArrayPage = (page, prevPage) => {
     return arrayMap
 }
 
+const makeDate = (stringDate) => {
+    const month = {
+        'janvier': 00,
+        'février': 01,
+        'mars': 02,
+        'avril': 03,
+        'mai': 04,
+        'juin': 05,
+        'juillet': 06,
+        'août': 07,
+        'septembre': 08,
+        'octobre': 09,
+        'novembre': 10,
+        'décembre': 11
+    }
+    const split = stringDate.split(' ')
+    const date = new Date(split[2], month[split[1]], split[0])
+    return date
+}
+
 module.exports = {
     fetchRss,
     isInList,
-    makeArrayPage
+    makeArrayPage,
+    makeDate
 };

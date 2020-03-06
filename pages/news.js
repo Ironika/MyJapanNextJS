@@ -5,20 +5,11 @@ import debounce from "lodash.debounce"
 import { CardNews, Loader } from '../components'
 
 const News = (props) => {
-    const pageToDisplay = 12
+    const pageToDisplay = 8
     const [news, setNews] = useState(props.news || [])
     const [displayedNews, setDisplayedNews] = useState((props.news instanceof Array && props.news.slice(0, pageToDisplay)) || [])
     const [hasMore, setHasMore] = useState(true)
     const [loader, setLoader] = useState(props.news ? false : true)
-
-    useEffect(() => {
-        window.onscroll = debounce(() => {
-            if (!hasMore) return
-            let scroll = window.innerHeight + document.documentElement.scrollTop
-            if ( scroll === document.documentElement.offsetHeight)
-                loadItems()
-        }, 100);
-    }, [displayedNews])
 
     useEffect(() => {
         const fetchDatas = async () => {
@@ -30,6 +21,16 @@ const News = (props) => {
 
         fetchDatas()
     }, []);
+
+    if (process.browser) {
+        window.onscroll = debounce(() => {
+            if (!hasMore) return
+            let scroll = window.innerHeight + document.documentElement.scrollTop
+            if (scroll === document.documentElement.offsetHeight) {
+                loadItems()
+            }
+        }, 100)
+    }
 
     const loadItems = () => {
         let nbToDisplay = displayedNews.length + pageToDisplay
