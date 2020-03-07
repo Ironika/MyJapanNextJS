@@ -70,16 +70,11 @@ function formatJsonScantrad(json) {
     const items = json.rss.channel.item
     for(var i = 0; i < items.length; i++) {
         if(isInList(items[i].title['_cdata'].toUpperCase(), 'scans')) {
-            let title = items[i].title['_cdata'].replace('Scan - ', '')
-            title = title.replace('Chapitre ', '')
-            const item = {
-                title: title,
-                link: items[i].link['_text'],
-                pubDate: items[i].pubDate['_text'],
-                site: 'Scantrad',
-                img: items[i].description['_cdata'].match('src="(https.*.png)')[0].replace('src="', ''),
-                lang: 'VF'
-            }
+            const title = items[i].title['_cdata'].replace('Scan - ', '').replace('Chapitre ', '')
+            const link = items[i].link['_text']
+            const pubDate = items[i].pubDate['_text']
+            const img = items[i].description['_cdata'].match('src="(https.*.png)')[0].replace('src="', '')
+            const item = { title, link, pubDate, img, site: 'Scantrad', lang: 'VF'}
             array.push(item)
         }
     }
@@ -91,20 +86,15 @@ function formatJsonMangaFox(json) {
     const $ = cheerio.load(json.data)
     const items = $('.manga-list-4-list > li')
     for(let i = 0; i < items.length; i++) {
-        let title = $('.manga-list-4-list > li > .manga-list-4-item-title > a')[i].children[0].data
+        let title = $('.manga-list-4-list .manga-list-4-item-title a')[i].children[0].data
         if(isInList(title.toUpperCase(), 'scans')) {
-            const img = $('.manga-list-4-list > li > a > img')[i].attribs.alt === title ? $('.manga-list-4-list > li > a > img')[i].attribs.src : $('.manga-list-4-list > li > a > img')[i + 1].attribs.src
-            const date = $('.manga-list-4-list > li > .manga-list-4-item-subtitle > span')[i].children[0].data
-            const chapt = $('.manga-list-4-list > li > .manga-list-4-item-part > li:first-child > a')[i].children[0].data ? $('.manga-list-4-list > li > .manga-list-4-item-part > li:first-child > a')[i].children[0].data.replace('Ch.', '') : ''
-            const link = $('.manga-list-4-list > li > .manga-list-4-item-part > li:first-child > a')[i].attribs.href ? $('.manga-list-4-list > li > .manga-list-4-item-part > li:first-child > a')[i].attribs.href : $('.manga-list-4-list > li > a')[i].attribs.href
-            const item = {
-                title: title + ' ' + chapt,
-                link: 'http://fanfox.net' + link,
-                pubDate: date,
-                site: 'MangaFox',
-                img: img,
-                lang: 'VA'
-            }
+            const img = $('.manga-list-4-list .manga-list-4-cover')[i].attribs.src
+            const pubDate = $('.manga-list-4-list .manga-list-4-item-subtitle span')[i].children[0].data
+            const chapt = $('.manga-list-4-list .manga-list-4-item-part li:first-child a')[i].children[0].data ? $('.manga-list-4-list .manga-list-4-item-part li:first-child a')[i].children[0].data.replace('Ch.', '') : ''
+            let link = $('.manga-list-4-list .manga-list-4-item-part li:first-child a')[i].attribs.href ? $('.manga-list-4-list .manga-list-4-item-part li:first-child a')[i].attribs.href : $('.manga-list-4-list > li > a')[i].attribs.href
+            title = title + ' ' + chapt
+            link = 'http://fanfox.net' + link
+            const item = {title, link, pubDate, img, site: 'MangaFox', lang: 'VA'}
             array.push(item)
         }
     }
@@ -114,14 +104,11 @@ function formatJsonMangaFox(json) {
 function formatJsonWebtoons(json) {
     let array = []
     const items = json.rss.channel.item
-    const item = {
-        title: json.rss.channel.title['_cdata'] + ' ' + items[0].title['_cdata'],
-        link: items[0].link['_text'],
-        pubDate: items[0].pubDate['_text'],
-        site: 'Webtoons',
-        img: json.rss.channel.image.url['_text'],
-        lang: 'VA'
-    }
+    const title = json.rss.channel.title['_cdata'] + ' ' + items[0].title['_cdata']
+    const link = items[0].link['_text']
+    const pubDate = items[0].pubDate['_text']
+    const img = json.rss.channel.image.url['_text']
+    const item = { title, link, pubDate, img, site: 'Webtoons', lang: 'VA'}
     array.push(item)
     return array
 }

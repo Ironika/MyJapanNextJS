@@ -71,8 +71,8 @@ const ListPaginate = (props) => {
                         }) :
                         <div>A Timeout occured, please refresh</div>
                 }
-                {loadMore && <Loader />}
             </div>
+            {loader ? '' : loadMore ? <Loader /> : hasMore ? <i className="fa fa-angle-double-down scroll-more"></i> : ''}
         </>
     )
 }

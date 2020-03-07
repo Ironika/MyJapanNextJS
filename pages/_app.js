@@ -5,6 +5,7 @@ import { ParallaxProvider } from 'react-scroll-parallax'
 import { useRouter } from 'next/router'
 import { Header, Banner, Footer } from '../components'
 import favicon from '../public/img/favicon.png'
+import ScrollToTop from 'react-scroll-up'
 import '../styles.scss'
 
 
@@ -37,6 +38,9 @@ const App = ({ Component, pageProps }) => {
         <Banner title={title}/>
         <Component {...pageProps} />
       </ParallaxProvider>
+      <ScrollToTop showUnder={160}>
+        <i className="fa fa-arrow-circle-o-up scroll-up"></i>
+      </ScrollToTop>
       <Footer />
     </>
   )

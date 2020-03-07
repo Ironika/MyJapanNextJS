@@ -43,10 +43,10 @@ const Scans = (props) => {
                     <List datas={props.scans} title={'Scantrad'} type={'scans'} />
                 </div>
                 <div className="center">
-                    <ListPaginate datas={props.scansVa} title={'MangaFox'} type={'scansva'} />
+                    <List datas={props.scansWebtoons} title={'Webtoons'} type={'scanswebtoons'} />
                 </div>
                 <div className="right">
-                    <List datas={props.scansWebtoons} title={'Webtoons'} type={'scanswebtoons'} />
+                    <ListPaginate datas={props.scansVa} title={'MangaFox'} type={'scansva'} />
                 </div>
             </div>
         </div>
