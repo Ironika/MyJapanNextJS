@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { getApiDatas } from '../helpers'
 import debounce from "lodash.debounce"
-import { CardNews, Loader, Tags } from '../components'
+import { CardNews, Tags, CardNewsSkeleton, SkeletonItem } from '../components'
 
 const getTags = (datas) => {
     let _tags = [{ value: 'All', active: true }]
@@ -78,18 +78,26 @@ const News = (props) => {
 
     return (
         <div className="News">
-            {   loader ? <Loader /> :
-                <>
-                    <Tags tags={tags} setActiveTags={(tags) => setTags(tags)} />
-                    <div className="card-container">
-                        { displayedNews.length > 0 ?
-                            displayedNews.map((item, index) =>
-                                <CardNews key={index} data={item} />
-                            ) :
-                            <div>No Results founds.</div>
-                        }
-                    </div>
-                </>
+            {   loader ? 
+                    <>
+                        <SkeletonItem className="tag-skeleton" />
+                        <div className="card-container">
+                            { Array(8).fill(8).map((item, index) =>
+                                <CardNewsSkeleton key={index}/>
+                            )}
+                        </div>
+                    </> :
+                    <>
+                        <Tags tags={tags} setActiveTags={(tags) => setTags(tags)} />
+                        <div className="card-container">
+                            { displayedNews.length > 0 ?
+                                displayedNews.map((item, index) =>
+                                    <CardNews key={index} data={item} />
+                                ) :
+                                <div>No Results founds.</div>
+                            }
+                        </div>
+                    </>
             }
         </div>
     );

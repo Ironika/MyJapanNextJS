@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import debounce from "lodash.debounce"
 import PropTypes from 'prop-types'
 import { getApiDatas } from '../helpers'
-import { Loader, CardScanVa, CardAnime } from './'
+import { CardScanVa, CardAnime, CardScansVaSkeleton, CardAnimesSkeleton } from './'
 
 const ListPaginate = (props) => {
     const itemToDisplay = props.type === 'scansva' ? 8 : 10
@@ -64,15 +64,23 @@ const ListPaginate = (props) => {
         <>
             {props.title && <h2 onClick={() => setIsOpen(!isOpen)}>{props.title}<i className={isOpen ? "fa fa-chevron-down" : "fa fa-chevron-right"}></i></h2>}
             <div className={isOpen ? "card-container open" : "card-container"}>
-                {loader ? <Loader /> :
+                {loader ? 
+                    Array(props.type === 'scansva' ? 8 : 10).fill(props.type === 'scansva' ? 8 : 10).map((item, index) =>
+                        props.type === 'scansva' ? <CardScansVaSkeleton key={index} /> : <CardAnimesSkeleton key={index} />
+                    ) :
                     displayedDatas.length > 0 ?
                         displayedDatas.map((item, index) => {
                             return props.type === 'scansva' ? <CardScanVa key={index} data={item} /> : <CardAnime key={index} data={item} />
                         }) :
                         <div>A Timeout occured, please refresh</div>
                 }
+                {loader ? '' : loadMore ? 
+                    Array(props.type === 'scansva' ? 8 : 10).fill(props.type === 'scansva' ? 8 : 10).map((item, index) =>
+                        props.type === 'scansva' ? <CardScansVaSkeleton key={index} /> : <CardAnimesSkeleton key={index} />
+                    ) : 
+                    hasMore ? <i className="fa fa-angle-double-down scroll-more"></i> : ''
+                }
             </div>
-            {loader ? '' : loadMore ? <Loader /> : hasMore ? <i className="fa fa-angle-double-down scroll-more"></i> : ''}
         </>
     )
 }

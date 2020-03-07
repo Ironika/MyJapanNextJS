@@ -10,6 +10,13 @@ import Loader from './Loader'
 import Text from './Text'
 import ListPaginate from './ListPaginate'
 import Tags from './Tags'
+import {
+    SkeletonItem, 
+    CardNewsSkeleton,
+    CardScansSkeleton,
+    CardScansVaSkeleton,
+    CardAnimesSkeleton
+} from './SkeletonItem'
 
 export {
     Banner,
@@ -23,5 +30,10 @@ export {
     Loader,
     Text,
     ListPaginate,
-    Tags
+    Tags,
+    SkeletonItem,
+    CardNewsSkeleton,
+    CardScansSkeleton,
+    CardScansVaSkeleton,
+    CardAnimesSkeleton
 }

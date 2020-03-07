@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Link from 'next/link.js'
 import PropTypes from 'prop-types'
 import { getApiDatas } from '../helpers'
-import { Loader, CardNews, Text } from '../components'
+import { CardNews, Text, CardNewsSkeleton } from '../components'
 import { ParallaxBanner } from 'react-scroll-parallax'
 
 import homescreen from '../public/img/homescreen.jpg'
@@ -55,7 +55,10 @@ const List = (props) => {
         <div className="news">
             <h2>Last News</h2>
             <div className="card-container">
-                {loader ? <Loader /> :
+                {loader ? 
+                    Array(4).fill(4).map((item, index) =>
+                        <CardNewsSkeleton key={index}/>
+                    ) :
                     datas.length > 0 ?
                     datas.map((item, index) =>
                         <CardNews key={index} data={item} />
