@@ -12,7 +12,7 @@ import homescreen3 from '../public/img/homescreen3.jpg'
 const content1 = () => {
     return (
         <p>
-            I will share with you through this site, various news, photos, music, manga or anime.
+            I will share with you through this site, various news, photos, musics, mangas or animes.
             <br />
             In addition, this site will allow me to experiment some web technologies.
             <br />
@@ -26,7 +26,7 @@ const content1 = () => {
 const content2 = () => {
     return (
         <p>
-            Some pages may be long to load during the visit & somes images may be ugly.
+            Some pages may be long to load during the visit.
             <br />
             IronikaSpace is a datas scrapper, so it get datas on other websites and lists them, the process can be long.
             <br />

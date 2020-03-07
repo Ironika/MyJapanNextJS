@@ -8,13 +8,13 @@ const Header = () => {
     const [isMini, setIsMini] = useState(false)
 
     if (process.browser) {
-        window.onscroll = debounce(() => {
+        window.addEventListener('scroll', debounce(() => {
             let scroll = document.documentElement.scrollTop
             if(scroll > 0 && !isMini)
                 setIsMini(true)
             else if (scroll === 0 && isMini)
                 setIsMini(false)
-        }, 0)
+        }, 0))
     }
 
     return (

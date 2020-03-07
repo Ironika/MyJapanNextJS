@@ -7,12 +7,16 @@
         color: $second-color;
         text-shadow: black 0.5px 0.5px;
         font-size: 20px;
+        &:hover {
+            color: $main-color;
+            font-weight: bold;
+        }
     }
     .tag:first-child {
         font-size: 30px;
     }
     .active {
-        color: $main-color !important;
+        color: $main-color;
         font-weight: bold;
     }
 }

@@ -50,19 +50,11 @@ function formatJsonAnimeSeikou(json) {
         title = title.replace('VOSTFR', '')
         title = title.replace('vostfr', '')
         if(title && isInList(title.toUpperCase(), 'animes')) {
-            const img = $('.slide-entry .slide-image > img')[i].attribs.src
-            const date = $('.slide-entry .hidden > span[itemprop="datePublished"]')[i].children[0].data
+            const img = $('.slide-entry .slide-image  img')[i].attribs.src
+            const date = $('.slide-entry .hidden  span[itemprop="datePublished"]')[i].children[0].data
             const link = $('.slide-entry .slide-image')[i].attribs.href
-            const item = {
-                title: title,
-                link: link,
-                pubDate: new Date(date),
-                site: 'Anime Seikou',
-                img: img,
-                lang: 'VOSTFR'
-            }
-            if(!isInArray(item, array))
-                array.push(item)
+            const item = { title, link, img, pubDate: new Date(date), site: 'Anime Seikou', lang: 'VOSTFR'}
+            array.push(item)
         }
     }
     return array
@@ -81,29 +73,12 @@ function formatJsonUniversAnimeiz(json) {
             const img = $('.post .post-thumb a img')[i] && $('.post .post-thumb a img')[i].attribs.src
             const link = $('.post .post-thumb a')[i] && $('.post .post-thumb a')[i].attribs.href
             const date = $('.post .meta-date')[i] && $('.post .meta-date')[i].children[0].data
-            const _title = episode ? title + ' ' + episode.replace('Épisode ', '') : title
-            const item = {
-                title: _title,
-                link: link,
-                pubDate: makeDate(date),
-                site: 'Univers Animeiz',
-                img: img,
-                lang: 'VOSTFR'
-            }
-            if(!isInArray(item, array))
-                array.push(item)
+            title = episode ? `${title} ${episode.replace('Épisode ', '')}` : title
+            const item = { title, link, img, pubDate: makeDate(date), site: 'Univers Animeiz', lang: 'VOSTFR'}
+            array.push(item)
         }
     }
     return array
-}
-
-function isInArray(item, array) {
-    let isInArray = false
-    for(let anime of array){
-        if(anime.title.includes(item.title))
-            return isInArray = true
-    }
-    return isInArray
 }
 
 module.exports = getAnimes;

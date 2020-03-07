@@ -2,7 +2,7 @@ import React from 'react';
 
 const Footer = () => (
     <footer>
-        Ironika © 2019.
+        Ironika © 2020
     </footer>
 );
 

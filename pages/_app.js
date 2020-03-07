@@ -3,7 +3,7 @@ import Head from 'next/head'
 import PropTypes from 'prop-types'
 import { ParallaxProvider } from 'react-scroll-parallax'
 import { useRouter } from 'next/router'
-import { Header, Banner } from '../components'
+import { Header, Banner, Footer } from '../components'
 import favicon from '../public/img/favicon.png'
 import '../styles.scss'
 
@@ -37,6 +37,7 @@ const App = ({ Component, pageProps }) => {
         <Banner title={title}/>
         <Component {...pageProps} />
       </ParallaxProvider>
+      <Footer />
     </>
   )
 }
