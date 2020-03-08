@@ -1,13 +1,17 @@
 const cheerio = require('cheerio');
 const axios = require('axios');
-const { ADALA, NAUTIJON, MANGASNEWS } = require('../rss');
+const { ADALA, NAUTIJON, MANGASNEWS, JEUXVIDEO, JOURNAL_DU_GEEK, BEGEEK } = require('../rss');
+const { fetchRss } = require('./Shared');
 
 async function getNews() {
     const adala = await getAdalaNews()
     const nautijon = await getNautijonNews()
     const mangasNews = await getMangasNews()
+    const jeuxVideo = await getJeuxVideo()
+    const journalDuGeek = await getJournalDuGeek()
+    const begeek = await getBegeek()
 
-    const news = [...adala, ...nautijon, ...mangasNews]
+    const news = [...adala, ...nautijon, ...mangasNews, ...jeuxVideo, ...journalDuGeek, ...begeek]
     news.sort((a, b) => b.pubDate - a.pubDate)
 
     return news
@@ -28,6 +32,24 @@ async function getNautijonNews() {
 async function getMangasNews() {
     const json = await axios.get(MANGASNEWS)
     const datas = formatJsonMangasNews(json)
+    return datas
+}
+
+async function getJeuxVideo() {
+    const json = await fetchRss(JEUXVIDEO)
+    const datas = formatJsonJeuxVideo(json)
+    return datas
+}
+
+async function getJournalDuGeek() {
+    const json = await fetchRss(JOURNAL_DU_GEEK)
+    const datas = formatJsonJournalDuGeek(json)
+    return datas
+}
+
+async function getBegeek() {
+    const json = await fetchRss(BEGEEK)
+    const datas = formatJsonBegeek(json)
     return datas
 }
 
@@ -83,5 +105,61 @@ function formatJsonMangasNews(json) {
     return array
 }
 
+function formatJsonJeuxVideo(json) {
+    let array = []
+    const items = json.rss.channel.item
+    const date = new Date()
+    for(var i = 0; i < items.length; i++) {
+        const title = items[i].title['_cdata']
+        const link = items[i].link['_text']
+        const pubDate = date.setMinutes(-i - 3) //items[i].pubDate['_text']
+        const tag = items[i].category['_text'].toUpperCase()
+        const desc = items[i].description['_cdata']
+        const img = items[i]['media:thumbnail']._attributes.url
+        const item = { title, link, pubDate, img, tag, desc, site: 'JeuxVideo.com'}
+        array.push(item)
+    }
+    return array
+}
+
+function formatJsonJournalDuGeek(json) {
+    let array = []
+    const items = json.rss.channel.item
+    const date = new Date()
+    for(var i = 0; i < items.length; i++) {
+        const title = items[i].title['_text']
+        const link = items[i].link['_text']
+        const pubDate = date.setMinutes(-i - 4) //items[i].pubDate['_text']
+        const tag = items[i].category[0]['_cdata'].toUpperCase()
+        const desc = items[i].description['_cdata']
+        const match = items[i]['content:encoded']['_cdata'].match('src="(https.*.jpg)')
+        let img = ''
+        if(match) {
+            img = items[i]['content:encoded']['_cdata'].match('src="(https.*.jpg)')[0].replace('src="', '')
+        } else {
+            img = items[i]['content:encoded']['_cdata'].match('src="(https.*.png)')[0].replace('src="', '')
+        }
+        const item = { title, link, pubDate, img, tag, desc, site: 'JournalDuGeek'}
+        array.push(item)
+    }
+    return array
+}
+
+function formatJsonBegeek(json) {
+    let array = []
+    const items = json.rss.channel.item
+    const date = new Date()
+    for(var i = 0; i < items.length; i++) {
+        const title = items[i].title['_text']
+        const link = items[i].link['_text']
+        const pubDate = date.setMinutes(-i - 5) //items[i].pubDate['_text']
+        const tag = items[i].category[1] ? items[i].category[1]['_cdata'].toUpperCase() : 'BeGeek'.toUpperCase() 
+        const desc = items[i].description['_cdata']
+        const img = items[i]['media:content']._attributes.url
+        const item = { title, link, pubDate, img, tag, desc, site: 'BeGeek'}
+        array.push(item)
+    }
+    return array
+}
 
 module.exports = getNews;

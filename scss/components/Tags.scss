@@ -1,4 +1,7 @@
 .tag-container {
+    @media screen and (max-width: $md) {
+        display: none;
+    }
     padding: 20px;
     margin-top: 20px;
     .tag {

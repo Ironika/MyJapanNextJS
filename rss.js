@@ -2,8 +2,9 @@
 export const ADALA = 'https://adala-news.fr/';
 export const NAUTIJON = 'https://www.nautiljon.com/actualite/';
 export const MANGASNEWS = 'https://www.manga-news.com/index.php/actus/';
-export const HITEK = 'https://hitek.fr/rss';
+export const JOURNAL_DU_GEEK = 'https://www.journaldugeek.com/feed/';
 export const JEUXVIDEO = 'http://www.jeuxvideo.com/rss/rss.xml';
+export const BEGEEK = 'https://techguru.fr/feed/';
 
 // DEV
 export const DEVELOPPEZ = 'https://web.developpez.com/index/rss';
@@ -27,3 +28,4 @@ export const TOWER_OF_GOD = 'https://www.webtoons.com/en/fantasy/tower-of-god/rs
 export const MAGE_DEMONS_QUEENS = 'https://www.webtoons.com/en/comedy/mage-and-demon-queen/rss?title_no=1438';
 export const GOD_OF_HIGH_SCHOOL = 'https://www.webtoons.com/en/action/the-god-of-high-school/rss?title_no=66';
 export const HARDCORE_LEVELING = 'https://www.webtoons.com/en/action/hardcore-leveling-warrior/rss?title_no=1221';
+export const THE_GAMER = 'https://www.webtoons.com/en/action/the-gamer/rss?title_no=88';

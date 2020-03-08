@@ -7,7 +7,8 @@ const { SCANTRAD,
         TOWER_OF_GOD,
         MAGE_DEMONS_QUEENS,
         GOD_OF_HIGH_SCHOOL,
-        HARDCORE_LEVELING
+        HARDCORE_LEVELING,
+        THE_GAMER
 } = require('../rss');
 
 async function getScans() {
@@ -54,7 +55,8 @@ async function getWebtoons() {
         fetchRss(TOWER_OF_GOD),
         fetchRss(MAGE_DEMONS_QUEENS),
         fetchRss(GOD_OF_HIGH_SCHOOL),
-        fetchRss(HARDCORE_LEVELING)
+        fetchRss(HARDCORE_LEVELING),
+        fetchRss(THE_GAMER)
     ])
 
     let datas = []
