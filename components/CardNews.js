@@ -5,6 +5,7 @@ import Loader from './Loader'
 
 const CardNews = (props) => {
     const pubDate = new Date(props.data.pubDate)
+    const html = (props.data.desc && props.data.desc.length > 150) ? props.data.desc.substring(0,150) + '...' : props.data.desc
     return (
         <div className="card-news">
             <a href={props.data.link} target="_blank" rel="noopener noreferrer">
@@ -15,7 +16,7 @@ const CardNews = (props) => {
                     <button>{props.data.tag}</button>
                     <span className="date">{pubDate.toLocaleDateString('fr-FR')}</span>
                     <h3>{props.data.title}</h3>
-                    <p>{(props.data.desc && props.data.desc.length > 150) ? props.data.desc.substring(0,150) + '...' : props.data.desc}</p>
+                    <p dangerouslySetInnerHTML={{__html: html.replace(/(<? *script)/gi, 'illegalscript')}} ></p>
                 </div>
             </a>
         </div>
