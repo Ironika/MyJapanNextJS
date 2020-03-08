@@ -4,53 +4,33 @@ const { ADALA, NAUTIJON, MANGASNEWS, JEUXVIDEO, JOURNAL_DU_GEEK, BEGEEK } = requ
 const { fetchRss } = require('./Shared');
 
 async function getNews() {
-    const adala = await getAdalaNews()
-    const nautijon = await getNautijonNews()
-    const mangasNews = await getMangasNews()
-    const jeuxVideo = await getJeuxVideo()
-    const journalDuGeek = await getJournalDuGeek()
-    const begeek = await getBegeek()
+    const [
+        adalaJson, 
+        nautijonJson, 
+        mangasNewsJson, 
+        jeuxVideoJson, 
+        journalDuGeekJson, 
+        begeekJson
+    ] = await Promise.all([
+        axios.get(ADALA),
+        axios.get(NAUTIJON),
+        axios.get(MANGASNEWS),
+        fetchRss(JEUXVIDEO),
+        fetchRss(JOURNAL_DU_GEEK),
+        fetchRss(BEGEEK)
+    ])
+
+    const adala = formatJsonAdala(adalaJson)
+    const nautijon = formatJsonNautijon(nautijonJson)
+    const mangasNews = formatJsonMangasNews(mangasNewsJson)
+    const jeuxVideo = formatJsonJeuxVideo(jeuxVideoJson)
+    const journalDuGeek = formatJsonJournalDuGeek(journalDuGeekJson)
+    const begeek = formatJsonBegeek(begeekJson)
 
     const news = [...adala, ...nautijon, ...mangasNews, ...jeuxVideo, ...journalDuGeek, ...begeek]
     news.sort((a, b) => b.pubDate - a.pubDate)
 
     return news
-}
-
-async function getAdalaNews() {
-    const json = await axios.get(ADALA)
-    const datas = formatJsonAdala(json)
-    return datas
-}
-
-async function getNautijonNews() {
-    const json = await axios.get(NAUTIJON)
-    const datas = formatJsonNautijon(json)
-    return datas
-}
-
-async function getMangasNews() {
-    const json = await axios.get(MANGASNEWS)
-    const datas = formatJsonMangasNews(json)
-    return datas
-}
-
-async function getJeuxVideo() {
-    const json = await fetchRss(JEUXVIDEO)
-    const datas = formatJsonJeuxVideo(json)
-    return datas
-}
-
-async function getJournalDuGeek() {
-    const json = await fetchRss(JOURNAL_DU_GEEK)
-    const datas = formatJsonJournalDuGeek(json)
-    return datas
-}
-
-async function getBegeek() {
-    const json = await fetchRss(BEGEEK)
-    const datas = formatJsonBegeek(json)
-    return datas
 }
 
 function formatJsonAdala(json) {
