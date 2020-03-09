@@ -1,28 +1,22 @@
 import React, {useState, useEffect} from 'react'
 import PropTypes from 'prop-types'
-import { getApiDatas, getTags } from '../helpers'
-import debounce from "lodash.debounce"
+import { getApiDatas } from '../helpers'
 import { CardNewsDev, CardNewsDevSkeleton, SkeletonItem, Tags } from '../components'
+import { usePaginate, useTags } from '../hooks'
 
 const NewsDev = (props) => {
-    const pageToDisplay = 6
-    const [newsDev, setNewsDev] = useState(props.newsDev || [])
     const [loader, setLoader] = useState(props.newsDev ? false : true)
-    const [tags, setTags] = useState(props.newsDev ? getTags(props.newsDev) : [])
-    const [hasMore, setHasMore] = useState(true)
-    const [displayedNewsDev, setDisplayedNewsDev] = useState((props.newsDev instanceof Array && props.newsDev.slice(0, pageToDisplay)) || [])
+    const {tags, setTags, getTags, filteredByTag } = useTags()
+    const {displayedDatas, setDisplayedDatas, pageToDisplay, datas, setDatas} = usePaginate(6, filteredByTag)
 
     useEffect(() => {
         const fetchDatas = async () => {
-            if(!props.newsDev) {
-                const _newsDev = await getApiDatas('newsDev')
-                setNewsDev(filteredNews(_newsDev))
-                setTags(getTags(_newsDev))
-                setDisplayedNewsDev(filteredNews(_newsDev).slice(0, pageToDisplay))
-            } else {
-                setTags(getTags(props.newsDev))
-                setDisplayedNewsDev(filteredNews(props.newsDev).slice(0, pageToDisplay))
-            }
+            let _datas = props.newsDev
+            if(!_datas)
+                _datas = await getApiDatas('newsdev')
+            setDatas(_datas)
+            setTags(getTags(_datas))
+            setDisplayedDatas(filteredByTag(_datas).slice(0, pageToDisplay))
             setLoader(false)
         }
 
@@ -30,48 +24,15 @@ const NewsDev = (props) => {
     }, []);
 
     useEffect(() => {
-        setDisplayedNewsDev(filteredNews(newsDev).slice(0, pageToDisplay))
+        setDisplayedDatas(filteredByTag(datas).slice(0, pageToDisplay))
     }, [tags]);
-
-    const filteredNews = (news) => {
-        if(tags.length === 0 || tags[0].active)
-            return news
-
-        let _news = []
-        for(let tag of tags) {
-            if(tag.active)
-                _news = [..._news, ...news.filter((item) => item.site === tag.value)]
-        }
-
-        _news.sort((a, b) => b.pubDate - a.pubDate)
-        return _news
-    }
-
-    if (process.browser) {
-        window.onscroll = debounce(() => {
-            if (!hasMore) return
-            let scroll = window.innerHeight + document.documentElement.scrollTop
-            if (scroll === document.documentElement.offsetHeight) {
-                loadItems()
-            }
-        }, 100)
-    }
-
-    const loadItems = () => {
-        let nbToDisplay = displayedNewsDev.length + pageToDisplay
-        if(nbToDisplay > newsDev.length) {
-            nbToDisplay = newsDev.length
-            setHasMore(false)
-        }
-        setDisplayedNewsDev(filteredNews(newsDev).slice(0, nbToDisplay))
-    }
 
     const fakeArray = Array(6).fill(6)
 
     return (
         <div className="NewsDev">
             {
-                loader ? 
+                loader ?
                 <>
                     <SkeletonItem className="tag-skeleton" />
                     <div className="card-container">
@@ -83,9 +44,12 @@ const NewsDev = (props) => {
                 <>
                     <Tags tags={tags} setActiveTags={(tags) => setTags(tags)} />
                     <div className="card-container">
-                        { displayedNewsDev.map((data, i) => 
-                            <CardNewsDev key={i} data={data} />
-                        )}
+                        { displayedDatas.length > 0 ?
+                            displayedDatas.map((data, i) =>
+                                <CardNewsDev key={i} data={data} />
+                            ) :
+                            <div>No Results founds.</div>
+                        }
                     </div>
                 </>
             }
@@ -95,7 +59,7 @@ const NewsDev = (props) => {
 
 NewsDev.getInitialProps = async ({req}) => {
     if(req) {
-        const newsDev = await getApiDatas('newsDev', 1);
+        const newsDev = await getApiDatas('newsdev', 1);
         return { newsDev }
     }
     return {}

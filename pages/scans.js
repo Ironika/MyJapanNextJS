@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { getApiDatas } from '../helpers'
-import { Loader, ListPaginate, CardScan, CardScansSkeleton } from '../components'
+import { ListPaginate, CardScan, CardScansSkeleton } from '../components'
 
 const List = (props) => {
     const [loader, setLoader] = useState(props.datas ? false : true)
@@ -29,7 +29,7 @@ const List = (props) => {
         <>
             <h2 onClick={handleClickOpen}>{props.title}<i className={isOpen ? "fa fa-chevron-down" : "fa fa-chevron-right"}></i></h2>
             <div className={isOpen ? "card-container open" : "card-container"}>
-            {loader ? 
+            {loader ?
                 fakeArray.map((item, index) =>
                     <CardScansSkeleton key={index}/>
                 ) :

@@ -1,28 +1,22 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
-import { getApiDatas, getTags } from '../helpers'
-import debounce from "lodash.debounce"
+import { getApiDatas } from '../helpers'
 import { CardNews, Tags, CardNewsSkeleton, SkeletonItem } from '../components'
+import { usePaginate, useTags } from '../hooks'
 
 const News = (props) => {
-    const pageToDisplay = 8
-    const [news, setNews] = useState(props.news || [])
-    const [displayedNews, setDisplayedNews] = useState((props.news instanceof Array && props.news.slice(0, pageToDisplay)) || [])
-    const [hasMore, setHasMore] = useState(true)
     const [loader, setLoader] = useState(props.news ? false : true)
-    const [tags, setTags] = useState(props.news ? getTags(props.news) : [])
+    const {tags, setTags, getTags, filteredByTag } = useTags()
+    const {displayedDatas, setDisplayedDatas, pageToDisplay, datas, setDatas} = usePaginate(8, filteredByTag)
 
     useEffect(() => {
         const fetchDatas = async () => {
-            if(!props.news) {
-                const _news = await getApiDatas('news')
-                setNews(_news)
-                setTags(getTags(_news))
-                setDisplayedNews(filteredNews(_news).slice(0, pageToDisplay))
-            } else {
-                setTags(getTags(props.news))
-                setDisplayedNews(filteredNews(props.news).slice(0, pageToDisplay))
-            }
+            let _datas = props.news
+            if(!_datas)
+                _datas = await getApiDatas('news')
+            setDatas(_datas)
+            setTags(getTags(_datas))
+            setDisplayedDatas(filteredByTag(_datas).slice(0, pageToDisplay))
             setLoader(false)
         }
 
@@ -30,47 +24,14 @@ const News = (props) => {
     }, []);
 
     useEffect(() => {
-        setDisplayedNews(filteredNews(news).slice(0, pageToDisplay))
+        setDisplayedDatas(filteredByTag(datas).slice(0, pageToDisplay))
     }, [tags]);
-
-    const filteredNews = (news) => {
-        if(tags.length === 0 || tags[0].active)
-            return news
-
-        let _news = []
-        for(let tag of tags) {
-            if(tag.active)
-                _news = [..._news, ...news.filter((item) => item.site === tag.value)]
-        }
-
-        _news.sort((a, b) => b.pubDate - a.pubDate)
-        return _news
-    }
-
-    if (process.browser) {
-        window.onscroll = debounce(() => {
-            if (!hasMore) return
-            let scroll = window.innerHeight + document.documentElement.scrollTop
-            if (scroll === document.documentElement.offsetHeight) {
-                loadItems()
-            }
-        }, 100)
-    }
-
-    const loadItems = () => {
-        let nbToDisplay = displayedNews.length + pageToDisplay
-        if(nbToDisplay > news.length) {
-            nbToDisplay = news.length
-            setHasMore(false)
-        }
-        setDisplayedNews(filteredNews(news).slice(0, nbToDisplay))
-    }
 
     const fakeArray = Array(8).fill(8)
 
     return (
         <div className="News">
-            {   loader ? 
+            {   loader ?
                     <>
                         <SkeletonItem className="tag-skeleton" />
                         <div className="card-container">
@@ -82,8 +43,8 @@ const News = (props) => {
                     <>
                         <Tags tags={tags} setActiveTags={(tags) => setTags(tags)} />
                         <div className="card-container">
-                            { displayedNews.length > 0 ?
-                                displayedNews.map((item, index) =>
+                            { displayedDatas.length > 0 ?
+                                displayedDatas.map((item, index) =>
                                     <CardNews key={index} data={item} />
                                 ) :
                                 <div>No Results founds.</div>
