@@ -5,11 +5,11 @@ const { fetchRss } = require('./Shared');
 
 async function getNews() {
     const [
-        adalaJson, 
-        nautijonJson, 
-        mangasNewsJson, 
-        jeuxVideoJson, 
-        journalDuGeekJson, 
+        adalaJson,
+        nautijonJson,
+        mangasNewsJson,
+        jeuxVideoJson,
+        journalDuGeekJson,
         begeekJson
     ] = await Promise.all([
         axios.get(ADALA),
@@ -112,8 +112,8 @@ function formatJsonJournalDuGeek(json) {
         const pubDate = date.setMinutes(-i - 4) //items[i].pubDate['_text']
         const tag = items[i].category[0] ? items[i].category[0]['_cdata'].toUpperCase() : 'JournalDuGeek'.toUpperCase()
         const desc = items[i].description['_cdata']
-        const match = items[i]['content:encoded']['_cdata'].match('src="(https.*.jpg)')
-        const img = match ? items[i]['content:encoded']['_cdata'].match('src="(https.*.jpg)')[0].replace('src="', '') : items[i]['content:encoded']['_cdata'].match('src="(https.*.png)')[0].replace('src="', '')
+        const match = items[i]['content:encoded']['_cdata'].match('src="(https.*(.jpg|.png|.jpeg))')
+        const img = match ? match[0].replace('src="', '') : ''
         const item = { title, link, pubDate, img, tag, desc, site: 'JournalDuGeek'}
         array.push(item)
     }
@@ -128,7 +128,7 @@ function formatJsonBegeek(json) {
         const title = items[i].title['_text']
         const link = items[i].link['_text']
         const pubDate = date.setMinutes(-i - 5) //items[i].pubDate['_text']
-        const tag = items[i].category[1] ? items[i].category[1]['_cdata'].toUpperCase() : 'BeGeek'.toUpperCase() 
+        const tag = items[i].category[1] ? items[i].category[1]['_cdata'].toUpperCase() : 'BeGeek'.toUpperCase()
         const desc = items[i].description['_cdata']
         const img = items[i]['media:content']._attributes.url
         const item = { title, link, pubDate, img, tag, desc, site: 'BeGeek'}
