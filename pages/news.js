@@ -1,18 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
-import { getApiDatas } from '../helpers'
+import { getApiDatas, getTags } from '../helpers'
 import debounce from "lodash.debounce"
 import { CardNews, Tags, CardNewsSkeleton, SkeletonItem } from '../components'
-
-const getTags = (datas) => {
-    let _tags = [{ value: 'All', active: true }]
-    for(let data of datas) {
-        const tag = _tags.find(element => element.value === data.site)
-        if(!tag)
-            _tags.push({value: data.site, active: false})
-    }
-    return _tags
-}
 
 const News = (props) => {
     const pageToDisplay = 8

@@ -15,3 +15,13 @@ export const getApiDatas = async(path, page, prevPage) => {
 
     return []
 }
+
+export const getTags = (datas) => {
+    let _tags = [{ value: 'All', active: true }]
+    for(let data of datas) {
+        const tag = _tags.find(element => element.value === data.site)
+        if(!tag)
+            _tags.push({value: data.site, active: false})
+    }
+    return _tags
+}
