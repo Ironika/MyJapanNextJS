@@ -19,7 +19,8 @@
             justify-content: center;
             .card-news-home {
                 @media screen and (max-width: $xs) {
-                    width: calc(45%);
+                    width: calc(40%);
+                    font-size: 21px;
                 }
                 @media screen and (min-width: $xs) and (max-width: $md) {
                     width: calc(30%);
@@ -44,6 +45,9 @@
                 transition: 0.1s;
                 cursor: pointer;
                 span {
+                    @media screen and (max-width: $xs) {
+                        transform: translateY(75%);
+                    }
                     transform: translateY(35%);
                     display: block;
                 }

@@ -65,7 +65,7 @@ const Header = () => {
                     </Link>
                 </li>
                 <li onClick={handleClickCloseMenu}>
-                    <Link href={'/newsdev'}>
+                    <Link href={'/dev'}>
                         <a>
                             Dev
                             <i className="fa fa-arrow-right"></i>
