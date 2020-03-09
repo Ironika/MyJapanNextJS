@@ -4,41 +4,19 @@ const { isInList, makeArrayPage, makeDate } = require('./Shared');
 const { ANIME_SEIKOU, UNIVERSANIMEIZ } = require('../rss');
 
 async function getAnimes(page, prevPage) {
-    const animeSeikou = await getAnimeSeikou(page, prevPage)
-    const universAnimeiz = await getUniversAnimeiz(page, prevPage)
+    const arrayPage = makeArrayPage(page, prevPage)
+    const promises = [...arrayPage.map((item) => axios.get(`${ANIME_SEIKOU}${item}`)), ...arrayPage.map((item) => axios.get(`${UNIVERSANIMEIZ}${item}`))]
+    const responseDatas = await Promise.all(promises)
+    let animes = []
+    for(let i = 0; i < responseDatas.length; i++) {
+        if(i < arrayPage.length)
+            animes = [...animes, ...formatJsonAnimeSeikou(responseDatas[i])]
+        else
+            animes = [...animes, ...formatJsonUniversAnimeiz(responseDatas[i])]
+    }
 
-    const animes = [...animeSeikou, ...universAnimeiz]
     animes.sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate))
-
     return animes
-}
-
-async function getAnimeSeikou(page, prevPage) {
-    const arrayMap = makeArrayPage(page, prevPage)
-    const responseDatas = await Promise.all(
-        arrayMap.map((item) => axios.get(`${ANIME_SEIKOU}${item}`))
-    )
-
-    let datas = []
-    for(let data of responseDatas) {
-        datas = [...datas, ...formatJsonAnimeSeikou(data)]
-    }
-
-    return datas
-}
-
-async function getUniversAnimeiz(page, prevPage) {
-    const arrayMap = makeArrayPage(page, prevPage)
-    const responseDatas = await Promise.all(
-        arrayMap.map((item) => axios.get(`${UNIVERSANIMEIZ}${item}`))
-    )
-
-    let datas = []
-    for(let data of responseDatas) {
-        datas = [...datas, ...formatJsonUniversAnimeiz(data)]
-    }
-
-    return datas
 }
 
 function formatJsonAnimeSeikou(json) {
