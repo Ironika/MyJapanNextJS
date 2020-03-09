@@ -36,40 +36,30 @@ const content2 = () => {
 }
 
 const List = (props) => {
-    const [datas, setDatas] = useState(props.datas || [])
-    const [loader, setLoader] = useState(props.datas ? false : true)
-
-    useEffect(() => {
-        const fetchDatas = async () => {
-            if(!props.datas) {
-                let _datas = await getApiDatas('news')
-                _datas.length = 4
-                setDatas(_datas)
-            }
-            setLoader(false)
-        }
-        fetchDatas()
-    }, [])
-
-    const fakeArray = Array(4).fill(4)
+    const news = [
+        {title: 'Adala-news', type: 'news'},
+        {title: 'Manga-news', type: 'news'},
+        {title: 'Nautijon', type: 'news'},
+        {title: 'JeuxVideo.com', type: 'news'},
+        {title: 'JournalDuGeek', type: 'news'},
+        {title: 'BeGeek', type: 'news'},
+        {title: 'RedditReact', type: 'newsdev'},
+        {title: 'RedditJs', type: 'newsdev'},
+        {title: 'JsFeeds', type: 'newsdev'},
+        {title: 'SitepointJs', type: 'newsdev'},
+        {title: 'EchoJs', type: 'newsdev'},
+        {title: 'Developpez.com', type: 'newsdev'}
+    ]
 
     return (
         <div className="news">
-            <h2>Last News</h2>
+            <h2>News</h2>
             <div className="card-container">
-                {loader ? 
-                    fakeArray.map((item, index) =>
-                        <CardNewsSkeleton key={index}/>
-                    ) :
-                    datas.length > 0 ?
-                    datas.map((item, index) =>
-                        <CardNews key={index} data={item} />
-                    ) :
-                    <div>No News Found</div>
-                }
-            </div>
-            <div className="cta">
-                <Link href={'/news'}><a>Voir plus</a></Link>
+                { news.map((item, index) =>
+                    <Link key={index} href={`/${item.type}?tag=${item.title}`}>
+                        <a className="card-news-home"><span>{item.title}</span></a>
+                    </Link>
+                )}
             </div>
         </div>
     )
@@ -80,7 +70,7 @@ const Index = (props) => {
     const layers2 = [{ image: homescreen3, amount: 0.5 }]
     const layers3 = [{ image: homescreen, amount: 0.5 }]
     const style = { height: '450px' }
-    
+
     return (
         <div className="Home">
             <Text
@@ -97,27 +87,10 @@ const Index = (props) => {
                 citationTrad={'Patience is a treasure of life'}
             />
             <ParallaxBanner className="homescreen" layers={layers2} style={style}></ParallaxBanner>
-            <List datas={props.news} />
+            <List />
             <ParallaxBanner className="homescreen" layers={layers3} style={style}></ParallaxBanner>
         </div>
     );
-}
-
-Index.getInitialProps = async ({ req }) => {
-    if (req) {
-        const news = await getApiDatas('news');
-        news.length = 4
-        return { news }
-    }
-    return {}
-}
-
-Index.propTypes = {
-    news: PropTypes.array
-}
-
-List.propTypes = {
-    datas: PropTypes.array
 }
 
 export default Index

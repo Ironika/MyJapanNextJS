@@ -64,13 +64,13 @@ const ListPaginate = (props) => {
         setIsOpen(!isOpen)
     }
 
-    const fakeArray = Array(props.type === 'scansva' ? 8 : 10).fill(props.type === 'scansva' ? 8 : 10)
+    const fakeArray = Array(props.type === 'scansva' ? 8 : 10).fill(8)
 
     return (
         <>
             {props.title && <h2 onClick={handleClickOpen}>{props.title}<i className={isOpen ? "fa fa-chevron-down" : "fa fa-chevron-right"}></i></h2>}
             <div className={isOpen ? "card-container open" : "card-container"}>
-                {loader ? 
+                {loader ?
                     fakeArray.map((item, index) =>
                         props.type === 'scansva' ? <CardScansVaSkeleton key={index} /> : <CardAnimesSkeleton key={index} />
                     ) :
@@ -80,10 +80,10 @@ const ListPaginate = (props) => {
                         }) :
                         <div>A Timeout occured, please refresh</div>
                 }
-                {loader ? '' : loadMore ? 
+                {loader ? '' : loadMore ?
                     fakeArray.map((item, index) =>
                         props.type === 'scansva' ? <CardScansVaSkeleton key={index} /> : <CardAnimesSkeleton key={index} />
-                    ) : 
+                    ) :
                     hasMore ? <i className="fa fa-angle-double-down scroll-more"></i> : ''
                 }
             </div>

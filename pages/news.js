@@ -3,11 +3,13 @@ import PropTypes from 'prop-types'
 import { getApiDatas } from '../helpers'
 import { CardNews, Tags, CardNewsSkeleton, SkeletonItem } from '../components'
 import { usePaginate, useTags } from '../hooks'
+import { useRouter } from 'next/router'
 
 const News = (props) => {
     const [loader, setLoader] = useState(props.news ? false : true)
     const {tags, setTags, getTags, filteredByTag } = useTags()
     const {displayedDatas, setDisplayedDatas, pageToDisplay, datas, setDatas} = usePaginate(8, filteredByTag)
+    const {query} = useRouter()
 
     useEffect(() => {
         const fetchDatas = async () => {
@@ -15,7 +17,7 @@ const News = (props) => {
             if(!_datas)
                 _datas = await getApiDatas('news')
             setDatas(_datas)
-            setTags(getTags(_datas))
+            setTags(getTags(_datas, query.tag))
             setDisplayedDatas(filteredByTag(_datas).slice(0, pageToDisplay))
             setLoader(false)
         }

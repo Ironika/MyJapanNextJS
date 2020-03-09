@@ -3,11 +3,13 @@ import PropTypes from 'prop-types'
 import { getApiDatas } from '../helpers'
 import { CardNewsDev, CardNewsDevSkeleton, SkeletonItem, Tags } from '../components'
 import { usePaginate, useTags } from '../hooks'
+import { useRouter } from 'next/router'
 
 const NewsDev = (props) => {
     const [loader, setLoader] = useState(props.newsDev ? false : true)
     const {tags, setTags, getTags, filteredByTag } = useTags()
-    const {displayedDatas, setDisplayedDatas, pageToDisplay, datas, setDatas} = usePaginate(6, filteredByTag)
+    const {displayedDatas, setDisplayedDatas, pageToDisplay, datas, setDatas} = usePaginate(9, filteredByTag)
+    const {query} = useRouter()
 
     useEffect(() => {
         const fetchDatas = async () => {
@@ -15,7 +17,7 @@ const NewsDev = (props) => {
             if(!_datas)
                 _datas = await getApiDatas('newsdev')
             setDatas(_datas)
-            setTags(getTags(_datas))
+            setTags(getTags(_datas, query.tag))
             setDisplayedDatas(filteredByTag(_datas).slice(0, pageToDisplay))
             setLoader(false)
         }
@@ -27,7 +29,7 @@ const NewsDev = (props) => {
         setDisplayedDatas(filteredByTag(datas).slice(0, pageToDisplay))
     }, [tags]);
 
-    const fakeArray = Array(6).fill(6)
+    const fakeArray = Array(9).fill(9)
 
     return (
         <div className="NewsDev">

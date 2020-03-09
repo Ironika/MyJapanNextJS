@@ -3,12 +3,12 @@ import { useState } from 'react'
 export const useTags = () => {
     const [tags, setTags] = useState([])
 
-    const getTags = (datas) => {
-        let _tags = [{ value: 'All', active: true }]
+    const getTags = (datas, currentTag) => {
+        let _tags = [{ value: 'All', active: currentTag ? false : true }]
         for(let data of datas) {
             const tag = _tags.find(element => element.value === data.site)
             if(!tag)
-                _tags.push({value: data.site, active: false})
+                _tags.push({value: data.site, active: data.site === currentTag ? true : false})
         }
         return _tags
     }
