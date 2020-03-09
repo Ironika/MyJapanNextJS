@@ -15,7 +15,7 @@ const NewsDev = (props) => {
         const fetchDatas = async () => {
             let _datas = props.newsDev
             if(!_datas)
-                _datas = await getApiDatas('newsdev')
+                _datas = await getApiDatas('dev')
             setDatas(_datas)
             setTags(getTags(_datas, query.tag))
             setDisplayedDatas(filteredByTag(_datas).slice(0, pageToDisplay))
@@ -61,7 +61,7 @@ const NewsDev = (props) => {
 
 NewsDev.getInitialProps = async ({req}) => {
     if(req) {
-        const newsDev = await getApiDatas('newsdev', 1);
+        const newsDev = await getApiDatas('dev', 1);
         return { newsDev }
     }
     return {}

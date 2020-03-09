@@ -43,12 +43,12 @@ const List = (props) => {
         {title: 'JeuxVideo.com', type: 'news'},
         {title: 'JournalDuGeek', type: 'news'},
         {title: 'BeGeek', type: 'news'},
-        {title: 'RedditReact', type: 'newsdev'},
-        {title: 'RedditJs', type: 'newsdev'},
-        {title: 'JsFeeds', type: 'newsdev'},
-        {title: 'SitepointJs', type: 'newsdev'},
-        {title: 'EchoJs', type: 'newsdev'},
-        {title: 'Developpez.com', type: 'newsdev'}
+        {title: 'RedditReact', type: 'dev'},
+        {title: 'RedditJs', type: 'dev'},
+        {title: 'JsFeeds', type: 'dev'},
+        {title: 'SitepointJs', type: 'dev'},
+        {title: 'EchoJs', type: 'dev'},
+        {title: 'Developpez.com', type: 'dev'}
     ]
 
     return (
