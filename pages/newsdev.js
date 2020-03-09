@@ -1,9 +1,11 @@
 import React, {useState, useEffect} from 'react'
 import PropTypes from 'prop-types'
 import { getApiDatas } from '../helpers'
+import { CardNewsDev, CardNewsDevSkeleton } from '../components'
 
 const NewsDev = (props) => {
     const [newsDev, setNewsDev] = useState(props.newsDev || [])
+    const [loader, setLoader] = useState(props.newsDev ? false : true)
 
     useEffect(() => {
         const fetchDatas = async () => {
@@ -11,28 +13,34 @@ const NewsDev = (props) => {
                 const _newsDev = await getApiDatas('newsDev')
                 setNewsDev(_newsDev)
             }
-            // setLoader(false)
+            setLoader(false)
         }
 
         fetchDatas()
     }, []);
 
-    const handleClick = () => {
-        window.open(item.link, '_blank')
-    }
+    const fakeArray = Array(6).fill(6)
 
     return (
         <div className="NewsDev">
-            <div className="card-container">
-                { newsDev.map((item, i) => 
-                    <div key={i} className="card-news-dev" onClick={handleClick}>
-                        {item.title}
-                        <br />
-                        <br />
-                        {item.site}
+            {
+                loader ? 
+                <>
+                    {/* <SkeletonItem className="tag-skeleton" /> */}
+                    <div className="card-container">
+                        { fakeArray.map((item, index) =>
+                            <CardNewsDevSkeleton key={index}/>
+                        )}
                     </div>
-                )}
-            </div>
+                </> :
+                <>
+                    <div className="card-container">
+                        { newsDev.map((data, i) => 
+                            <CardNewsDev key={i} data={data} />
+                        )}
+                    </div>
+                </>
+            }
         </div>
     );
 }

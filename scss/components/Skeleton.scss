@@ -54,6 +54,26 @@
     }
 }
 
+.card-newsdev-skeleton {
+    @media screen and (max-width: $xs) {
+        width: calc(100% - 40px);
+    }
+    @media screen and (min-width: $xs) and (max-width: $md) {
+        width: calc(100% - 40px);
+    }
+    @media screen and (min-width: $md) and (max-width: $lg) {
+        width: calc(50% - 40px);
+    }
+    @media screen and (min-width: $lg) {
+        width: calc(33% - 40px);
+    }
+    box-shadow: 5px 5px 5px $main-color;
+    margin-bottom: 20px;
+    background-color: $second-color; 
+    margin: 10px;
+    padding: 10px;
+}
+
 .card-scans-skeleton {
     box-shadow: 5px 5px 5px $main-color;
     margin-bottom: 20px;

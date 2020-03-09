@@ -39,3 +39,12 @@ export const CardAnimesSkeleton = () => {
         </div>
     )
 }
+
+export const CardNewsDevSkeleton = () => {
+    const style = { height: "100px" }
+    return (
+        <div className="card-newsdev-skeleton">
+            <SkeletonItem style={style} />
+        </div>
+    )
+}

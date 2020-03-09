@@ -7,13 +7,4 @@
         flex-wrap: wrap;
         justify-content: flex-start;
     }
-    .card-news-dev {
-        width: calc(50% - 40px);
-        box-shadow: 5px 5px 5px $main-color;
-        margin-bottom: 20px;
-        background-color: $second-color; 
-        margin: 10px;
-        padding: 10px;
-        cursor: pointer;
-    }
 }

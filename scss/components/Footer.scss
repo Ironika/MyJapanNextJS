@@ -3,4 +3,8 @@ footer {
     padding: 20px;
     text-align: right;
     color: $five-color;
+    a {
+        float: left;
+        color: $five-color;
+    }
 }

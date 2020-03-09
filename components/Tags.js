@@ -26,15 +26,11 @@ const Tags = props => {
         props.setActiveTags(_tags)
     }
 
-    const handleClickTag = () => {
-        setActiveTag(tag)
-    }
-
     return (
         <div className="tag-container">
             {
                 props.tags.map((tag, i) =>
-                    <span key={i} onClick={handleClickTag} className={tag.active ? 'tag active' : 'tag'}>
+                    <span key={i} onClick={() => setActiveTag(tag)} className={tag.active ? 'tag active' : 'tag'}>
                         {tag.value}
                     </span>
                 )

@@ -3,6 +3,7 @@ import CardAnime from './CardAnime'
 import CardNews from './CardNews'
 import CardScan from './CardScan'
 import CardScanVa from './CardScanVa'
+import CardNewsDev from './CardNewsDev'
 import Footer from './Footer'
 import Header from './Header'
 import Link from './Link'
@@ -15,7 +16,8 @@ import {
     CardNewsSkeleton,
     CardScansSkeleton,
     CardScansVaSkeleton,
-    CardAnimesSkeleton
+    CardAnimesSkeleton,
+    CardNewsDevSkeleton
 } from './SkeletonItem'
 
 export {
@@ -24,6 +26,7 @@ export {
     CardNews,
     CardScan,
     CardScanVa,
+    CardNewsDev,
     Footer,
     Header,
     Link,
@@ -35,5 +38,6 @@ export {
     CardNewsSkeleton,
     CardScansSkeleton,
     CardScansVaSkeleton,
-    CardAnimesSkeleton
+    CardAnimesSkeleton,
+    CardNewsDevSkeleton
 }
