@@ -1,6 +1,6 @@
 import React from 'react'
 
-export const SkeletonItem = ({ style, className }) => ( 
+export const SkeletonItem = ({ style, className }) => (
     <div className={className ? `${className} skeleton-item` : 'skeleton-item'} style={style} />
 );
 
