@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import PropTypes from 'prop-types'
 import { getApiDatas } from '../helpers'
-import { CardNewsDev, CardNewsDevSkeleton, SkeletonItem, Tags } from '../components'
+import { CardNewsDev, CardNewsDevSkeleton, SkeletonItem, Tags, Loader } from '../components'
 import { usePaginate, useTags } from '../hooks'
 import { useRouter } from 'next/router'
 
@@ -20,6 +20,7 @@ const NewsDev = (props) => {
             setTags(getTags(_datas, query.tag))
             setDisplayedDatas(filteredByTag(_datas).slice(0, pageToDisplay))
             setLoader(false)
+            window.addEventListener("scroll", callbackFunc);
         }
 
         fetchDatas()
@@ -28,31 +29,50 @@ const NewsDev = (props) => {
     useEffect(() => {
         setDisplayedDatas(filteredByTag(datas).slice(0, pageToDisplay))
     }, [tags]);
-
-    const fakeArray = Array(9).fill(9)
+    
+    function isElementInViewport(el) {
+        var rect = el.getBoundingClientRect();
+        return (
+          rect.top >= 0 &&
+          rect.left >= 0 &&
+          rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+          rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+        );
+      }
+      
+    function callbackFunc() {
+        const items = document.querySelectorAll(".timeline li");
+        for (var i = 0; i < items.length; i++) {
+            if (isElementInViewport(items[i])) {
+                if(!items[i].classList.contains("in-view")){
+                    items[i].classList.add("in-view");
+                }
+            } else if(items[i].classList.contains("in-view")) {
+                items[i].classList.remove("in-view");
+            }
+        }
+    }
 
     return (
         <div className="NewsDev">
             {
-                loader ?
-                <>
-                    <SkeletonItem className="tag-skeleton" />
-                    <div className="card-container">
-                        { fakeArray.map((item, index) =>
-                            <CardNewsDevSkeleton key={index}/>
-                        )}
-                    </div>
-                </> :
+                loader ? <Loader />:
                 <>
                     <Tags tags={tags} setActiveTags={(tags) => setTags(tags)} />
-                    <div className="card-container">
-                        { displayedDatas.length > 0 ?
-                            displayedDatas.map((data, i) =>
-                                <CardNewsDev key={i} data={data} />
-                            ) :
-                            <div>No Results founds.</div>
-                        }
-                    </div>
+                    <section className="timeline">
+                        <ul>
+                            { displayedDatas.map((data, i) =>
+                                <li key={i} onClick={() => window.open(data.link, '_blank')}>
+                                    <div>
+                                        <time>{data.site}</time>
+                                        <div className="discovery">
+                                            <p>{data.title}</p>
+                                        </div>
+                                    </div>
+                                </li>
+                            )}
+                        </ul>
+                    </section>
                 </>
             }
         </div>
