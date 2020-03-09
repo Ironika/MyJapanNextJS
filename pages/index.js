@@ -51,12 +51,14 @@ const List = (props) => {
         fetchDatas()
     }, [])
 
+    const fakeArray = Array(4).fill(4)
+
     return (
         <div className="news">
             <h2>Last News</h2>
             <div className="card-container">
                 {loader ? 
-                    Array(4).fill(4).map((item, index) =>
+                    fakeArray.map((item, index) =>
                         <CardNewsSkeleton key={index}/>
                     ) :
                     datas.length > 0 ?
@@ -74,6 +76,11 @@ const List = (props) => {
 }
 
 const Index = (props) => {
+    const layers1 = [{ image: homescreen2, amount: 0.5 }]
+    const layers2 = [{ image: homescreen3, amount: 0.5 }]
+    const layers3 = [{ image: homescreen, amount: 0.5 }]
+    const style = { height: '450px' }
+    
     return (
         <div className="Home">
             <Text
@@ -82,16 +89,16 @@ const Index = (props) => {
                 citationJap={'猿も木から落ちる'}
                 citationTrad={'Even the monkey falls from the tree'}
             />
-            <ParallaxBanner className="homescreen" layers={[{ image: homescreen2, amount: 0.5 }]} style={{ height: '450px' }}></ParallaxBanner>
+            <ParallaxBanner className="homescreen" layers={layers1} style={style}></ParallaxBanner>
             <Text
                 title={'My Bad !'}
                 content={content2()}
                 citationJap={'堪忍は一生の宝'}
                 citationTrad={'Patience is a treasure of life'}
             />
-            <ParallaxBanner className="homescreen" layers={[{ image: homescreen3, amount: 0.5 }]} style={{ height: '450px' }}></ParallaxBanner>
+            <ParallaxBanner className="homescreen" layers={layers2} style={style}></ParallaxBanner>
             <List datas={props.news} />
-            <ParallaxBanner className="homescreen" layers={[{ image: homescreen, amount: 0.5 }]} style={{ height: '450px' }}></ParallaxBanner>
+            <ParallaxBanner className="homescreen" layers={layers3} style={style}></ParallaxBanner>
         </div>
     );
 }

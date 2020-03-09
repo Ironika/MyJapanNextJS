@@ -5,33 +5,37 @@ export const SkeletonItem = ({ style, className }) => (
 );
 
 export const CardNewsSkeleton = () => {
+    const style = { height: "400px" }
     return (
         <div className="card-news-skeleton">
-            <SkeletonItem style={{ height: "400px" }} />
+            <SkeletonItem style={style} />
         </div>
     )
 }
 
 export const CardScansSkeleton = () => {
+    const style = { height: "90px" }
     return (
         <div className="card-scans-skeleton">
-            <SkeletonItem style={{ height: "90px" }} />
+            <SkeletonItem style={style} />
         </div>
     )
 }
 
 export const CardScansVaSkeleton = () => {
+    const style = { height: "300px" }
     return (
         <div className="card-scansva-skeleton">
-            <SkeletonItem style={{ height: "300px" }} />
+            <SkeletonItem style={style} />
         </div>
     )
 }
 
 export const CardAnimesSkeleton = () => {
+    const style = { height: "300px" }
     return (
         <div className="card-animes-skeleton">
-            <SkeletonItem style={{ height: "300px" }} />
+            <SkeletonItem style={style} />
         </div>
     )
 }

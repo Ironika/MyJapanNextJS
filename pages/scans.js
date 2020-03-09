@@ -19,12 +19,18 @@ const List = (props) => {
         fetchDatas()
     }, []);
 
+    const handleClickOpen = () => {
+        setIsOpen(!isOpen)
+    }
+
+    const fakeArray = Array(6).fill(6)
+
     return (
         <>
-            <h2 onClick={() => setIsOpen(!isOpen)}>{props.title}<i className={isOpen ? "fa fa-chevron-down" : "fa fa-chevron-right"}></i></h2>
+            <h2 onClick={handleClickOpen}>{props.title}<i className={isOpen ? "fa fa-chevron-down" : "fa fa-chevron-right"}></i></h2>
             <div className={isOpen ? "card-container open" : "card-container"}>
             {loader ? 
-                Array(6).fill(6).map((item, index) =>
+                fakeArray.map((item, index) =>
                     <CardScansSkeleton key={index}/>
                 ) :
                 datas.length > 0 ?

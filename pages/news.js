@@ -76,13 +76,15 @@ const News = (props) => {
         setDisplayedNews(filteredNews(news).slice(0, nbToDisplay))
     }
 
+    const fakeArray = Array(8).fill(8)
+
     return (
         <div className="News">
             {   loader ? 
                     <>
                         <SkeletonItem className="tag-skeleton" />
                         <div className="card-container">
-                            { Array(8).fill(8).map((item, index) =>
+                            { fakeArray.map((item, index) =>
                                 <CardNewsSkeleton key={index}/>
                             )}
                         </div>

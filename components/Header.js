@@ -17,17 +17,32 @@ const Header = () => {
         }, 0))
     }
 
+    const handleClickMenu = () => {
+        setMenuIsOpen(!menuIsOpen)
+    }
+
+    const handleClickCloseMenu = () => {
+        setMenuIsOpen(false)
+    }
+
     return (
         <nav className="header">
             <ul className="nav">
-                <li>
+                {/* <li>
                     <Link href={'/'}><a>Home</a></Link>
+                </li> */}
+                <li>
+                    <Link href={'/newsdev'}><a>Dev</a></Link>
                 </li>
                 <li>
                     <Link href={'/news'}><a>News</a></Link>
                 </li>
 
-                <li className="logo"><img src={logo} className={isMini ? 'mini': ''} alt="logo" /></li>
+                <li className="logo">
+                    <Link href={'/'}>
+                        <img src={logo} className={isMini ? 'mini': ''} alt="logo" />
+                    </Link>
+                </li>
 
                 <li>
                     <Link href={'/scans'}><a>Scans</a></Link>
@@ -35,12 +50,13 @@ const Header = () => {
                 <li>
                     <Link href={'/animes'}><a>Animes</a></Link>
                 </li>
-                <li className="burger" onClick={(e) => setMenuIsOpen(!menuIsOpen)}>
+
+                <li className="burger" onClick={handleClickMenu}>
                     <i className="fa fa-bars"></i>
                 </li>
             </ul>
             <ul className={menuIsOpen ? 'nav-mobile menuIsOpen' : 'nav-mobile'}>
-                <li onClick={(e) => setMenuIsOpen(false)}>
+                <li onClick={handleClickCloseMenu}>
                     <Link href={'/'}>
                         <a>
                             Home
@@ -48,7 +64,15 @@ const Header = () => {
                         </a>
                     </Link>
                 </li>
-                <li onClick={(e) => setMenuIsOpen(false)}>
+                <li onClick={handleClickCloseMenu}>
+                    <Link href={'/newsdev'}>
+                        <a>
+                            Dev
+                            <i className="fa fa-arrow-right"></i>
+                        </a>
+                    </Link>
+                </li>
+                <li onClick={handleClickCloseMenu}>
                     <Link href={'/news'}>
                         <a>
                             News
@@ -56,7 +80,7 @@ const Header = () => {
                         </a>
                     </Link>
                 </li>
-                <li onClick={(e) => setMenuIsOpen(false)}>
+                <li onClick={handleClickCloseMenu}>
                     <Link href={'/scans'}>
                         <a>
                             Scans
@@ -64,7 +88,7 @@ const Header = () => {
                         </a>
                     </Link>
                 </li>
-                <li onClick={(e) => setMenuIsOpen(false)}>
+                <li onClick={handleClickCloseMenu}>
                     <Link href={'/animes'}>
                         <a>
                             Animes
