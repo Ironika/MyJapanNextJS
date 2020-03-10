@@ -13,8 +13,8 @@ const isInList = (title, type) => {
     let list = scansList
     if(type === 'animes')
         list = animeList
-    for(let item of list) {
-        if(title.includes(item))
+    for(let i = 0; i < list.length; i++) {
+        if(title.includes(list[i]))
             isInList = true
     }
     return isInList

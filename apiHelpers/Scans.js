@@ -42,8 +42,8 @@ async function getMangaFox(page, prevPage) {
     )
 
     let datas = []
-    for(let data of responseDatas) {
-        datas = [...datas, ...formatJsonMangaFox(data)]
+    for(let i = 0; i < responseDatas.length; i++) {
+        datas = [...datas, ...formatJsonMangaFox(responseDatas[i])]
     }
 
     return datas
@@ -60,8 +60,8 @@ async function getWebtoons() {
     ])
 
     let datas = []
-    for(let data of responseDatas) {
-        datas = [...datas, ...formatJsonWebtoons(data)]
+    for(let i = 0; i < responseDatas.length; i++) {
+        datas = [...datas, ...formatJsonWebtoons(responseDatas[i])]
     }
 
     return datas

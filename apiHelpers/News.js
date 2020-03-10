@@ -112,7 +112,7 @@ function formatJsonJournalDuGeek(json) {
         const pubDate = date.setMinutes(-i - 4) //items[i].pubDate['_text']
         const tag = items[i].category[0] ? items[i].category[0]['_cdata'].toUpperCase() : 'JournalDuGeek'.toUpperCase()
         const desc = items[i].description['_cdata']
-        const match = items[i]['content:encoded']['_cdata'].match('src="(https.*(.jpg|.png|.jpeg))"')
+        const match = items[i]['content:encoded']['_cdata'].match('src="(https.*(.jpg|.png|.jpeg))')
         const img = match ? match[0].replace('src="', '') : ''
         const item = { title, link, pubDate, img, tag, desc, site: 'JournalDuGeek'}
         array.push(item)

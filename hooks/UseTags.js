@@ -5,10 +5,10 @@ export const useTags = () => {
 
     const getTags = (datas, currentTag) => {
         let _tags = [{ value: 'All', active: currentTag ? false : true }]
-        for(let data of datas) {
-            const tag = _tags.find(element => element.value === data.site)
+        for(let i = 0; i < datas.length; i++) {
+            const tag = _tags.find(element => element.value === datas[i].site)
             if(!tag)
-                _tags.push({value: data.site, active: data.site === currentTag ? true : false})
+                _tags.push({value: datas[i].site, active: datas[i].site === currentTag ? true : false})
         }
         return _tags
     }
@@ -18,9 +18,9 @@ export const useTags = () => {
             return datas
 
         let _datas = []
-        for(let tag of tags) {
-            if(tag.active)
-                _datas = [..._datas, ...datas.filter((item) => item.site === tag.value)]
+        for(let i = 0; i < tags.length; i++) {
+            if(tags[i].active)
+                _datas = [..._datas, ...datas.filter((item) => item.site === tags[i].value)]
         }
 
         _datas.sort((a, b) => b.pubDate - a.pubDate)
