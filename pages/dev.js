@@ -5,6 +5,7 @@ import { CardNewsDev, CardNewsDevSkeleton, SkeletonItem, Tags, Loader } from '..
 import { usePaginate, useTags } from '../hooks'
 import { useRouter } from 'next/router'
 
+
 const NewsDev = (props) => {
     const [loader, setLoader] = useState(props.newsDev ? false : true)
     const {tags, setTags, getTags, filteredByTag } = useTags()
@@ -20,7 +21,6 @@ const NewsDev = (props) => {
             setTags(getTags(_datas, query.tag))
             setDisplayedDatas(filteredByTag(_datas).slice(0, pageToDisplay))
             setLoader(false)
-            window.addEventListener("scroll", callbackFunc);
         }
 
         fetchDatas()
@@ -29,47 +29,29 @@ const NewsDev = (props) => {
     useEffect(() => {
         setDisplayedDatas(filteredByTag(datas).slice(0, pageToDisplay))
     }, [tags]);
-    
-    function isElementInViewport(el) {
-        var rect = el.getBoundingClientRect();
-        return (
-          rect.top >= 0 &&
-          rect.left >= 0 &&
-          rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-          rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-        );
-      }
-      
-    function callbackFunc() {
-        const items = document.querySelectorAll(".timeline li");
-        for (var i = 0; i < items.length; i++) {
-            if (isElementInViewport(items[i])) {
-                if(!items[i].classList.contains("in-view")){
-                    items[i].classList.add("in-view");
-                }
-            } else if(items[i].classList.contains("in-view")) {
-                items[i].classList.remove("in-view");
-            }
-        }
-    }
+
+    const fakeArray = Array(4).fill(4)
 
     return (
         <div className="NewsDev">
             {
-                loader ? <Loader />:
+                loader ? 
+                <>
+                    <SkeletonItem className="tag-skeleton" />
+                    <section className="timeline" style={{marginTop: '20px'}}>
+                        <ul>
+                            { fakeArray.map((data, i) =>
+                                <CardNewsDevSkeleton key={i}/>
+                            )}
+                        </ul>
+                    </section>
+                </> :
                 <>
                     <Tags tags={tags} setActiveTags={(tags) => setTags(tags)} />
                     <section className="timeline">
                         <ul>
                             { displayedDatas.map((data, i) =>
-                                <li key={i} onClick={() => window.open(data.link, '_blank')}>
-                                    <div>
-                                        <time>{data.site}</time>
-                                        <div className="discovery">
-                                            <p>{data.title}</p>
-                                        </div>
-                                    </div>
-                                </li>
+                                <CardNewsDev data={data} key={i} />
                             )}
                         </ul>
                     </section>

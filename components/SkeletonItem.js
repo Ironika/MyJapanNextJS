@@ -43,8 +43,8 @@ export const CardAnimesSkeleton = () => {
 export const CardNewsDevSkeleton = () => {
     const style = { height: "100px" }
     return (
-        <div className="card-newsdev-skeleton">
+        <li className="card-newsdev-skeleton in-view">
             <SkeletonItem style={style} />
-        </div>
+        </li>
     )
 }

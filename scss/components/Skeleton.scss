@@ -55,23 +55,26 @@
 }
 
 .card-newsdev-skeleton {
-    @media screen and (max-width: $xs) {
-        width: calc(100% - 40px);
+    list-style-type: none;
+    position: relative;
+    width: 6px;
+    margin: 0 auto;
+    padding-top: 50px;
+    background: $second-color;
+    &::after {
+        content: '';
+        position: absolute;
+        left: 50%;
+        bottom: 0;
+        transform: translateX(-50%) rotate(45deg);
+        width: 20px;
+        height: 20px;
+        z-index: 5;
+        background: $main-color;
     }
-    @media screen and (min-width: $xs) and (max-width: $md) {
-        width: calc(100% - 40px);
+    div {
+        background: #D8D8D8 !important;
     }
-    @media screen and (min-width: $md) and (max-width: $lg) {
-        width: calc(50% - 40px);
-    }
-    @media screen and (min-width: $lg) {
-        width: calc(33% - 40px);
-    }
-    box-shadow: 5px 5px 5px $main-color;
-    margin-bottom: 20px;
-    background-color: #D8D8D8;
-    margin: 10px;
-    padding: 10px;
 }
 
 .card-scans-skeleton {
