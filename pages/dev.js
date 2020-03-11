@@ -1,10 +1,9 @@
 import React, {useState, useEffect} from 'react'
 import PropTypes from 'prop-types'
 import { getApiDatas } from '../helpers'
-import { CardNewsDev, CardNewsDevSkeleton, SkeletonItem, Tags, Loader } from '../components'
+import { CardNewsDev, CardNewsDevSkeleton, SkeletonItem, Tags } from '../components'
 import { usePaginate, useTags } from '../hooks'
 import { useRouter } from 'next/router'
-
 
 const NewsDev = (props) => {
     const [loader, setLoader] = useState(props.newsDev ? false : true)

@@ -2,18 +2,21 @@ import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { getApiDatas } from '../helpers'
 import { ListPaginate, CardScan, CardScansSkeleton } from '../components'
+// import { usePaginate } from '../hooks'
 
 const List = (props) => {
     const [loader, setLoader] = useState(props.datas ? false : true)
     const [datas, setDatas] = useState(props.datas || [])
+    // const {displayedDatas, setDisplayedDatas, pageToDisplay, setDatas} = usePaginate(3)
     const [isOpen, setIsOpen] = useState(true)
 
     useEffect(() => {
         const fetchDatas = async () => {
-            if(!props.datas) {
-                const _datas = await getApiDatas(props.type)
-                setDatas(_datas)
-            }
+            let _datas = props.datas
+            if(!props.datas)
+                _datas = await getApiDatas('scans')
+            setDatas(_datas)
+            // setDisplayedDatas(_datas.slice(0, pageToDisplay))
             setLoader(false)
         }
         fetchDatas()
@@ -49,10 +52,7 @@ const Scans = (props) => {
         <div className="Scans">
             <div className="container">
                 <div className="left">
-                    <List datas={props.scans} title={'Scantrad'} type={'scans'} />
-                </div>
-                <div className="center">
-                    <List datas={props.scansWebtoons} title={'Webtoons'} type={'scanswebtoons'} />
+                    <List datas={props.scans} title={'Webtoons or VF'} type={'scans'} />
                 </div>
                 <div className="right">
                     <ListPaginate datas={props.scansVa} title={'MangaFox'} type={'scansva'} />
@@ -65,16 +65,14 @@ const Scans = (props) => {
 Scans.getInitialProps = async ({req}) => {
     if(req) {
         const scans = await getApiDatas('scans')
-        const scansWebtoons = await getApiDatas('scanswebtoons')
         const scansVa = await getApiDatas('scansva', 2)
-        return {scans, scansWebtoons, scansVa}
+        return {scans, scansVa}
     }
     return {}
 }
 
 Scans.propTypes = {
     scans: PropTypes.array,
-    scansWebtoons: PropTypes.array,
     scansVa: PropTypes.array
 }
 

@@ -9,12 +9,17 @@ const CardScan = (props) => {
         <div className="card-scans">
             <a href={props.data.link} className="card-scans-container" target="_blank" rel="noopener noreferrer">
                 <img src={props.data.img} alt={props.data.title}/>
-                <div className="card-scans-container-content">
-                    <p className="date">{pubDate}</p>
-                    <h3>{props.data.title}</h3>
-                    <button>{props.data.lang}</button>
-                </div>
             </a>
+            <div className="card-scans-container-content">
+                <div className="card-scans-container-content-infos">
+                    <img src={props.data.img} alt={props.data.title}/>
+                    <div>
+                        <p className="date">{pubDate}</p>
+                        <h3>{props.data.title}</h3>
+                        <button>{props.data.lang}</button>
+                    </div>
+                </div>
+            </div>
         </div>
     )
 }

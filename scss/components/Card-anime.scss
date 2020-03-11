@@ -2,6 +2,7 @@
     transform-style: preserve-3d;
     backface-visibility: hidden;
     margin: 10px;
+    box-shadow: 5px 5px 5px $main-color;
     @media screen and (max-width: $xs) {
         width: calc(100% - 20px);
     }

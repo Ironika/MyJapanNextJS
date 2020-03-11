@@ -5,66 +5,45 @@ const { SCANTRAD,
         MANGAFOX,
         UNORDINARY,
         TOWER_OF_GOD,
-        MAGE_DEMONS_QUEENS,
-        GOD_OF_HIGH_SCHOOL,
-        HARDCORE_LEVELING,
-        THE_GAMER
+        MAGE_DEMONS_QUEENS
 } = require('../rss');
 
 async function getScans() {
-    const scans = await getScantrad()
+    const [
+        scantradJson, 
+        unOrdinaryJson, 
+        towerOfGodJson, 
+        mageDemonsQueensJson
+    ] = await Promise.all([
+        fetchRss(SCANTRAD),
+        fetchRss(UNORDINARY),
+        fetchRss(TOWER_OF_GOD),
+        fetchRss(MAGE_DEMONS_QUEENS),
+    ])
+
+    const scantrad = formatJsonScantrad(scantradJson)
+    const unOrdinary = formatJsonWebtoons(unOrdinaryJson)
+    const towerOfGod = formatJsonWebtoons(towerOfGodJson)
+    const mageDemonsQueens = formatJsonWebtoons(mageDemonsQueensJson)
+
+    const scans = [...scantrad, ...unOrdinary, ...towerOfGod, ...mageDemonsQueens]
     scans.sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate))
     return scans
 }
 
 async function getScansVA(page, prevPage) {
-    const scansVa = await getMangaFox(page, prevPage)
-    scansVa.sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate))
-    return scansVa
-}
-
-async function getScansWebtoons() {
-    const webtoons = await getWebtoons()
-    webtoons.sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate))
-    return webtoons
-}
-
-async function getScantrad() {
-    const json = await fetchRss(SCANTRAD)
-    const datas = formatJsonScantrad(json)
-    return datas
-}
-
-async function getMangaFox(page, prevPage) {
     const arrayMap = makeArrayPage(page, prevPage)
     const responseDatas = await Promise.all(
         arrayMap.map((item) => axios.get(`${MANGAFOX}${item}.html`))
     )
 
-    let datas = []
+    let scansVa = []
     for(let i = 0; i < responseDatas.length; i++) {
-        datas = [...datas, ...formatJsonMangaFox(responseDatas[i])]
+        scansVa = [...scansVa, ...formatJsonMangaFox(responseDatas[i])]
     }
 
-    return datas
-}
-
-async function getWebtoons() {
-    const responseDatas = await Promise.all([
-        fetchRss(UNORDINARY),
-        fetchRss(TOWER_OF_GOD),
-        fetchRss(MAGE_DEMONS_QUEENS),
-        fetchRss(GOD_OF_HIGH_SCHOOL),
-        fetchRss(HARDCORE_LEVELING),
-        fetchRss(THE_GAMER)
-    ])
-
-    let datas = []
-    for(let i = 0; i < responseDatas.length; i++) {
-        datas = [...datas, ...formatJsonWebtoons(responseDatas[i])]
-    }
-
-    return datas
+    scansVa.sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate))
+    return scansVa
 }
 
 function formatJsonScantrad(json) {
@@ -117,6 +96,5 @@ function formatJsonWebtoons(json) {
 
 module.exports = {
     getScans,
-    getScansVA,
-    getScansWebtoons
+    getScansVA
 };
