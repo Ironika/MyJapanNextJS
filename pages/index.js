@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import Link from 'next/link.js'
-import PropTypes from 'prop-types'
-import { getApiDatas } from '../helpers'
-import { CardNews, Text, CardNewsSkeleton } from '../components'
+import { Text } from '../components'
 import { ParallaxBanner } from 'react-scroll-parallax'
 
+import banner from '../public/img/banner.jpg'
 import homescreen from '../public/img/homescreen.jpg'
 import homescreen2 from '../public/img/homescreen2.jpg'
 import homescreen3 from '../public/img/homescreen3.jpg'
@@ -57,7 +56,12 @@ const List = (props) => {
             <div className="card-container">
                 { news.map((item, index) =>
                     <Link key={index} href={`/${item.type}?tag=${item.title}`}>
-                        <a className="card-news-home"><span>{item.title}</span></a>
+                        <a className="card-news-home">
+                            <img src={banner} alt={item.title}/>
+                            <div className="card-news-home-content">
+                                <span>{item.title}</span>
+                            </div>
+                        </a>
                     </Link>
                 )}
             </div>
