@@ -8,7 +8,7 @@ import { useRouter } from 'next/router'
 const NewsDev = (props) => {
     const [loader, setLoader] = useState(props.newsDev ? false : true)
     const {tags, setTags, getTags, filteredByTag } = useTags()
-    const {displayedDatas, setDisplayedDatas, pageToDisplay, datas, setDatas} = usePaginate(9, filteredByTag)
+    const {displayedDatas, setDisplayedDatas, itemToDisplay, datas, setDatas} = usePaginate(9, filteredByTag)
     const {query} = useRouter()
 
     useEffect(() => {
@@ -18,7 +18,7 @@ const NewsDev = (props) => {
                 _datas = await getApiDatas('dev')
             setDatas(_datas)
             setTags(getTags(_datas, query.tag))
-            setDisplayedDatas(filteredByTag(_datas).slice(0, pageToDisplay))
+            setDisplayedDatas(filteredByTag(_datas).slice(0, itemToDisplay))
             setLoader(false)
         }
 
@@ -26,7 +26,7 @@ const NewsDev = (props) => {
     }, []);
 
     useEffect(() => {
-        setDisplayedDatas(filteredByTag(datas).slice(0, pageToDisplay))
+        setDisplayedDatas(filteredByTag(datas).slice(0, itemToDisplay))
     }, [tags]);
 
     const fakeArray = Array(4).fill(4)
@@ -34,7 +34,7 @@ const NewsDev = (props) => {
     return (
         <div className="NewsDev">
             {
-                loader ? 
+                loader ?
                 <>
                     <SkeletonItem className="tag-skeleton" />
                     <section className="timeline" style={{marginTop: '20px'}}>

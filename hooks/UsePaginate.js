@@ -2,7 +2,7 @@ import { useState } from 'react'
 import debounce from "lodash.debounce"
 
 export const usePaginate = (page, customFilter) => {
-    const pageToDisplay = page
+    const itemToDisplay = page
     const [hasMore, setHasMore] = useState(true)
     const [datas, setDatas] = useState([])
     const [displayedDatas, setDisplayedDatas] = useState([])
@@ -18,7 +18,7 @@ export const usePaginate = (page, customFilter) => {
     }
 
     const loadItems = () => {
-        let nbToDisplay = displayedDatas.length + pageToDisplay
+        let nbToDisplay = displayedDatas.length + itemToDisplay
         if(nbToDisplay > datas.length) {
             nbToDisplay = datas.length
             setHasMore(false)
@@ -34,6 +34,7 @@ export const usePaginate = (page, customFilter) => {
         setDatas,
         displayedDatas,
         setDisplayedDatas,
-        pageToDisplay
+        itemToDisplay,
+        hasMore
     }
 }

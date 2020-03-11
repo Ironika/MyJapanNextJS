@@ -16,13 +16,16 @@
         color: inherit;
         background-color: rgba(0,0,0,0.5);
         filter: blur(3px);
+        position: relative;
+        top: 5px;
         img {
-            width: 100%;
+            width: 95%;
             height: 90px;
             object-fit: cover;
+            margin: auto;
         }
         &-content {
-            height: 80px;
+            height: 87px;
             font-size: 14px;
             padding: 5px;
             // text-align: center;

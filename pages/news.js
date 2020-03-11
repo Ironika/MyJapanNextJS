@@ -8,7 +8,7 @@ import { useRouter } from 'next/router'
 const News = (props) => {
     const [loader, setLoader] = useState(props.news ? false : true)
     const {tags, setTags, getTags, filteredByTag } = useTags()
-    const {displayedDatas, setDisplayedDatas, pageToDisplay, datas, setDatas} = usePaginate(8, filteredByTag)
+    const {displayedDatas, setDisplayedDatas, itemToDisplay, datas, setDatas} = usePaginate(8, filteredByTag)
     const {query} = useRouter()
 
     useEffect(() => {
@@ -18,7 +18,7 @@ const News = (props) => {
                 _datas = await getApiDatas('news')
             setDatas(_datas)
             setTags(getTags(_datas, query.tag))
-            setDisplayedDatas(filteredByTag(_datas).slice(0, pageToDisplay))
+            setDisplayedDatas(filteredByTag(_datas).slice(0, itemToDisplay))
             setLoader(false)
         }
 
@@ -26,7 +26,7 @@ const News = (props) => {
     }, []);
 
     useEffect(() => {
-        setDisplayedDatas(filteredByTag(datas).slice(0, pageToDisplay))
+        setDisplayedDatas(filteredByTag(datas).slice(0, itemToDisplay))
     }, [tags]);
 
     const fakeArray = Array(8).fill(8)
