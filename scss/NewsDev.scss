@@ -35,8 +35,6 @@
                     width: 400px;
                     padding: 20px;
                     background: #fff;
-                    box-shadow: 4px 13px 30px 1px rgba(252, 56, 56, 0.2);
-                    border-radius: 5px;
                     display: flex;
                     align-items: center;
                     time {
@@ -44,12 +42,12 @@
                         background: $main-color;
                         color: white;
                         padding: 5px;
-                        top: -15px;
-                        border-radius: 5px;
+                        top: -20px;
                         display: flex;
                         justify-content: center;
                         align-items: center;
                         letter-spacing: 2px;
+                        text-shadow: black 0.5px 0.5px;
                     }
                     div {
                         height: 100px;
@@ -64,6 +62,10 @@
                     .discovery {
                         margin-right: 10px;
                     }
+                }
+                .card-news-content {
+                    background-color: rgba(0, 0, 0, 0.4);
+                    box-shadow: 5px 5px 5px $main-color;
                 }
                 &:nth-of-type(odd) {
                     > div {

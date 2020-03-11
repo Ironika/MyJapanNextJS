@@ -21,7 +21,7 @@ const CardNewsDev = (props) => {
           rect.right <= (window.innerWidth || document.documentElement.clientWidth)
         );
       }
-      
+
     const handleScrollView = () => {
         const currentEl = el.current
         if(!currentEl)
@@ -33,13 +33,13 @@ const CardNewsDev = (props) => {
             _isView = true
         else if(_isView)
             _isView = false
-        
-        setIsView(_isView)  
+
+        setIsView(_isView)
     }
 
     return (
         <li ref={el} className={isView ? 'in-view' : ''} onClick={() => window.open(props.data.link, '_blank')}>
-            <div>
+            <div className="card-news-content">
                 <time>{props.data.site}</time>
                 <div className="discovery">
                     <p>{props.data.title}</p>
