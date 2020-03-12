@@ -18,13 +18,11 @@ const CardNews = (props) => {
                     <path d="M 0 100 Q 50 200 100 250 Q 250 400 350 300 C 400 250 550 150 650 300 Q 750 450 800 400 L 800 500 L 0 500" stroke="transparent"/>
                     <path className="card__line" d="M 0 100 Q 50 200 100 250 Q 250 400 350 300 C 400 250 550 150 650 300 Q 750 450 800 400" stroke="pink" strokeWidth="3" fill="transparent"/>
                 </svg>
-                {/*<div className="card-news-content">*/}
                 <div className="black-box"></div>
-                    <button>{props.data.tag}</button>
-                    <span className="date">{pubDate.toLocaleDateString('fr-FR')}</span>
-                    <h3>{title}</h3>
-                    <p dangerouslySetInnerHTML={{__html: html.replace(/(<? *script)/gi, 'illegalscript')}} ></p>
-                {/*</div>*/}
+                <button>{props.data.tag}</button>
+                <span className="date">{pubDate.toLocaleDateString('fr-FR')}</span>
+                <h3>{title}</h3>
+                <p dangerouslySetInnerHTML={{__html: html.replace(/(<? *script)/gi, 'illegalscript')}} ></p>
             </a>
         </div>
     )

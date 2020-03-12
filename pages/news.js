@@ -8,7 +8,7 @@ import { useRouter } from 'next/router'
 const News = (props) => {
     const [loader, setLoader] = useState(props.news ? false : true)
     const {tags, setTags, getTags, filteredByTag } = useTags()
-    const {displayedDatas, setDisplayedDatas, itemToDisplay, datas, setDatas} = usePaginate(8, filteredByTag)
+    const {displayedDatas, setDisplayedDatas, itemToDisplay, datas, setDatas, hasMore} = usePaginate(8, filteredByTag)
     const {query} = useRouter()
 
     useEffect(() => {
@@ -52,6 +52,7 @@ const News = (props) => {
                                 <div>No Results founds.</div>
                             }
                         </div>
+                        {hasMore ? <i className="fa fa-angle-double-down scroll-more"></i> : ''}
                     </>
             }
         </div>
