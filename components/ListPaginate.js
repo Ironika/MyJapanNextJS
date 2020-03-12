@@ -5,11 +5,9 @@ import { getApiDatas } from '../helpers'
 import { CardScanVa, CardAnime, CardScansVaSkeleton, CardAnimesSkeleton } from './'
 
 const ListPaginate = (props) => {
-    const itemToDisplay = props.type === 'scansva' ? 8 : 10
     const callPageBy = props.type === 'scansva' ? 4 : 2
     const [currentPage, setCurrentPage] = useState(props.type === 'scansva' ? 2 : 1)
     const [datas, setDatas] = useState(props.datas || [])
-    const [displayedDatas, setDisplayedDatas] = useState((props.datas instanceof Array && props.datas.slice(0, itemToDisplay)) || [])
     const [hasMore, setHasMore] = useState(true)
     const [loader, setLoader] = useState(props.datas ? false : true)
     const [loadMore, setLoadMore] = useState(false)
@@ -17,37 +15,27 @@ const ListPaginate = (props) => {
 
     useEffect(() => {
         const fetchDatas = async () => {
-            if(!props.datas) {
-                let _datas = await getApiDatas(props.type, currentPage)
-                setDatas(_datas)
-                setDisplayedDatas(_datas.slice(0, itemToDisplay))
-            } else {
-                setDisplayedDatas(props.datas.slice(0, itemToDisplay))
-            }
+            let _datas = props.datas
+            if(!props.datas)
+                _datas = await getApiDatas(props.type, currentPage)
+            setDatas(_datas)
             setLoader(false)
         }
         fetchDatas()
     }, [])
 
     const loadItems = async() => {
-        let _itemToDisplay = displayedDatas.length + itemToDisplay
-        if(_itemToDisplay > datas.length) {
-            if(datas.length >= 50) {
-                _itemToDisplay = datas.length
-                setHasMore(false)
-                setDisplayedDatas(datas.slice(0, _itemToDisplay))
-            } else {
-                setLoadMore(true)
-                const _currentPage = currentPage + callPageBy
-                const _datas = await getApiDatas(props.type, _currentPage, currentPage)
-                const newDatas = [...datas, ..._datas]
-                setDatas(newDatas)
-                setCurrentPage(_currentPage)
-                setDisplayedDatas(newDatas.slice(0, _itemToDisplay))
-                setLoadMore(false)
-            }
-        } else
-            setDisplayedDatas(datas.slice(0, _itemToDisplay))
+        if(datas.length >= 50) {
+            setHasMore(false)
+        } else {
+            setLoadMore(true)
+            const _currentPage = currentPage + callPageBy
+            const _datas = await getApiDatas(props.type, _currentPage, currentPage)
+            const newDatas = [...datas, ..._datas]
+            setDatas(newDatas)
+            setCurrentPage(_currentPage)
+            setLoadMore(false)
+        }
     }
 
     if (process.browser) {
@@ -74,8 +62,8 @@ const ListPaginate = (props) => {
                     fakeArray.map((item, index) =>
                         props.type === 'scansva' ? <CardScansVaSkeleton key={index} /> : <CardAnimesSkeleton key={index} />
                     ) :
-                    displayedDatas.length > 0 ?
-                        displayedDatas.map((item, index) => {
+                    datas.length > 0 ?
+                        datas.map((item, index) => {
                             return props.type === 'scansva' ? <CardScanVa key={index} data={item} /> : <CardAnime key={index} data={item} />
                         }) :
                         <div>A Timeout occured, please refresh</div>

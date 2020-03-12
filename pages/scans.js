@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { getApiDatas } from '../helpers'
 import { ListPaginate, CardScan, CardScansSkeleton } from '../components'
-import { usePaginate } from '../hooks'
 
 const List = (props) => {
+    const itemToDisplay = 6
     const [loader, setLoader] = useState(props.datas ? false : true)
-    const {displayedDatas, setDisplayedDatas, itemToDisplay, setDatas} = usePaginate(6)
+    const [datas, setDatas] = useState([])
     const [isOpen, setIsOpen] = useState(true)
 
     useEffect(() => {
@@ -14,8 +14,7 @@ const List = (props) => {
             let _datas = props.datas
             if(!props.datas)
                 _datas = await getApiDatas('scans')
-            setDatas(_datas)
-            setDisplayedDatas(_datas.slice(0, itemToDisplay))
+            setDatas(_datas.slice(0, itemToDisplay))
             setLoader(false)
         }
         fetchDatas()
@@ -35,8 +34,8 @@ const List = (props) => {
                 fakeArray.map((item, index) =>
                     <CardScansSkeleton key={index}/>
                 ) :
-                displayedDatas.length > 0 ?
-                    displayedDatas.map((item, index) =>
+                datas.length > 0 ?
+                    datas.map((item, index) =>
                         <CardScan key={index} data={item} />
                     ) :
                     <div>No Scans Found</div>
