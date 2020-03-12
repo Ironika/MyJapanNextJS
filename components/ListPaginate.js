@@ -18,6 +18,11 @@ const ListPaginate = (props) => {
             let _datas = props.datas
             if(!props.datas)
                 _datas = await getApiDatas(props.type, currentPage)
+            if(_datas.length === 0) {
+                const _currentPage = currentPage + callPageBy
+                _datas = await getApiDatas(props.type, _currentPage, currentPage)
+                setCurrentPage(_currentPage)
+            }
             setDatas(_datas)
             setLoader(false)
         }
