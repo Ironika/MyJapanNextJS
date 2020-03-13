@@ -2,9 +2,10 @@ footer {
     background-color: $main-color;
     padding: 20px;
     text-align: right;
-    color: $five-color;
+    color: $background-color;
+    text-shadow: black 0.5px 0.5px;
     a {
         float: left;
-        color: $five-color;
+        color: $background-color;
     }
 }

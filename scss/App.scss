@@ -1,9 +1,7 @@
 $main-color: #f6bfbc;
 $second-color: #e4d2d8;
-$third-color: #e9dfe5;
-$fourd-color: #fdeff2;
-$five-color: #fef4f4;
-$six-color: #d9003a;
+$third-color: #3D2A5A;
+$background-color: #fef4f4;
 
 $font: 'Kaushan Script', cursive;
 
@@ -13,7 +11,7 @@ $lg : 991px;
 $xlg : 1199px;
 
 body {
-    background-color: $five-color;
+    background-color: $background-color;
     font-family: $font;
     height: 100%;
     margin: 0;

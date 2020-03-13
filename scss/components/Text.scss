@@ -2,11 +2,11 @@
     padding: 40px 20px;
     text-align: center;
     h2 {
-        color: $second-color;
+        color: $third-color;
         font-weight: bold;
         font-size: 34px;
         margin-top: 10px;
-        text-shadow: black 0.5px 0.5px;
+        text-shadow: $second-color 0.5px 0.5px;
     }
     blockquote {
         background-color: $second-color;

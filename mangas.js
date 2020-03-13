@@ -121,6 +121,7 @@ export const animeList = [
     'BOKU NO HERO ACADEMIA',
     'BORUTO',
     'DANMACHI',
+    "DARWIN",
     "DARWIN'S GAME",
     'DEMON SLAYER',
     'DIGIMON',
