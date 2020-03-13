@@ -14,4 +14,10 @@
         font-family: $font;
         display: inline-block;
     }
+    a {
+        color: $third-color;
+        text-transform: uppercase;
+        text-decoration: none;
+        font-weight: bold;
+    }
 }
