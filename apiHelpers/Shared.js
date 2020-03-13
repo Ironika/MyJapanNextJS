@@ -24,11 +24,11 @@ const makeArrayPage = (page, prevPage) => {
     let arrayMap = []
     if(prevPage) {
         for(let i = Number(prevPage) + 1; i <= page; i++) {
-            arrayMap.push(i)
+            arrayMap = [...arrayMap, i]
         }
     } else {
         for(let i = 1; i <= page; i++) {
-            arrayMap.push(i)
+            arrayMap = [...arrayMap, i]
         }
     }
 

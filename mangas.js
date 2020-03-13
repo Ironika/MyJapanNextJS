@@ -36,6 +36,7 @@ export const scansList = [
     'HEAVEN DEFYING SWORD',
     'HERO? I QUIT A LONG TIME AGO',
     'HOLY ANCESTOR',
+    'HUI DAO MING CHAO DANG WANGYE',
     'HUNTER AGE',
     'HUNTER X HUNTER',
     "I'M THE GREAT IMMORTAL",

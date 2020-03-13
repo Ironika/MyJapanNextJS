@@ -37,7 +37,7 @@ const NewsDev = (props) => {
                 loader ?
                 <>
                     <SkeletonItem className="tag-skeleton" />
-                    <section className="timeline" style={{marginTop: '20px'}}>
+                    <section className="timeline mt-20">
                         <ul>
                             { fakeArray.map((data, i) =>
                                 <CardNewsDevSkeleton key={i}/>

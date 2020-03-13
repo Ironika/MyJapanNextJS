@@ -10,9 +10,9 @@ const { SCANTRAD,
 
 async function getScans() {
     const [
-        scantradJson, 
-        unOrdinaryJson, 
-        towerOfGodJson, 
+        scantradJson,
+        unOrdinaryJson,
+        towerOfGodJson,
         mageDemonsQueensJson
     ] = await Promise.all([
         fetchRss(SCANTRAD),
@@ -56,7 +56,7 @@ function formatJsonScantrad(json) {
             const pubDate = items[i].pubDate['_text']
             const img = items[i].description['_cdata'].match('src="(https.*.png)')[0].replace('src="', '')
             const item = { title, link, pubDate, img, site: 'Scantrad', lang: 'VF'}
-            array.push(item)
+            array = [...array, item]
         }
     }
     return array
@@ -76,7 +76,7 @@ function formatJsonMangaFox(json) {
             title = title + ' ' + chapt
             link = 'http://fanfox.net' + link
             const item = {title, link, pubDate, img, site: 'MangaFox', lang: 'VA'}
-            array.push(item)
+            array = [...array, item]
         }
     }
     return array
@@ -90,7 +90,7 @@ function formatJsonWebtoons(json) {
     const pubDate = items[0].pubDate['_text']
     const img = json.rss.channel.image.url['_text']
     const item = { title, link, pubDate, img, site: 'Webtoons', lang: 'VA'}
-    array.push(item)
+    array = [...array, item]
     return array
 }
 
