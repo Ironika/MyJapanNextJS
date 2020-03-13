@@ -8,7 +8,7 @@ export const useTags = () => {
         for(let i = 0; i < datas.length; i++) {
             const tag = _tags.find(element => element.value === datas[i].site)
             if(!tag)
-                _tags.push({value: datas[i].site, active: datas[i].site === currentTag ? true : false})
+                _tags = [..._tags, {value: datas[i].site, active: datas[i].site === currentTag ? true : false}]
         }
         return _tags
     }

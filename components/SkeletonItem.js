@@ -41,7 +41,7 @@ export const CardAnimesSkeleton = () => {
 }
 
 export const CardNewsDevSkeleton = () => {
-    const style = { height: "100px" }
+    const style = { height: "150px" }
     return (
         <li className="card-newsdev-skeleton in-view">
             <SkeletonItem style={style} />

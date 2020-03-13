@@ -3,11 +3,11 @@ const { fetchRss } = require('./Shared');
 
 async function getNewsDev() {
     const [
-        developpezJson, 
-        jsFeedsJson, 
-        echoJsJson, 
-        redditJsJson, 
-        redditReactJson, 
+        developpezJson,
+        jsFeedsJson,
+        echoJsJson,
+        redditJsJson,
+        redditReactJson,
         sitepointJsJson
     ] = await Promise.all([
         fetchRss(DEVELOPPEZ),
@@ -38,7 +38,7 @@ function formatJsonDeveloppez(json) {
         const link = items[i].link['_text']
         const pubDate = new Date(items[i].pubDate['_text']).getTime()
         const item = { title, link, pubDate, site: 'Developpez.com'}
-        array.push(item)
+        array = [...array, item]
     }
     return array
 }
@@ -51,7 +51,7 @@ function formatJsonJsFeeds(json) {
         const link = items[i].link['_text']
         const pubDate = new Date(items[i].pubDate['_text']).getTime()
         const item = { title, link, pubDate, site: 'JsFeeds'}
-        array.push(item)
+        array = [...array, item]
     }
     return array
 }
@@ -64,7 +64,7 @@ function formatJsonEchoJS(json) {
         const link = items[i].link['_text']
         const pubDate = new Date().setHours(i / -2)
         const item = { title, link, pubDate, site: 'EchoJs'}
-        array.push(item)
+        array = [...array, item]
     }
     return array
 }
@@ -77,7 +77,7 @@ function formatJsonRedditJs(json) {
         const link = items[i].link['_attributes'].href
         const pubDate = new Date(items[i].updated['_text']).getTime()
         const item = { title, link, pubDate, site: 'RedditJs'}
-        array.push(item)
+        array = [...array, item]
     }
     return array
 }
@@ -90,7 +90,7 @@ function formatJsonRedditReact(json) {
         const link = items[i].link['_attributes'].href
         const pubDate = new Date(items[i].updated['_text']).getTime()
         const item = { title, link, pubDate, site: 'RedditReact'}
-        array.push(item)
+        array = [...array, item]
     }
     return array
 }
@@ -103,7 +103,7 @@ function formatJsonSitepointJS(json) {
         const link = items[i].link['_text']
         const pubDate = new Date(items[i].pubDate['_text']).getTime()
         const item = { title, link, pubDate, site: 'SitepointJs'}
-        array.push(item)
+        array = [...array, item]
     }
     return array
 }

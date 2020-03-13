@@ -45,7 +45,7 @@ function formatJsonAdala(json) {
         const img = $('.post .attachment-post-thumbnail')[i] && $('.post .attachment-post-thumbnail')[i].attribs.src
         const link = $('.post .thumbnail-link')[i] && $('.post .thumbnail-link')[i].attribs.href
         const item = {title, link, desc, img, tag, site: 'Adala-news', pubDate: date.setMinutes(-i)}
-        array.push(item)
+        array = [...array, item]
     }
     return array
 }
@@ -62,7 +62,7 @@ function formatJsonNautijon(json) {
         const img = $('.une_actu .fleft')[i] && 'https://www.nautiljon.com' + $('.une_actu .fleft')[i].attribs.src.replace('mini', 'medium')
         const link = $('.une_actu h3 a')[i] && 'https://www.nautiljon.com' + $('.une_actu h3 a')[i].attribs.href
         const item = {title, link, desc, img, tag, site: 'Nautijon', pubDate: date.setMinutes(-i - 2)}
-        array.push(item)
+        array = [...array, item]
     }
     return array
 }
@@ -80,7 +80,7 @@ function formatJsonMangasNews(json) {
         const img = $('.actu .actu-picture')[i] && $('.actu .actu-picture')[i].attribs.src
         const link = $('.actu .actu-title a')[i] && $('.actu .actu-title a')[i].attribs.href
         const item = {title, link, desc, img, tag, site: 'Manga-news', pubDate: date.setMinutes(-i - 1)}
-        array.push(item)
+        array = [...array, item]
     }
     return array
 }
@@ -97,7 +97,7 @@ function formatJsonJeuxVideo(json) {
         const desc = items[i].description['_cdata']
         const img = items[i]['media:thumbnail']._attributes.url
         const item = { title, link, pubDate, img, tag, desc, site: 'JeuxVideo.com'}
-        array.push(item)
+        array = [...array, item]
     }
     return array
 }
@@ -115,7 +115,7 @@ function formatJsonJournalDuGeek(json) {
         const match = items[i]['content:encoded']['_cdata'].match('src="(https.*(.jpg|.png|.jpeg))')
         const img = match ? match[0].replace('src="', '') : ''
         const item = { title, link, pubDate, img, tag, desc, site: 'JournalDuGeek'}
-        array.push(item)
+        array = [...array, item]
     }
     return array
 }
@@ -132,7 +132,7 @@ function formatJsonBegeek(json) {
         const desc = items[i].description['_cdata']
         const img = items[i]['media:content']._attributes.url
         const item = { title, link, pubDate, img, tag, desc, site: 'BeGeek'}
-        array.push(item)
+        array = [...array, item]
     }
     return array
 }

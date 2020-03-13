@@ -36,7 +36,7 @@ const News = (props) => {
             {   loader ?
                     <>
                         <SkeletonItem className="tag-skeleton" />
-                        <div className="card-container">
+                        <div className="card-container mt-20">
                             { fakeArray.map((item, index) =>
                                 <CardNewsSkeleton key={index}/>
                             )}

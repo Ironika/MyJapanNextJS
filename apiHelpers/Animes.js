@@ -32,7 +32,7 @@ function formatJsonAnimeSeikou(json) {
             const date = $('.slide-entry .hidden  span[itemprop="datePublished"]')[i].children[0].data
             const link = $('.slide-entry .slide-image')[i].attribs.href
             const item = { title, link, img, pubDate: new Date(date), site: 'Anime Seikou', lang: 'VOSTFR'}
-            array.push(item)
+            array = [...array, item]
         }
     }
     return array
@@ -53,7 +53,7 @@ function formatJsonUniversAnimeiz(json) {
             const date = $('.post .meta-date')[i] && $('.post .meta-date')[i].children[0].data
             title = episode ? `${title} ${episode.replace('Épisode ', '')}` : title
             const item = { title, link, img, pubDate: makeDate(date), site: 'Univers Animeiz', lang: 'VOSTFR'}
-            array.push(item)
+            array = [...array, item]
         }
     }
     return array
