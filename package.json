@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "NODE_ENV=dev next",
     "build-storybook": "build-storybook",
-    "build": "build-storybook && NODE_ENV=prod next build",
+    "build": "NODE_ENV=prod next build",
     "start": "next start",
     "storybook": "start-storybook -p 6006"
   },
