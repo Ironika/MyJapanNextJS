@@ -5,6 +5,23 @@ import { CardNewsDev, CardNewsDevSkeleton, SkeletonItem, Tags } from '../compone
 import { usePaginate, useTags } from '../hooks'
 import { useRouter } from 'next/router'
 
+export const List = (props) => {
+    return (
+        <section className={props.loading ? 'timelint mt-20' : "timeline"}>
+            <ul>
+                { props.datas.length > 0 ?
+                    props.datas.map((data, index) =>
+                        props.loading ?
+                        <CardNewsDevSkeleton /> :
+                        <CardNewsDev data={data} key={index} />
+                    ) :
+                    <div>No Results founds.</div>
+                }
+            </ul>
+        </section>
+    )
+}
+
 const NewsDev = (props) => {
     const [loader, setLoader] = useState(props.newsDev ? false : true)
     const {tags, setTags, getTags, filteredByTag } = useTags()
@@ -37,23 +54,11 @@ const NewsDev = (props) => {
                 loader ?
                 <>
                     <SkeletonItem className="tag-skeleton" />
-                    <section className="timeline mt-20">
-                        <ul>
-                            { fakeArray.map((data, i) =>
-                                <CardNewsDevSkeleton key={i}/>
-                            )}
-                        </ul>
-                    </section>
+                    <List datas={fakeArray} loading={loader}/>
                 </> :
                 <>
                     <Tags tags={tags} setActiveTags={(tags) => setTags(tags)} />
-                    <section className="timeline">
-                        <ul>
-                            { displayedDatas.map((data, i) =>
-                                <CardNewsDev data={data} key={i} />
-                            )}
-                        </ul>
-                    </section>
+                    <List datas={displayedDatas}/>
                 </>
             }
         </div>

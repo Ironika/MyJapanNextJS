@@ -5,6 +5,24 @@ import { CardNews, Tags, CardNewsSkeleton, SkeletonItem } from '../components'
 import { usePaginate, useTags } from '../hooks'
 import { useRouter } from 'next/router'
 
+export const List = (props) => {
+    return (
+        <>
+            <div className={props.loading ? 'card-container mt-20' : 'card-container'}>
+                { props.datas.length > 0 ?
+                    props.datas.map((data, index) =>
+                        props.loading ?
+                        <CardNewsSkeleton /> :
+                        <CardNews data={data} key={index} />
+                    ) :
+                    <div>No Results founds.</div>
+                }
+            </div>
+            {props.hasMore ? <i className="fa fa-angle-double-down scroll-more"></i> : ''}
+        </>
+    )
+}
+
 const News = (props) => {
     const [loader, setLoader] = useState(props.news ? false : true)
     const {tags, setTags, getTags, filteredByTag } = useTags()
@@ -36,23 +54,11 @@ const News = (props) => {
             {   loader ?
                     <>
                         <SkeletonItem className="tag-skeleton" />
-                        <div className="card-container mt-20">
-                            { fakeArray.map((item, index) =>
-                                <CardNewsSkeleton key={index}/>
-                            )}
-                        </div>
+                        <List datas={fakeArray} loading={loader}/>
                     </> :
                     <>
                         <Tags tags={tags} setActiveTags={(tags) => setTags(tags)} />
-                        <div className="card-container">
-                            { displayedDatas.length > 0 ?
-                                displayedDatas.map((item, index) =>
-                                    <CardNews key={index} data={item} />
-                                ) :
-                                <div>No Results founds.</div>
-                            }
-                        </div>
-                        {hasMore ? <i className="fa fa-angle-double-down scroll-more"></i> : ''}
+                        <List datas={displayedDatas} hasMore={hasMore}/>
                     </>
             }
         </div>

@@ -7,7 +7,7 @@ const CardAnime = (props) => {
         window.open(props.data.link, '_blank')
     }
 
-    const style = { backgroundImage: 'url(' + props.data.img + ')' }
+    const style = { backgroundImage: `url(${props.data.img})` }
 
     return (
         <Tilt className="tilt-anime">

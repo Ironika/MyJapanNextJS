@@ -3,9 +3,9 @@ import Link from './Link'
 import debounce from "lodash.debounce"
 import logo from '../public/img/cerisier.png'
 
-const Header = () => {
+const Header = (props) => {
     const [menuIsOpen, setMenuIsOpen] = useState(false)
-    const [isMini, setIsMini] = useState(false)
+    const [isMini, setIsMini] = useState(props.isMini ? true : false)
 
     if (process.browser) {
         window.addEventListener('scroll', debounce(() => {

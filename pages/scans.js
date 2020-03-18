@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { getApiDatas } from '../helpers'
 import { ListPaginate, CardScan, CardScansSkeleton } from '../components'
 
-const List = (props) => {
+export const List = (props) => {
     const itemToDisplay = 6
     const [loader, setLoader] = useState(props.datas ? false : true)
     const [datas, setDatas] = useState([])
