@@ -34,7 +34,7 @@ const content2 = () => {
     )
 }
 
-const List = (props) => {
+export const List = (props) => {
     const news = [
         {title: 'Adala-news', type: 'news'},
         {title: 'Manga-news', type: 'news'},
@@ -47,12 +47,17 @@ const List = (props) => {
         {title: 'JsFeeds', type: 'dev'},
         {title: 'SitepointJs', type: 'dev'},
         {title: 'EchoJs', type: 'dev'},
-        {title: 'Developpez.com', type: 'dev'}
+        {title: 'Developpez.com', type: 'dev'},
+        {title: 'MangaFox', type: 'scans'},
+        {title: 'Scantrad', type: 'scans'},
+        {title: 'Webtoons', type: 'scans'},
+        {title: 'UniversAnimeiz', type: 'animes'},
+        {title: 'AnimeSaikou', type: 'animes'}
     ]
 
     return (
         <div className="news">
-            <h2>News</h2>
+            <h2>Scrapped sites</h2>
             <div className="card-container">
                 { news.map((item, index) =>
                     <Link key={index} href={`/${item.type}?tag=${item.title}`}>

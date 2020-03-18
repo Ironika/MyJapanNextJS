@@ -1,16 +1,16 @@
 const axios = require('axios');
 const cheerio = require('cheerio');
 const { isInList, makeArrayPage, makeDate } = require('./Shared');
-const { ANIME_SEIKOU, UNIVERSANIMEIZ } = require('../rss');
+const { ANIME_SAIKOU, UNIVERSANIMEIZ } = require('../rss');
 
 async function getAnimes(page, prevPage) {
     const arrayPage = makeArrayPage(page, prevPage)
-    const promises = [...arrayPage.map((item) => axios.get(`${ANIME_SEIKOU}${item}`)), ...arrayPage.map((item) => axios.get(`${UNIVERSANIMEIZ}${item}`))]
+    const promises = [...arrayPage.map((item) => axios.get(`${ANIME_SAIKOU}${item}`)), ...arrayPage.map((item) => axios.get(`${UNIVERSANIMEIZ}${item}`))]
     const responseDatas = await Promise.all(promises)
     let animes = []
     for(let i = 0; i < responseDatas.length; i++) {
         if(i < arrayPage.length)
-            animes = [...animes, ...formatJsonAnimeSeikou(responseDatas[i])]
+            animes = [...animes, ...formatJsonAnimeSaikou(responseDatas[i])]
         else
             animes = [...animes, ...formatJsonUniversAnimeiz(responseDatas[i])]
     }
@@ -19,7 +19,7 @@ async function getAnimes(page, prevPage) {
     return animes
 }
 
-function formatJsonAnimeSeikou(json) {
+function formatJsonAnimeSaikou(json) {
     let array = []
     const $ = cheerio.load(json.data)
     const items = $('.slide-entry')
@@ -31,7 +31,7 @@ function formatJsonAnimeSeikou(json) {
             const img = $('.slide-entry .slide-image  img')[i].attribs.src
             const date = $('.slide-entry .hidden  span[itemprop="datePublished"]')[i].children[0].data
             const link = $('.slide-entry .slide-image')[i].attribs.href
-            const item = { title, link, img, pubDate: new Date(date), site: 'Anime Seikou', lang: 'VOSTFR'}
+            const item = { title, link, img, pubDate: new Date(date), site: 'Anime Saikou', lang: 'VOSTFR'}
             array = [...array, item]
         }
     }

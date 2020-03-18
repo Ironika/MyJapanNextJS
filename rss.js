@@ -19,7 +19,7 @@ export const SCANTRAD = 'https://scantrad.net/rss/';
 export const MANGAFOX = 'http://fanfox.net/releases/';
 
 // ANIME
-export const ANIME_SEIKOU = 'https://anime-saikou.com/page/';
+export const ANIME_SAIKOU = 'https://anime-saikou.com/page/';
 export const UNIVERSANIMEIZ = 'https://www.universanimeiz.com/page/';
 
 // WEBTOONS
