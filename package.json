@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "NODE_ENV=dev next",
-    "build": "NODE_ENV=prod next build",
+    "build": "NODE_ENV=prod build-storybook -c .storybook -o next build",
     "start": "next start",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
