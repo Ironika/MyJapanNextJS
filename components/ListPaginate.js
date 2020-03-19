@@ -71,13 +71,13 @@ const ListPaginate = (props) => {
                         datas.map((item, index) => {
                             return props.type === 'scansva' ? <CardScanVa key={index} data={item} /> : <CardAnime key={index} data={item} />
                         }) :
-                        <div>A Timeout occured, please refresh</div>
+                        <div style={{textAlign: 'center', width: '100%'}}>No results or a timeout occured, please refresh</div>
                 }
                 {loader ? '' : loadMore ?
                     fakeArray.map((item, index) =>
                         props.type === 'scansva' ? <CardScansVaSkeleton key={index} /> : <CardAnimesSkeleton key={index} />
                     ) :
-                    hasMore ? <i className="fa fa-angle-double-down scroll-more"></i> : ''
+                    hasMore && datas.length > 0 ? <i className="fa fa-angle-double-down scroll-more"></i> : ''
                 }
             </div>
         </>

@@ -1,8 +1,4 @@
-// src/components/Task.stories.js
-
 import React from 'react';
-import { action } from '@storybook/addon-actions';
-
 import Footer from '../components/Footer';
 import '../index.css';
 

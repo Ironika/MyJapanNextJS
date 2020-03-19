@@ -15,10 +15,10 @@ export const List = (props) => {
                         <CardNewsSkeleton /> :
                         <CardNews data={data} key={index} />
                     ) :
-                    <div>No Results founds.</div>
+                    <div style={{width: '100%', textAlign: 'center'}}>No Results founds</div>
                 }
             </div>
-            {props.hasMore ? <i className="fa fa-angle-double-down scroll-more"></i> : ''}
+            {props.hasMore && props.datas.length > 0 ? <i className="fa fa-angle-double-down scroll-more"></i> : ''}
         </>
     )
 }
@@ -27,7 +27,7 @@ const News = (props) => {
     const [loader, setLoader] = useState(props.news ? false : true)
     const {tags, setTags, getTags, filteredByTag } = useTags()
     const {displayedDatas, setDisplayedDatas, itemToDisplay, datas, setDatas, hasMore} = usePaginate(8, filteredByTag)
-    const {query} = useRouter()
+    const router = useRouter()
 
     useEffect(() => {
         const fetchDatas = async () => {
@@ -35,7 +35,7 @@ const News = (props) => {
             if(!_datas)
                 _datas = await getApiDatas('news')
             setDatas(_datas)
-            setTags(getTags(_datas, query.tag))
+            router ? setTags(getTags(_datas, router.query.tag)) : setTags(getTags(_datas))
             setDisplayedDatas(filteredByTag(_datas).slice(0, itemToDisplay))
             setLoader(false)
         }

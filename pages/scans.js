@@ -38,7 +38,7 @@ export const List = (props) => {
                     datas.map((item, index) =>
                         <CardScan key={index} data={item} />
                     ) :
-                    <div>No Scans Found</div>
+                    <div style={{width: '100%', textAlign: 'center'}}>No Scans Found</div>
             }
             </div>
         </>

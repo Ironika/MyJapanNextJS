@@ -4,18 +4,15 @@ import PropTypes from 'prop-types'
 const Text = (props) => {
     return (
         <div className="text">
-            <h2>{props.title}</h2>
-            {props.content}
-            <blockquote>{props.citationJap} <br/> "{props.citationTrad}"</blockquote>
+            <h2>{props.data.title}</h2>
+            <p dangerouslySetInnerHTML={{__html: props.data.content}}></p>
+            <blockquote>{props.data.citationJap} <br/> "{props.data.citationTrad}"</blockquote>
         </div>
     )
 }
 
 Text.propTypes = {
-    title: PropTypes.string.isRequired,
-    content: PropTypes.node.isRequired,
-    citationJap: PropTypes.string.isRequired,
-    citationTrad: PropTypes.string.isRequired
+    data: PropTypes.object.isRequired
 }
 
 

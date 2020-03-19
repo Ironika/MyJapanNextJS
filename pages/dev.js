@@ -15,7 +15,7 @@ export const List = (props) => {
                         <CardNewsDevSkeleton /> :
                         <CardNewsDev data={data} key={index} />
                     ) :
-                    <div>No Results founds.</div>
+                    <div style={{width: '100%', textAlign: 'center'}}>No Results founds.</div>
                 }
             </ul>
         </section>
@@ -26,7 +26,7 @@ const NewsDev = (props) => {
     const [loader, setLoader] = useState(props.newsDev ? false : true)
     const {tags, setTags, getTags, filteredByTag } = useTags()
     const {displayedDatas, setDisplayedDatas, itemToDisplay, datas, setDatas} = usePaginate(9, filteredByTag)
-    const {query} = useRouter()
+    const router = useRouter()
 
     useEffect(() => {
         const fetchDatas = async () => {
@@ -34,7 +34,7 @@ const NewsDev = (props) => {
             if(!_datas)
                 _datas = await getApiDatas('dev')
             setDatas(_datas)
-            setTags(getTags(_datas, query.tag))
+            router ? setTags(getTags(_datas, router.query.tag)) : setTags(getTags(_datas))
             setDisplayedDatas(filteredByTag(_datas).slice(0, itemToDisplay))
             setLoader(false)
         }
@@ -67,7 +67,7 @@ const NewsDev = (props) => {
 
 NewsDev.getInitialProps = async ({req}) => {
     if(req) {
-        const newsDev = await getApiDatas('dev', 1);
+        const newsDev = await getApiDatas('dev');
         return { newsDev }
     }
     return {}

@@ -1,6 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+export const Tag = (props) => {
+    return (
+        <span onClick={props.setActive} className={props.data.active ? 'tag active' : 'tag'}>
+            { props.data.value }
+        </span>
+    )
+}
+
 const Tags = props => {
     const setActiveTag = (tag) => {
         let _tags = [...props.tags]
@@ -29,10 +37,8 @@ const Tags = props => {
     return (
         <div className="tag-container">
             {
-                props.tags.map((tag, i) =>
-                    <span key={i} onClick={() => setActiveTag(tag)} className={tag.active ? 'tag active' : 'tag'}>
-                        {tag.value}
-                    </span>
+                props.tags.map((data, i) =>
+                    <Tag key={i} data={data} setActive={() => setActiveTag(data)} />
                 )
             }
         </div>
