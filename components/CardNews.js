@@ -22,7 +22,7 @@ const CardNews = (props) => {
                 <button>{props.data.tag}</button>
                 <span className="date">{pubDate.toLocaleDateString('fr-FR')}</span>
                 <h3>{title}</h3>
-                <p dangerouslySetInnerHTML={{__html: html.replace(/(<? *script)/gi, 'illegalscript')}} ></p>
+                <p dangerouslySetInnerHTML={{__html: !html ? '' : html.replace(/(<? *script)/gi, 'illegalscript')}} ></p>
             </a>
         </div>
     )
