@@ -21,6 +21,7 @@ export const MANGAFOX = 'http://fanfox.net/releases/';
 // ANIME
 export const ANIME_SAIKOU = 'https://anime-saikou.com/page/';
 export const UNIVERSANIMEIZ = 'https://www.universanimeiz.com/page/';
+export const VOSTFREE = 'https://vostfree.com/last-episode.html/page/';
 
 // WEBTOONS
 export const UNORDINARY = 'https://www.webtoons.com/en/super-hero/unordinary/rss?title_no=679';
