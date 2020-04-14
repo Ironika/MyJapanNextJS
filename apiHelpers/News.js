@@ -42,7 +42,7 @@ function formatJsonAdala(json) {
         const title = $('.post .entry-title a')[i] && $('.post .entry-title a')[i].children[0].data
         const tag = $('.post .entry-category a')[i] && $('.post .entry-category a')[i].children[0].data
         const desc = $('.post .entry-summary p')[i] && $('.post .entry-summary p')[i].children[0].data
-        const img = $('.post .wp-post-image"')[i] && $('.post .wp-post-image"')[i].attribs.src
+        const img = $('.post .wp-post-image')[i] && $('.post .wp-post-image')[i].attribs['data-src']
         const link = $('.post .thumbnail-link')[i] && $('.post .thumbnail-link')[i].attribs.href
         const item = {title, link, desc, img, tag, site: 'Adala-news', pubDate: date.setMinutes(-i)}
         array = [...array, item]
