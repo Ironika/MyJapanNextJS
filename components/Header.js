@@ -26,7 +26,7 @@ const Header = (props) => {
     }
 
     return (
-        <nav className="header">
+        <nav className={menuIsOpen ? 'header menuIsOpenHeader' : 'header'}>
             <ul className="nav">
                 {/* <li>
                     <Link href={'/'}><a>Home</a></Link>
@@ -52,7 +52,7 @@ const Header = (props) => {
                 </li>
 
                 <li className="burger" onClick={handleClickMenu}>
-                    <i className="fa fa-bars"></i>
+                    <i className={menuIsOpen ? 'fa fa-close' : "fa fa-bars"}></i>
                 </li>
             </ul>
             <ul className={menuIsOpen ? 'nav-mobile menuIsOpen' : 'nav-mobile'}>
