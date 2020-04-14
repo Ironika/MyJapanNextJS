@@ -84,9 +84,9 @@
       margin: 0;
       padding-top: 50px;
       position: absolute;
-      transition: right 500ms, top 500ms;
-      top: -100px;
-      right: -100%;
+      transition: all 600ms;
+      top: -200px;
+      right: -200%;
       width: 100%;
       z-index: -1;
       li {
@@ -130,6 +130,7 @@
         background: rgba(0, 0, 0, 0.9);
         transition: all 500ms ease-in-out;
         clip-path: circle(20px at calc(100% - 20px) 25px);
+        -webkit-clip-path: circle(20px at calc(100% - 20px) 25px);
         visibility: hidden;
       }
     }
@@ -143,6 +144,7 @@
   .nav-mobile:before {
     visibility: visible;
     clip-path: circle(100%);
+    -webkit-clip-path: circle(100%);
   }
 }
 
