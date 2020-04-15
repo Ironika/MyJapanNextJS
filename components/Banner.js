@@ -1,15 +1,18 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { ParallaxBanner } from 'react-scroll-parallax'
 import banner from '../public/img/banner.jpg'
+import homescreen3 from '../public/img/homescreen3.jpg'
 
 const Banner = (props) => {
-    const layers = [{ image: banner, amount: 0.5 }]
-    const style = { height: '300px' }
     return (
-        <ParallaxBanner className="homescreen banner" layers={layers} style={style}>
+        <div className="c-glitch banner" style={{backgroundImage: 'url(' + banner + ')'}}>
             <h1 className="title">{props.title}</h1>
-        </ParallaxBanner>
+            <div className="c-glitch__img" style={{backgroundImage: 'url(' + homescreen3 + ')'}}></div>
+            <div className="c-glitch__img" style={{backgroundImage: 'url(' + homescreen3 + ')'}}></div>
+            <div className="c-glitch__img" style={{backgroundImage: 'url(' + homescreen3 + ')'}}></div>
+            <div className="c-glitch__img" style={{backgroundImage: 'url(' + homescreen3 + ')'}}></div>
+            <div className="c-glitch__img" style={{backgroundImage: 'url(' + homescreen3 + ')'}}></div>
+        </div>
     )
 }
 

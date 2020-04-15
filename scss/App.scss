@@ -21,29 +21,6 @@ body {
     z-index: -1;
 }
 
-.banner {
-    .parallax-banner-layer-0 {
-        @media screen and (max-width: $xs) {
-            background-position: center right !important;
-        }
-    }
-    .title {
-        color: white;
-        font-weight: bold;
-        font-size: 40px;
-        text-align: center;
-        text-shadow: black 4px 3px;
-        margin-top: 40%;
-        text-transform: uppercase;
-        @media screen and (min-width: $md) and (max-width: $lg) {
-            margin-top: 20%;
-        }
-        @media screen and (min-width: $lg) {
-            margin-top: 12%;
-        }
-    }
-}
-
 .scroll-up {
     color: $main-color;
     font-size: 60px;

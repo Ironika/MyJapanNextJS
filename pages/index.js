@@ -24,8 +24,7 @@ const scrappedSites = [
     {title: 'MangaFox', type: 'scans'},
     {title: 'Scantrad', type: 'scans'},
     {title: 'Webtoons', type: 'scans'},
-    {title: 'UniversAnimeiz', type: 'animes'},
-    {title: 'AnimeSaikou', type: 'animes'}
+    {title: 'Vostfree', type: 'animes'}
 ]
 
 export const CardSite = (props) => {
