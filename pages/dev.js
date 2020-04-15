@@ -12,7 +12,7 @@ export const List = (props) => {
                 { props.datas.length > 0 ?
                     props.datas.map((data, index) =>
                         props.loading ?
-                        <CardNewsDevSkeleton /> :
+                        <CardNewsDevSkeleton key={index} /> :
                         <CardNewsDev data={data} key={index} />
                     ) :
                     <div style={{width: '100%', textAlign: 'center'}}>No Results founds.</div>

@@ -1,12 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import BlockQuote from './Blockquote'
 
 const Text = (props) => {
     return (
         <div className="text">
             <h2>{props.data.title}</h2>
             <p dangerouslySetInnerHTML={{__html: props.data.content}}></p>
-            <blockquote>{props.data.citationJap} <br/> "{props.data.citationTrad}"</blockquote>
+            <BlockQuote citationJap={props.data.citationJap} citationTrad={props.data.citationTrad}/>
         </div>
     )
 }
@@ -14,6 +15,5 @@ const Text = (props) => {
 Text.propTypes = {
     data: PropTypes.object.isRequired
 }
-
 
 export default Text

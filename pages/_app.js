@@ -20,6 +20,7 @@ const CustomHead = () => {
         <meta name="description" content="IronikaSpace Animes Scans News Geek Otaku Japan" />
         <link href="https://fonts.googleapis.com/css?family=Kaushan+Script&display=swap" defer={true} rel="stylesheet"></link>
         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" defer={true} rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossOrigin="anonymous" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.0/TweenMax.min.js"></script>
       </Head>
   )
 }
