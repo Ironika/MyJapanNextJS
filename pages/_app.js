@@ -37,7 +37,7 @@ const App = ({ Component, pageProps }) => {
         <Banner title={title}/>
         <Component {...pageProps} />
       </ParallaxProvider>
-      <ScrollToTop showUnder={160} duration={1000}>
+      <ScrollToTop showUnder={160} duration={1000} style={{zIndex: 100}}>
         <i className="fa fa-arrow-circle-o-up scroll-up"></i>
       </ScrollToTop>
       <Footer />
