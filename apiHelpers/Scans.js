@@ -67,7 +67,7 @@ function formatJsonMangaFox(json) {
     const $ = cheerio.load(json.data)
     const items = $('.manga-list-4-list > li')
     for(let i = 0; i < items.length; i++) {
-        let title = $('.manga-list-4-list .manga-list-4-item-title a')[i].children[0].data
+        let title = $('.manga-list-4-list .manga-list-4-item-title a')[i].attribs.title
         if(isInList(title.toUpperCase(), 'scans')) {
             const img = $('.manga-list-4-list .manga-list-4-cover')[i].attribs.src
             const pubDate = $('.manga-list-4-list .manga-list-4-item-subtitle span')[i].children[0].data
