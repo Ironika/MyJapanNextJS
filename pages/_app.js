@@ -2,7 +2,8 @@ import React from 'react'
 import Head from 'next/head'
 import PropTypes from 'prop-types'
 import { ParallaxProvider } from 'react-scroll-parallax'
-import { useRouter } from 'next/router'
+import Router, { useRouter } from 'next/router'
+import withGA from "next-ga";
 import { Header, Banner, Footer } from '../components'
 import favicon from '../public/img/favicon.png'
 import ScrollToTop from 'react-scroll-up'
@@ -50,4 +51,4 @@ App.propTypes = {
   pageProps: PropTypes.object.isRequired
 }
 
-export default App
+export default withGA("UA-163916215-1", Router)(App)
