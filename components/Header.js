@@ -28,14 +28,11 @@ const Header = (props) => {
     return (
         <nav className={menuIsOpen ? 'header menuIsOpenHeader' : 'header'}>
             <ul className="nav">
-                {/* <li>
-                    <Link href={'/'}><a>Home</a></Link>
-                </li> */}
                 <li>
-                    <Link href={'/dev'}><a>Dev</a></Link>
+                    <Link href={'/scans'}><a>Scans</a></Link>
                 </li>
                 <li>
-                    <Link href={'/news'}><a>News</a></Link>
+                    <Link href={'/animes'}><a>Animes</a></Link>
                 </li>
 
                 <li className="logo">
@@ -45,10 +42,10 @@ const Header = (props) => {
                 </li>
 
                 <li>
-                    <Link href={'/scans'}><a>Scans</a></Link>
+                    <Link href={'/news'}><a>News</a></Link>
                 </li>
                 <li>
-                    <Link href={'/animes'}><a>Animes</a></Link>
+                    <Link href={'/programming'}><a>Programming</a></Link>
                 </li>
 
                 <li className="burger" onClick={handleClickMenu}>

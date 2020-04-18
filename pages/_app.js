@@ -20,6 +20,7 @@ const CustomHead = () => {
         <link rel="shortcut icon" href={favicon}></link>
         <meta name="description" content="IronikaSpace Animes Scans News Geek Otaku Japan" />
         <link href="https://fonts.googleapis.com/css?family=Kaushan+Script&display=swap" defer={true} rel="stylesheet"></link>
+        <link rel="preload" href="/fonts/Kashima-Demo.otf" as="font" crossOrigin="" />
         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" defer={true} rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossOrigin="anonymous" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.0/TweenMax.min.js"></script>
       </Head>
@@ -33,6 +34,15 @@ const App = ({ Component, pageProps }) => {
   return (
     <>
       <CustomHead />
+      <style jsx global>{`
+			      @font-face {
+			        font-family: 'Kashima';
+			        src: url('/fonts/Kashima-Demo.otf');
+			        font-weight: bold;
+			        font-style: normal;
+			        font-display: swap;
+			      }
+			`}</style>
       <Header />
       <ParallaxProvider>
         <Banner title={title}/>
