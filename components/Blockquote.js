@@ -8,10 +8,12 @@ class BlockQuote extends Component  {
             ref: React.createRef(),
             el: null,
             hover: false,
-            x: 0,
-            y: 0,
-            width: 0,
-            height: 0
+            position : {
+                x: 0,
+                y: 0,
+                width: 0,
+                height: 0
+            }
         }
     }
 
@@ -26,7 +28,6 @@ class BlockQuote extends Component  {
     }
 
     componentWillUnmount() {
-        console.log('in')
         window.removeEventListener('mousemove', this.onMouseMove)
         window.removeEventListener('resize', this.calculatePosition)
         window.removeEventListener('scroll', this.calculatePosition)
@@ -45,20 +46,22 @@ class BlockQuote extends Component  {
             scale: 1
         });
         const box = this.state.el.getBoundingClientRect();
-        const x = box.left + (box.width * 0.5);
-        const y = box.top + (box.height * 0.5);
-        const width = box.width;
-        const height = box.height;
-        this.setState({x, y, width, height})
+        const position = {
+            x:  box.left + (box.width * 0.5),
+            y:  box.top + (box.height * 0.5),
+            width:  box.width,
+            height:  box.height
+        }
+        this.setState({position})
     }
 
     onMouseMove(e) {
         let hover = false;
-        let hoverArea = (this.state.hover ? 0.7 : 0.5);
-        let x = e.clientX - this.state.x;
-        let y = e.clientY - this.state.y;
-        let distance = Math.sqrt(x * x + y * y);
-        if (distance < (this.state.width * hoverArea)) {
+        const hoverArea = (this.state.hover ? 0.7 : 0.5);
+        const x = e.clientX - this.state.position.x;
+        const y = e.clientY - this.state.position.y;
+        const distance = Math.sqrt(x * x + y * y);
+        if (distance < (this.state.position.width * hoverArea)) {
             hover = true;
             if (!this.state.hover) {
                 this.setState({hover: true})
@@ -74,8 +77,8 @@ class BlockQuote extends Component  {
 
     onHover(x, y) {
         TweenMax.to(this.state.el, 0.4, {
-            x: (x - this.state.x) * 0.4,
-            y: (y - this.state.y) * 0.4,
+            x: (x - this.state.position.x) * 0.4,
+            y: (y - this.state.position.y) * 0.4,
             scale: 1.2,
             ease: Power2.easeOut
         });

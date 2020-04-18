@@ -57,7 +57,11 @@
                         align-items: center;
                         p {
                             text-align: center;
-                            overflow: scroll;
+                            overflow-y: scroll;
+                            -ms-overflow-style: none;
+                        }
+                        p::-webkit-scrollbar {
+                            display: none;
                         }
                     }
                     .discovery {
