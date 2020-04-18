@@ -69,10 +69,10 @@ function formatJsonMangaFox(json) {
     for(let i = 0; i < items.length; i++) {
         let title = $(items[i]).find('.manga-list-4-item-title a')[0].attribs.title
         if(isInList(title.toUpperCase(), 'scans')) {
-            const img = $(items[i]).find('.manga-list-4-cover')[0].attribs.src
-            const pubDate = $(items[i]).find('.manga-list-4-item-subtitle span')[0].children[0].data
-            const chapt = $(items[i]).find('.manga-list-4-item-part li:first-child a')[0].children[0].data ? $(items[i]).find('.manga-list-4-item-part li:first-child a')[0].children[0].data.replace('Ch.', '') : ''
-            let link = $(items[i]).find('.manga-list-4-item-part li:first-child a')[0].attribs.href ? $(items[i]).find('.manga-list-4-item-part li:first-child a')[0].attribs.href : $('.manga-list-4-list > li > a')[i].attribs.href
+            const img = $(items[i]).find('.manga-list-4-cover')[0] && $(items[i]).find('.manga-list-4-cover')[0].attribs.src
+            const pubDate = $(items[i]).find('.manga-list-4-item-subtitle span')[0] && $(items[i]).find('.manga-list-4-item-subtitle span')[0].children[0].data
+            const chapt = $(items[i]).find('.manga-list-4-item-part li:first-child a')[0] ? $(items[i]).find('.manga-list-4-item-part li:first-child a')[0].children[0].data.replace('Ch.', '') : ''
+            let link = $(items[i]).find('.manga-list-4-item-part li:first-child a')[0] ? $(items[i]).find('.manga-list-4-item-part li:first-child a')[0].attribs.href : $('.manga-list-4-list > li > a')[i].attribs.href
             title = title + ' ' + chapt
             link = 'http://fanfox.net' + link
             const item = {title, link, pubDate, img, site: 'MangaFox', lang: 'VA'}
