@@ -67,12 +67,12 @@ function formatJsonMangaFox(json) {
     const $ = cheerio.load(json.data)
     const items = $('.manga-list-4-list > li')
     for(let i = 0; i < items.length; i++) {
-        let title = $('.manga-list-4-list .manga-list-4-item-title a')[i].attribs.title
+        let title = $(items[i]).find('.manga-list-4-item-title a')[0].attribs.title
         if(isInList(title.toUpperCase(), 'scans')) {
-            const img = $('.manga-list-4-list .manga-list-4-cover')[i].attribs.src
-            const pubDate = $('.manga-list-4-list .manga-list-4-item-subtitle span')[i].children[0].data
-            const chapt = $('.manga-list-4-list .manga-list-4-item-part li:first-child a')[i].children[0].data ? $('.manga-list-4-list .manga-list-4-item-part li:first-child a')[i].children[0].data.replace('Ch.', '') : ''
-            let link = $('.manga-list-4-list .manga-list-4-item-part li:first-child a')[i].attribs.href ? $('.manga-list-4-list .manga-list-4-item-part li:first-child a')[i].attribs.href : $('.manga-list-4-list > li > a')[i].attribs.href
+            const img = $(items[i]).find('.manga-list-4-cover')[0].attribs.src
+            const pubDate = $(items[i]).find('.manga-list-4-item-subtitle span')[0].children[0].data
+            const chapt = $(items[i]).find('.manga-list-4-item-part li:first-child a')[0].children[0].data ? $(items[i]).find('.manga-list-4-item-part li:first-child a')[0].children[0].data.replace('Ch.', '') : ''
+            let link = $(items[i]).find('.manga-list-4-item-part li:first-child a')[0].attribs.href ? $(items[i]).find('.manga-list-4-item-part li:first-child a')[0].attribs.href : $('.manga-list-4-list > li > a')[i].attribs.href
             title = title + ' ' + chapt
             link = 'http://fanfox.net' + link
             const item = {title, link, pubDate, img, site: 'MangaFox', lang: 'VA'}

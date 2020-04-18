@@ -63,7 +63,7 @@ const Scans = (props) => {
 Scans.getInitialProps = async ({req}) => {
     if(req) {
         const scans = await getApiDatas('scans')
-        const scansVa = await getApiDatas('scansva', 2)
+        const scansVa = await getApiDatas('scansva', 4)
         return {scans, scansVa}
     }
     return {}
