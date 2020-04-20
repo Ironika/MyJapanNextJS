@@ -12,7 +12,7 @@ export const JSFEEDS = 'https://jsfeeds.com/feed';
 export const ECHOJS = 'https://www.echojs.com/rss';
 export const REDDIT_JS = 'https://www.reddit.com/r/javascript/.rss?format=xml';
 export const REDDIT_REACT = 'https://www.reddit.com/r/reactjs/.rss?format=xml';
-export const SITEPOINT_JS = 'https://www.sitepoint.com/javascript/feed/';
+export const SITEPOINT_JS = 'https://www.sitepoint.com/feed/';
 
 // SCANS
 export const SCANTRAD = 'https://scantrad.net/rss/';

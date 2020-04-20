@@ -99,7 +99,7 @@ function formatJsonSitepointJS(json) {
     let array = []
     const items = json.rss.channel.item
     for(var i = 0; i < items.length; i++) {
-        const title = items[i].title['_text']
+        const title = items[i].title['_cdata']
         const link = items[i].link['_text']
         const pubDate = new Date(items[i].pubDate['_text']).getTime()
         const item = { title, link, pubDate, site: 'SitepointJs'}
