@@ -74,7 +74,7 @@ function formatJsonMangasNews(json) {
     const items = $('.actu')
     const date = new Date()
     for(let i = 0; i < items.length - 1; i++) {
-        const title = $('.actu .actu-title a')[i] && $('.actu .actu-title a')[i].children[0].data
+        const title = $('.actu .actu-title a')[i] && $('.actu .actu-title a')[i].children[0].data.substring(17, $('.actu .actu-title a')[i].children[0].data.length)
         const tag = $('.actu .catIcon')[i] && $('.actu .catIcon')[i].children[0].data.toUpperCase()
         const desc = $('.actu .actu-content')[i] && $('.actu .actu-content')[i].children[0].data
         const img = $('.actu .actu-picture')[i] && $('.actu .actu-picture')[i].attribs.src

@@ -6,7 +6,7 @@ import NOT_FOUND from '../public/img/notfound.png'
 
 const CardNews = (props) => {
     const pubDate = new Date(props.data.pubDate)
-    const title = (props.data.title && props.data.title.length > 60) ? props.data.title.substring(0,60) + '...' : props.data.title
+    // const title = (props.data.title && props.data.title.length > 70) ? props.data.title.substring(0,70) + '...' : props.data.title
     const html = (props.data.desc && props.data.desc.length > 180) ? props.data.desc.substring(0,180) + '...' : props.data.desc
     return (
         <div className="card-news">
@@ -21,7 +21,7 @@ const CardNews = (props) => {
                 <div className="black-box"></div>
                 <button>{props.data.tag}</button>
                 <span className="date">{pubDate.toLocaleDateString('fr-FR')}</span>
-                <h3>{title}</h3>
+                <h3>{props.data.title}</h3>
                 <p dangerouslySetInnerHTML={{__html: !html ? '' : html.replace(/(<? *script)/gi, 'illegalscript')}} ></p>
             </a>
         </div>
