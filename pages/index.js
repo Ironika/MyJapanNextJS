@@ -54,8 +54,8 @@ export const List = (props) => {
 }
 
 const Index = (props) => {
-    const layers1 = [{ image: homescreen2, amount: 0.5 }]
-    const layers2 = [{ image: homescreen3, amount: 0.5 }]
+    const layers1 = [{ image: homescreen3, amount: 0.5 }]
+    const layers2 = [{ image: homescreen2, amount: 0.5 }]
     const layers3 = [{ image: homescreen, amount: 0.5 }]
     const dataText = {
         title: 'Welcome',
