@@ -83,7 +83,7 @@ class BlockQuote extends Component  {
             ease: Power2.easeOut
         });
         let el = this.state.el
-        el.style.zIndex = 10;
+        el.style.zIndex = 100;
         this.setState({el})
     }
 
