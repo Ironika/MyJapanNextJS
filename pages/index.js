@@ -57,9 +57,8 @@ const Index = (props) => {
     const layers1 = [{ image: homescreen2, amount: 0.5 }]
     const layers2 = [{ image: homescreen3, amount: 0.5 }]
     const layers3 = [{ image: homescreen, amount: 0.5 }]
-    const style = { height: '450px' }
     const dataText = {
-        title: 'Welcome on IronikaSpace',
+        title: 'Welcome',
         content: "I will share with you through this site, various news, photos, musics, mangas or animes.<br />In addition, this site will allow me to experiment some web technologies.<br />I hope that the experience will please you, and wish you a pleasant visit.<br />You can <a href='mailto:kevin.hoquet@gmail.com?subject=CONTACT IronikaSpace'>contact me</a> if you need.",
         citationJap: '猿も木から落ちる',
         citationTrad: 'Even the monkey falls from the tree'
@@ -75,11 +74,11 @@ const Index = (props) => {
     return (
         <div className="Home">
             <Text data={dataText} />
-            <ParallaxBanner className="homescreen" layers={layers1} style={style}></ParallaxBanner>
+            <ParallaxBanner className="homescreen" layers={layers1}></ParallaxBanner>
             <Text data={dataText2} />
-            <ParallaxBanner className="homescreen" layers={layers2} style={style}></ParallaxBanner>
+            <ParallaxBanner className="homescreen" layers={layers2}></ParallaxBanner>
             <List datas={scrappedSites} title={'Scrapped sites'}/>
-            <ParallaxBanner className="homescreen" layers={layers3} style={style}></ParallaxBanner>
+            <ParallaxBanner className="homescreen" layers={layers3}></ParallaxBanner>
         </div>
     );
 }
