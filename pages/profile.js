@@ -6,8 +6,7 @@ const Profile = (props) => {
 
     useEffect(() => {
         const _user = JSON.parse(sessionStorage.getItem('user'))
-        if(!_user)
-            Router.push('/signin')
+        if(!_user) Router.push('/signin')
         setUser(_user)
     }, [])
 
