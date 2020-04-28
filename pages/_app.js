@@ -44,8 +44,8 @@ const App = ({ Component, pageProps }) => {
 			      }
 			`}</style>
       <Header />
+      <Banner title={title}/>
       <ParallaxProvider>
-        <Banner title={title}/>
         <Component {...pageProps} />
       </ParallaxProvider>
       <ScrollToTop showUnder={160} duration={1000} style={{zIndex: 100}}>

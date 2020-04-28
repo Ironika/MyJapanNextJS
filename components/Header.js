@@ -5,15 +5,15 @@ import logo from '../public/img/cerisier.png'
 
 const Header = (props) => {
     const [menuIsOpen, setMenuIsOpen] = useState(false)
-    const [isMini, setIsMini] = useState(props.isMini ? true : false)
+    const [isScrolling, setIsScrolling] = useState(false)
 
     if (process.browser) {
         window.addEventListener('scroll', debounce(() => {
             let scroll = document.documentElement.scrollTop
-            if(scroll > 0 && !isMini)
-                setIsMini(true)
-            else if (scroll === 0 && isMini)
-                setIsMini(false)
+            if(scroll > 0 && !isScrolling)
+                setIsScrolling(true)
+            else if (scroll === 0 && isScrolling)
+                setIsScrolling(false)
         }, 0))
     }
 
@@ -25,8 +25,14 @@ const Header = (props) => {
         setMenuIsOpen(false)
     }
 
+    let classHeader = 'header'
+    if(isScrolling)
+        classHeader += ' isScrolling'
+    if(menuIsOpen)
+        classHeader += ' menuIsOpenHeader'
+
     return (
-        <nav className={menuIsOpen ? 'header menuIsOpenHeader' : 'header'}>
+        <nav className={classHeader}>
             <ul className="nav">
                 <li>
                     <Link href={'/scans'}><a>Scans</a></Link>
@@ -37,7 +43,7 @@ const Header = (props) => {
 
                 <li className="logo">
                     <Link href={'/'}>
-                        <img src={logo} className={isMini ? 'mini': ''} alt="logo" />
+                        <img src={logo} className={isScrolling ? 'mini': ''} alt="logo" />
                     </Link>
                 </li>
 
