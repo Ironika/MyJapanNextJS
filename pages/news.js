@@ -8,7 +8,7 @@ import { useRouter } from 'next/router'
 export const List = (props) => {
     return (
         <>
-            <div className={props.loading ? 'card-container mt-20' : 'card-container'}>
+            <div className='card-container'>
                 { props.datas.length > 0 ?
                     props.datas.map((data, index) =>
                         props.loading ?

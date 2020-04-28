@@ -60,6 +60,7 @@
                 top: 5px;
                 width: 50px;
                 transition: width, 0.5s;
+                border: none;
                 @media screen and (min-width: $md) {
                   left: 0;
                   // width: 70px;
