@@ -15,3 +15,15 @@ export const getApiDatas = async(path, page, prevPage) => {
 
     return []
 }
+
+export const postApiDatas = async(path, datas) => {
+    let url = `${process.env.api}${path}`
+    try {
+        const { data } = await Axios.post(url, datas)
+        return data
+    } catch(e) {
+        console.log(e)
+    }
+
+    return []
+}

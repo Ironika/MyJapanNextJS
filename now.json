@@ -1,0 +1,7 @@
+{
+    "build": {
+      "env": {
+        "MONGO_API": "@MONGO_API"
+      }
+    }
+  }
