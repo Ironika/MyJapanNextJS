@@ -21,7 +21,7 @@ const scrappedSites = [
     {title: 'SitepointJs', type: 'dev'},
     {title: 'EchoJs', type: 'dev'},
     {title: 'Developpez.com', type: 'dev'},
-    {title: 'MangaFox', type: 'scans'},
+    {title: 'MangaKakalot', type: 'scans'},
     {title: 'Scantrad', type: 'scans'},
     {title: 'Webtoons', type: 'scans'},
     {title: 'Vostfree', type: 'animes'}

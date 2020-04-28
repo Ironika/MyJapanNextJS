@@ -17,6 +17,7 @@ export const SITEPOINT_JS = 'https://www.sitepoint.com/feed/';
 // SCANS
 export const SCANTRAD = 'https://scantrad.net/rss/';
 export const MANGAFOX = 'http://fanfox.net/releases/';
+export const MANGAKAKALOT = 'https://mangakakalot.com/manga_list?type=latest&category=all&state=all&page='
 
 // ANIME
 export const ANIME_SAIKOU = 'https://anime-saikou.com/page/';

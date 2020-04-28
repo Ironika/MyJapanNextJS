@@ -6,6 +6,7 @@ import { CardScanVa, CardAnime, CardScansVaSkeleton, CardAnimesSkeleton } from '
 
 const ListPaginate = (props) => {
     const callPageBy = props.type === 'scansva' ? 4 : 2
+    const limit = props.type === 'scansva' ? 100 : 50
     const [currentPage, setCurrentPage] = useState(props.type === 'scansva' ? 4 : 1)
     const [datas, setDatas] = useState(props.datas || [])
     const [hasMore, setHasMore] = useState(true)
@@ -30,7 +31,7 @@ const ListPaginate = (props) => {
     }, [])
 
     const loadItems = async() => {
-        if(datas.length >= 50) {
+        if(datas.length >= limit) {
             setHasMore(false)
         } else {
             setLoadMore(true)

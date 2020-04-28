@@ -5,28 +5,26 @@ const { SCANTRAD,
         MANGAFOX,
         UNORDINARY,
         TOWER_OF_GOD,
-        MAGE_DEMONS_QUEENS
+        MANGAKAKALOT,
+
 } = require('../rss');
 
 async function getScans() {
     const [
         scantradJson,
         unOrdinaryJson,
-        towerOfGodJson,
-        mageDemonsQueensJson
+        towerOfGodJson
     ] = await Promise.all([
         fetchRss(SCANTRAD),
         fetchRss(UNORDINARY),
         fetchRss(TOWER_OF_GOD),
-        fetchRss(MAGE_DEMONS_QUEENS),
     ])
 
     const scantrad = formatJsonScantrad(scantradJson)
     const unOrdinary = formatJsonWebtoons(unOrdinaryJson)
     const towerOfGod = formatJsonWebtoons(towerOfGodJson)
-    const mageDemonsQueens = formatJsonWebtoons(mageDemonsQueensJson)
 
-    const scans = [...scantrad, ...unOrdinary, ...towerOfGod, ...mageDemonsQueens]
+    const scans = [...scantrad, ...unOrdinary, ...towerOfGod]
     scans.sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate))
     return scans
 }
@@ -34,15 +32,17 @@ async function getScans() {
 async function getScansVA(page, prevPage) {
     const arrayMap = makeArrayPage(page, prevPage)
     const responseDatas = await Promise.all(
-        arrayMap.map((item) => axios.get(`${MANGAFOX}${item}.html`))
+        // arrayMap.map((item) => axios.get(`${MANGAFOX}${item}.html`)),
+        arrayMap.map((item) => axios.get(`${MANGAKAKALOT}${item}`))
     )
 
     let scansVa = []
     for(let i = 0; i < responseDatas.length; i++) {
-        scansVa = [...scansVa, ...formatJsonMangaFox(responseDatas[i])]
+        // scansVa = [...scansVa, ...formatJsonMangaFox(responseDatas[i])]
+        scansVa = [...scansVa, ...formatJsonMangaKakalot(responseDatas[i])]
     }
 
-    scansVa.sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate))
+    // scansVa.sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate))
     return scansVa
 }
 
@@ -76,6 +76,23 @@ function formatJsonMangaFox(json) {
             title = title + ' ' + chapt
             link = 'http://fanfox.net' + link
             const item = {title, link, pubDate, img, site: 'MangaFox', lang: 'VA'}
+            array = [...array, item]
+        }
+    }
+    return array
+}
+
+function formatJsonMangaKakalot(json) {
+    let array = []
+    const $ = cheerio.load(json.data)
+    const items = $('.list-truyen-item-wrap')
+    for(let i = 0; i < items.length; i++) {
+        const title = $(items[i]).find('h3 > a')[0].attribs.title
+        if(isInList(title.toUpperCase(), 'scans')) {
+            const img = $(items[i]).find('img')[0] && $(items[i]).find('img')[0].attribs.src
+            const chapt = $(items[i]).find('.list-story-item-wrap-chapter')[0] ? $(items[i]).find('.list-story-item-wrap-chapter')[0].children[0].data : ''
+            const link = $(items[i]).find('.list-story-item-wrap-chapter')[0] && $(items[i]).find('.list-story-item-wrap-chapter')[0].attribs.href
+            const item = {title, chapt, link, img, site: 'MangaKakalot', lang: 'VA'}
             array = [...array, item]
         }
     }
