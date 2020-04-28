@@ -2,9 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 const CardScan = (props) => {
-    let pubDate = new Date(props.data.pubDate)
-        pubDate = pubDate.toLocaleDateString()
-
     return (
         <div className="card-scans">
             <a href={props.data.link} target="_blank" rel="noopener noreferrer">
@@ -15,8 +12,8 @@ const CardScan = (props) => {
                     <div className="card-scans-container-content-infos">
                         <img src={props.data.img} alt={props.data.title}/>
                         <div>
-                            <p className="date">{pubDate}</p>
                             <h3>{props.data.title}</h3>
+                            <p>Chapter : {props.data.chapt}</p>
                             <button>{props.data.lang}</button>
                         </div>
                     </div>

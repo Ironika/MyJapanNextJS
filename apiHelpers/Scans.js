@@ -2,30 +2,14 @@ const axios = require('axios');
 const cheerio = require('cheerio');
 const { isInList, fetchRss, makeArrayPage } = require('./Shared');
 const { SCANTRAD,
-        MANGAFOX,
-        UNORDINARY,
-        TOWER_OF_GOD,
-        MANGAKAKALOT,
-
+        // MANGAFOX,
+        MANGAKAKALOT
 } = require('../rss');
 
 async function getScans() {
-    const [
-        scantradJson,
-        unOrdinaryJson,
-        towerOfGodJson
-    ] = await Promise.all([
-        fetchRss(SCANTRAD),
-        fetchRss(UNORDINARY),
-        fetchRss(TOWER_OF_GOD),
-    ])
+    const scantradJson = await axios.get(SCANTRAD)
+    const scans = formatJsonScantrad(scantradJson)
 
-    const scantrad = formatJsonScantrad(scantradJson)
-    const unOrdinary = formatJsonWebtoons(unOrdinaryJson)
-    const towerOfGod = formatJsonWebtoons(towerOfGodJson)
-
-    const scans = [...scantrad, ...unOrdinary, ...towerOfGod]
-    scans.sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate))
     return scans
 }
 
@@ -48,14 +32,15 @@ async function getScansVA(page, prevPage) {
 
 function formatJsonScantrad(json) {
     let array = []
-    const items = json.rss.channel.item
-    for(var i = 0; i < items.length; i++) {
-        if(isInList(items[i].title['_cdata'].toUpperCase(), 'scans')) {
-            const title = items[i].title['_cdata'].replace('Scan - ', '').replace('Chapitre ', '')
-            const link = items[i].link['_text']
-            const pubDate = items[i].pubDate['_text']
-            const img = items[i].description['_cdata'].match('src="(https.*.png)')[0].replace('src="', '')
-            const item = { title, link, pubDate, img, site: 'Scantrad', lang: 'VF'}
+    const $ = cheerio.load(json.data)
+    const items = $('.h-left > .home-manga')
+    for(let i = 0; i < items.length; i++) {
+        const title = $(items[i]).find('.hmi-titre')[0] && $(items[i]).find('.hmi-titre')[0].children[0].children[0].data
+        if(title && isInList(title.toUpperCase(), 'scans')) {
+            const img = $(items[i]).find('.hm-image')[0] && `${SCANTRAD}${$(items[i]).find('.hm-image')[0].children[0].attribs.src}`
+            const chapt = $(items[i]).find('.hmit-numero')[0] && $(items[i]).find('.hmit-numero')[0].children[0].data
+            const link = $(items[i]).find('.hmi-lien')[0] && `${SCANTRAD}${$(items[i]).find('.hmi-lien')[0].attribs.href}`
+            const item = {title, chapt, link, img, site: 'Scantrad', lang: 'VF'}
             array = [...array, item]
         }
     }

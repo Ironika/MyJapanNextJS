@@ -9,10 +9,10 @@ const Banner = (props) => {
     return (
         <div className="c-glitch banner" style={{backgroundImage: 'url(' + banner + ')'}}>
             <h1 className="title">{props.title}</h1>
-            <div className="c-glitch__img" style={{backgroundImage: 'url(' + homescreen + ')'}}></div>
-            <div className="c-glitch__img" style={{backgroundImage: 'url(' + homescreen3 + ')'}}></div>
             <div className="c-glitch__img" style={{backgroundImage: 'url(' + homescreen2 + ')'}}></div>
+            <div className="c-glitch__img" style={{backgroundImage: 'url(' + homescreen3 + ')'}}></div>
             <div className="c-glitch__img" style={{backgroundImage: 'url(' + homescreen + ')'}}></div>
+            <div className="c-glitch__img" style={{backgroundImage: 'url(' + homescreen2 + ')'}}></div>
             <div className="c-glitch__img" style={{backgroundImage: 'url(' + banner + ')'}}></div>
         </div>
     )

@@ -47,18 +47,16 @@
                     flex: 70%;
                     h3 {
                         margin-top: 15px;
+                        margin-bottom: 5px;
                         margin-left: 10px;
                         // transform: translateY(50%);
                         text-shadow: black 0.5px 0.5px;
                         font-size: 18px;
                     }
-                    .date {
-                        font-size: 12px;
+                    p {
+                        font-size: 14px;
                         margin: 0;
-                        text-shadow: black 0.5px 0.5px;
-                        position: absolute;
-                        right: 5px;
-                        top: 5px;
+                        margin-left: 10px;
                     }
                     button {
                         background-color: $main-color;
@@ -67,7 +65,7 @@
                         color: white;
                         font-weight: bold;
                         position: absolute;
-                        bottom: 5px;
+                        top: 5px;
                         right: 5px;
                     }
                 }
