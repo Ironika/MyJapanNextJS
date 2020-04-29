@@ -1,5 +1,5 @@
 import { MongoClient } from 'mongodb';
-
+console.log(process.env.mongo_api_pwd)
 const client = new MongoClient(`mongodb+srv://Ironika:${process.env.mongo_api_pwd}@ironikaspace-p1klq.mongodb.net/ironikaspace?retryWrites=true&w=majority`, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
