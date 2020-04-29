@@ -77,6 +77,29 @@
             display: none;
           }
         }
+        .profile {
+          float: right;
+          cursor: pointer;
+          position: absolute;
+          right: 0;
+          top: -4px;
+          i {
+            color: $background-color;
+            font-size: 30px;
+            &:hover {
+              color: $main-color;
+            }
+          }
+          @media screen and (max-width: $md) {
+            display: none;
+          }
+          a {
+            border: 0;
+          }
+          a:hover {
+            border: 0;
+          }
+        }
 
     }
     .nav-mobile {
@@ -155,6 +178,12 @@
   }
   .active {
     color: $main-color !important;
+  }
+  .profile i {
+    color: $third-color !important;
+    &:hover {
+      color: $main-color !important;
+    }
   }
 }
 

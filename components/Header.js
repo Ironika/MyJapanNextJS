@@ -57,6 +57,10 @@ const Header = (props) => {
                 <li className="burger" onClick={handleClickMenu}>
                     <i className={menuIsOpen ? 'fa fa-close' : "fa fa-bars"}></i>
                 </li>
+
+                <li className="profile" onClick={handleClickMenu}>
+                    <Link href={'/profile'}><a><i className="fa fa-user"></i></a></Link>
+                </li>
             </ul>
             <ul className={menuIsOpen ? 'nav-mobile menuIsOpen' : 'nav-mobile'}>
                 <li onClick={handleClickCloseMenu}>
@@ -95,6 +99,14 @@ const Header = (props) => {
                     <Link href={'/animes'}>
                         <a>
                             Animes
+                            <i className="fa fa-arrow-right"></i>
+                        </a>
+                    </Link>
+                </li>
+                <li onClick={handleClickCloseMenu}>
+                    <Link href={'/profile'}>
+                        <a>
+                            Profile
                             <i className="fa fa-arrow-right"></i>
                         </a>
                     </Link>

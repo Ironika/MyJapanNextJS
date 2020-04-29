@@ -7,6 +7,8 @@ require('dotenv').config();
 module.exports = withPlugins([withSass, withImages, withFonts], {
     env: {
         api: process.env.NODE_ENV == 'dev' ? 'http://localhost:3000/api/' : 'https://ironikaspace.com/api/',
-        mongo_api_pwd: process.env.MONGO_API
+        mongo_api_pwd: process.env.MONGO_API,
+        mailer_user: process.env.MAILER_USER,
+        mailer_pwd: process.env.MAILER_PWD
     }
 })

@@ -18,18 +18,18 @@ UsersHandler.post(async (req, res) =>  {
     if(!email || !password)
         return res.json({status: 400, err: 'Email & password are required'})
 
-    const response = await req.db.collection('users').countDocuments({ email })
-    if (response > 0)
-        return res.json({err: 'Email already exist', status: 400})
+    const exist = await req.db.collection('users').countDocuments({ email })
+    if (exist > 0)
+        return res.json({err: 'Email already exist !', status: 400})
 
     const pwd_hash = await bcrypt.hash(password, 10)
 
-    req.db.collection('users').insertOne({email, pwd_hash}, function(err, result) {
-        console.log(result)
-        if (err) throw err
-        if(result) return res.json({status: 200, email: email})
-        return res.json({status: 400, err: 'An error Occured'})
-    });
+    const response = await req.db.collection('users').insertOne({email, pwd_hash})
+    if(response) {
+        const user = await req.db.collection('users').findOne({email})
+        return res.json({status: 200, user: {id: user._id, email: user.email}})
+    }
+    return res.json({status: 400, err: 'An error Occured !'})
 });
 
 export default UsersHandler;

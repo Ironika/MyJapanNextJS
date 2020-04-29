@@ -12,9 +12,9 @@ AuthHandler.post(async (req, res) =>  {
         const matchPwd = await bcrypt.compare(password, user.pwd_hash)
         if(matchPwd)
             return res.json({status: 200, user: {id: user._id, email: user.email} })
-        return res.json({err: 'Password not match', status: 401})
+        return res.json({err: 'Wrong password !', status: 401})
     } else
-        return res.json({err: 'Email not found', status: 400})
+        return res.json({err: 'Email not found !', status: 400})
 })
 
 export default AuthHandler;
