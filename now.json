@@ -4,5 +4,12 @@
         "mongo_api_pwd": "@mongo_api_pwd",
         "mailer_user": "@mailer_user",
         "mailer_pwd": "@mailer_pwd"
+    },
+    "build": {
+        "env": {
+            "mongo_api_pwd": "@mongo_api_pwd",
+            "mailer_user": "@mailer_user",
+            "mailer_pwd": "@mailer_pwd"
+        }
     }
 }

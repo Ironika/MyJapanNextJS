@@ -8,7 +8,7 @@ AuthHandler.use(middleware);
 AuthHandler.post(async (req, res) =>  {
     const { body: { email, password } } = req
     const user = await req.db.collection('users').findOne({email})
-    if(user) {
+    if(user.email) {
         const matchPwd = await bcrypt.compare(password, user.pwd_hash)
         if(matchPwd)
             return res.json({status: 200, user: {id: user._id, email: user.email} })
