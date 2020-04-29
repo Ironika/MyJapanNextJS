@@ -11,7 +11,7 @@ npm run dev
 npm run build
 
 # DEPLOY
-auto deploy with ZEIT now
+now (Or auto deploy with ZEIT)
 
 
 # -----------------------------------------
