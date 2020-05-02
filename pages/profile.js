@@ -1,32 +1,18 @@
 import React, { useState, useEffect} from 'react'
 import Router from 'next/router'
 import { getApiDatas } from '../helpers'
-import { CardAnime, ListPaginate } from '../components'
+import { ListPaginate } from '../components'
 import jsCookie from 'js-cookie'
+import { useUser } from '../hooks'
 
 const Profile = (props) => {
-    const [user, setUser] = useState({})
+    const { user } = useUser()
     const [checked, setChecked] = useState('scans')
-    const [bookmarks, setBookmarks] = useState({})
     const [scans, setScans] = useState([])
     const [animes, setAnimes] = useState([])
 
-    if (process.browser) {
-        const _user = jsCookie.get('user') ? JSON.parse(jsCookie.get('user')) : null
-        if(!_user) Router.push('/account')
-    }
-
     useEffect(() => {
-        const fetchDatas = async(uid) => {
-            const { bookmark } = await getApiDatas(`bookmarks/${uid}`)
-            setBookmarks(bookmark)
-        }
-        const _user = jsCookie.get('user') ? JSON.parse(jsCookie.get('user')) : null
-        if(_user) {
-            setUser(_user)
-            fetchDatas(_user.id)
-        } else
-            Router.push('/account')
+        if(!user) Router.push('/account')
     }, [])
 
     const handleClickLogout = () => {
@@ -39,7 +25,7 @@ const Profile = (props) => {
             const _animes = await getApiDatas('animes', 1, null, user.id, true)
             setAnimes(_animes)
         } else if(checked === 'scans') {
-            const _scans = await getApiDatas('scans', 1, null, user.id)
+            const _scans = await getApiDatas('scans', 1, null, user.id, true)
             setScans(_scans)
         }
         setChecked(checked)
@@ -59,7 +45,11 @@ const Profile = (props) => {
                 </div>
             </div>
             {
-                checked === 'settings' && <button onClick={() => handleClickLogout()}>Logout</button>
+                checked === 'settings' &&
+                    <div className="settings-container">
+                        <p>{user.email}</p>
+                        <button onClick={() => handleClickLogout()}>Logout</button>
+                    </div>
             }
             {
                 checked === 'scans' &&

@@ -1,5 +1,5 @@
 .Profile {
-    min-height: 600px;
+    min-height: 500px;
     position: relative;
     &:before {
         content: '';
@@ -12,6 +12,21 @@
         border-style: solid;
         border-width: 0px 0 120px 200vh;
         border-color: transparent transparent $background-color transparent;
+    }
+
+    .settings-container {
+        text-align: center;
+        padding: 20px;
+        button {
+            width: 20%;
+            height: 40px;
+            border: transparent;
+            background-color: $main-color;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            font-family: $font;
+        }
     }
 
     .card-container {

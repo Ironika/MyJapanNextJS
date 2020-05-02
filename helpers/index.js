@@ -31,7 +31,7 @@ export const postApiDatas = async(path, datas) => {
     return []
 }
 
-export const updateApiDatas = async(path, datas) => {
+export const putApiDatas = async(path, datas) => {
     let url = `${process.env.api}${path}`
     try {
         const { data } = await Axios.put(url, datas)

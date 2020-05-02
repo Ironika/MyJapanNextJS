@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import Tilt from 'react-tilt'
 import PropTypes from 'prop-types'
 import { useUser } from '../hooks'
-import { postApiDatas, updateApiDatas } from '../helpers'
+import { postApiDatas, putApiDatas } from '../helpers'
 
 const CardAnime = (props) => {
     const [isBookmarked, setIsBookmarked] = useState(props.data.isBookmarked ? props.data.isBookmarked : false)
@@ -19,9 +19,9 @@ const CardAnime = (props) => {
         const datas = { datas: anime, type: 'animes' }
 
         if(isBookmarked)
-            await updateApiDatas(`bookmarks/${user.id}`, datas)
+            await putApiDatas(`users/${user.id}`, datas)
         else
-            await postApiDatas(`bookmarks/${user.id}`, datas)
+            await postApiDatas(`users/${user.id}`, datas)
 
         setIsBookmarked(!isBookmarked)
     }

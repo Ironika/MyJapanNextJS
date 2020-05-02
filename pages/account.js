@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import Router from 'next/router'
-import { postApiDatas } from '../helpers'
+import { postApiDatas, putApiDatas } from '../helpers'
 import homescreen from '../public/img/homescreen3.jpg'
 import { Loader } from '../components'
 import jsCookie from 'js-cookie'
@@ -8,7 +8,7 @@ import jsCookie from 'js-cookie'
 const PATH = {
     'sign-in': 'auth',
     'sign-up': 'users',
-    'reset': 'reset_pwd'
+    'reset': 'auth'
 }
 
 const Account = () => {
@@ -36,7 +36,12 @@ const Account = () => {
             return
         }
 
-        const res = await postApiDatas(PATH[checked], {email, password})
+        let res;
+        if(checked === 'reset')
+            res = await putApiDatas(PATH[checked], {email, password})
+        else
+            res = await postApiDatas(PATH[checked], {email, password})
+
         if(res.status !== 200) {
             setLoader(false)
             setError(res.err)
