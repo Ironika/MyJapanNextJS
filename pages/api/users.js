@@ -5,14 +5,6 @@ import bcrypt from 'bcrypt'
 const UsersHandler = nextConnect();
 UsersHandler.use(middleware);
 
-UsersHandler.get(async (req, res) =>  {
-    req.db.collection('users').find({}).toArray(function(err, users) {
-        if (err) throw err
-        if(users) return res.json({status: 200, users})
-        return res.json({status: 400, err: 'An error Occured'})
-    });
-})
-
 UsersHandler.post(async (req, res) =>  {
     const { body: { email, password } } = req
     if(!email || !password)
