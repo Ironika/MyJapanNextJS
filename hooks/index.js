@@ -1,6 +1,6 @@
 import { usePaginate } from './UsePaginate'
 import { useTags } from './UseTags'
-import { useUser } from './UseUser'
+import { useUser } from './useUser'
 
 export {
     usePaginate,
