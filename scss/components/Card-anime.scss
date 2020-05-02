@@ -35,6 +35,21 @@
         background-size: cover;
         text-decoration: none;
         cursor: pointer;
+        z-index: -1;
+
+        i {
+            position: absolute;
+            top: 0;
+            right: 0;
+            font-size: 40px;
+            color: $background-color;
+            text-shadow: .5px .5px black;
+            padding: 10px 10px 20px 20px;
+            z-index: 5;
+        }
+        .fa-star {
+            color: #ffd700;
+        }
 
         &::before {
             content: "";
@@ -49,7 +64,7 @@
         &-content {
             position: absolute;
             bottom: 12px;
-            width: 100%;
+            width: 95%;
             color: #FFF;
             text-decoration: none;
             text-align: center;

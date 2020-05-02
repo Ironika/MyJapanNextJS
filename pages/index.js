@@ -23,7 +23,6 @@ const scrappedSites = [
     {title: 'Developpez.com', type: 'dev'},
     {title: 'MangaKakalot', type: 'scans'},
     {title: 'Scantrad', type: 'scans'},
-    {title: 'Webtoons', type: 'scans'},
     {title: 'Vostfree', type: 'animes'}
 ]
 

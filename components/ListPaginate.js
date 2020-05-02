@@ -3,8 +3,10 @@ import debounce from "lodash.debounce"
 import PropTypes from 'prop-types'
 import { getApiDatas } from '../helpers'
 import { CardScanVa, CardAnime, CardScansVaSkeleton, CardAnimesSkeleton } from './'
+import { useUser } from '../hooks'
 
 const ListPaginate = (props) => {
+    const { user } = useUser()
     const callPageBy = props.type === 'scansva' ? 4 : 2
     const limit = props.type === 'scansva' ? 100 : 50
     const [currentPage, setCurrentPage] = useState(props.type === 'scansva' ? 4 : 1)
@@ -15,28 +17,32 @@ const ListPaginate = (props) => {
     const [isOpen, setIsOpen] = useState(true)
 
     useEffect(() => {
-        const fetchDatas = async () => {
+        const fetchDatas = async (uid) => {
             let _datas = props.datas
+            const onlyBookmark = props.onlyBookmark ? true : false
             if(!props.datas)
-                _datas = await getApiDatas(props.type, currentPage)
+                _datas = await getApiDatas(props.type, currentPage, null, uid, onlyBookmark)
             if(_datas.length === 0) {
                 const _currentPage = currentPage + callPageBy
-                _datas = await getApiDatas(props.type, _currentPage, currentPage)
+                _datas = await getApiDatas(props.type, _currentPage, currentPage, uid, onlyBookmark)
                 setCurrentPage(_currentPage)
             }
             setDatas(_datas)
             setLoader(false)
         }
-        fetchDatas()
-    }, [])
+        const uid = user ? user.id : null
+        fetchDatas(uid)
+    }, [user])
 
     const loadItems = async() => {
-        if(datas.length >= limit) {
+        const onlyBookmark = props.onlyBookmark ? true : false
+        if(datas.length >= limit || (onlyBookmark && currentPage > 3)) {
             setHasMore(false)
         } else {
             setLoadMore(true)
             const _currentPage = currentPage + callPageBy
-            const _datas = await getApiDatas(props.type, _currentPage, currentPage)
+            const uid = user ? user.id : null
+            const _datas = await getApiDatas(props.type, _currentPage, currentPage, uid, onlyBookmark)
             const newDatas = [...datas, ..._datas]
             setDatas(newDatas)
             setCurrentPage(_currentPage)
@@ -88,7 +94,8 @@ const ListPaginate = (props) => {
 ListPaginate.propTypes = {
     datas: PropTypes.array,
     type: PropTypes.string.isRequired,
-    title: PropTypes.string
+    title: PropTypes.string,
+    onlyBookmark: PropTypes.bool
 }
 
 export default ListPaginate

@@ -3,6 +3,7 @@ import Router from 'next/router'
 import { postApiDatas } from '../helpers'
 import homescreen from '../public/img/homescreen3.jpg'
 import { Loader } from '../components'
+import jsCookie from 'js-cookie'
 
 const PATH = {
     'sign-in': 'auth',
@@ -20,7 +21,7 @@ const Account = () => {
     const [loader, setLoader] = useState(false)
 
     useEffect(() => {
-        const _user = JSON.parse(sessionStorage.getItem('user'))
+        const _user = jsCookie.get('user') ? JSON.parse(jsCookie.get('user')) : null
         if(_user) Router.push('/profile')
     }, [])
 
@@ -43,7 +44,7 @@ const Account = () => {
         }
 
         if(checked === 'sign-in' || checked === 'sign-up') {
-            sessionStorage.setItem('user', JSON.stringify(res.user))
+            jsCookie.set('user', JSON.stringify(res.user))
             Router.push('/profile')
         } else {
             setLoader(false)
