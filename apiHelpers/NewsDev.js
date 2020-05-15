@@ -2,32 +2,37 @@ const { DEVELOPPEZ, JSFEEDS, ECHOJS, REDDIT_JS, REDDIT_REACT, SITEPOINT_JS } = r
 const { fetchRss } = require('./Shared');
 
 async function getNewsDev() {
-    const [
-        developpezJson,
-        jsFeedsJson,
-        echoJsJson,
-        redditJsJson,
-        redditReactJson,
-        sitepointJsJson
-    ] = await Promise.all([
-        fetchRss(DEVELOPPEZ),
-        fetchRss(JSFEEDS),
-        fetchRss(ECHOJS),
-        fetchRss(REDDIT_JS),
-        fetchRss(REDDIT_REACT),
-        fetchRss(SITEPOINT_JS)
-    ])
+    try {
+        const [
+            developpezJson,
+            jsFeedsJson,
+            echoJsJson,
+            redditJsJson,
+            redditReactJson,
+            sitepointJsJson
+        ] = await Promise.all([
+            fetchRss(DEVELOPPEZ),
+            fetchRss(JSFEEDS),
+            fetchRss(ECHOJS),
+            fetchRss(REDDIT_JS),
+            fetchRss(REDDIT_REACT),
+            fetchRss(SITEPOINT_JS)
+        ])
 
-    const developpez = formatJsonDeveloppez(developpezJson)
-    const jsFeeds = formatJsonJsFeeds(jsFeedsJson)
-    const echoJs = formatJsonEchoJS(echoJsJson)
-    const redditJs = formatJsonRedditJs(redditJsJson)
-    const redditReact = formatJsonRedditReact(redditReactJson)
-    const sitepointJs = formatJsonSitepointJS(sitepointJsJson)
+        const developpez = developpezJson ? formatJsonDeveloppez(developpezJson) : []
+        const jsFeeds = jsFeedsJson ? formatJsonJsFeeds(jsFeedsJson) : []
+        const echoJs = echoJsJson ? formatJsonEchoJS(echoJsJson) : []
+        const redditJs = redditJsJson ? formatJsonRedditJs(redditJsJson) :[]
+        const redditReact = redditReactJson ? formatJsonRedditReact(redditReactJson) : []
+        const sitepointJs = sitepointJsJson ? formatJsonSitepointJS(sitepointJsJson) : []
 
-    const dev = [...developpez, ...jsFeeds, ...echoJs, ...redditJs, ...redditReact, ...sitepointJs]
-    dev.sort((a, b) => b.pubDate - a.pubDate)
-    return dev
+        const dev = [...developpez, ...jsFeeds, ...echoJs, ...redditJs, ...redditReact, ...sitepointJs]
+        dev.sort((a, b) => b.pubDate - a.pubDate)
+        return dev
+    } catch(e){
+        console.log(e)
+    }
+    return []
 }
 
 function formatJsonDeveloppez(json) {

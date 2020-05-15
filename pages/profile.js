@@ -1,7 +1,7 @@
 import React, { useState, useEffect} from 'react'
 import Router from 'next/router'
 import { getApiDatas } from '../helpers'
-import { ListPaginate } from '../components'
+import { ListPaginate, CardScanVa } from '../components'
 import jsCookie from 'js-cookie'
 import { useUser } from '../hooks'
 
@@ -13,6 +13,13 @@ const Profile = (props) => {
 
     useEffect(() => {
         if(!user) Router.push('/account')
+
+        const fetchDatas = async() => {
+            const response = await getApiDatas(`users/${user.id}`)
+            setScans(response.bookmark.scans)
+        }
+
+        fetchDatas()
     }, [])
 
     const handleClickLogout = () => {
@@ -25,7 +32,7 @@ const Profile = (props) => {
             const _animes = await getApiDatas('animes', 1, null, user.id, true)
             setAnimes(_animes)
         } else if(checked === 'scans') {
-            const _scans = await getApiDatas('scans', 1, null, user.id, true)
+            const _scans = await getApiDatas(`users/${user.id}`)
             setScans(_scans)
         }
         setChecked(checked)
@@ -53,8 +60,8 @@ const Profile = (props) => {
             }
             {
                 checked === 'scans' &&
-                <div>
-                    scans
+                <div className="card-container">
+                    { scans.length > 0 && scans.map(scan => <CardScanVa data={scan}/>) }
                 </div>
             }
             {

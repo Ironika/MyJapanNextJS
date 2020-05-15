@@ -3,9 +3,14 @@ const convert = require('xml-js');
 const { scansList, animeList } = require('../mangas');
 
 const fetchRss = async (url) => {
-    const response = await axios.get(url)
-    const json = JSON.parse(convert.xml2json(response.data, {compact: true, spaces: 4}));
-    return json
+    try{
+        const response = await axios.get(url)
+        const json = JSON.parse(convert.xml2json(response.data, {compact: true, spaces: 4}));
+        return json
+    } catch(e) {
+        console.log(e)
+        return ''
+    }
 }
 
 const isInList = (title, type) => {

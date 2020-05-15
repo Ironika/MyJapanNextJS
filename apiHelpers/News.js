@@ -36,14 +36,14 @@ async function getNews() {
 function formatJsonAdala(json) {
     let array = []
     const $ = cheerio.load(json.data)
-    const items = $('.post')
+    const items = $('article')
     const date = new Date()
     for(let i = 0; i < items.length; i++) {
-        const title = $('.post .entry-title a')[i] && $('.post .entry-title a')[i].children[0].data
-        const tag = $('.post .entry-category a')[i] && $('.post .entry-category a')[i].children[0].data
-        const desc = $('.post .entry-summary p')[i] && $('.post .entry-summary p')[i].children[0].data
-        const img = $('.post .wp-post-image')[i] && $('.post .wp-post-image')[i].attribs['data-src']
-        const link = $('.post .thumbnail-link')[i] && $('.post .thumbnail-link')[i].attribs.href
+        const title = $('article h2 a')[i] && $('article h2 a')[i].children[0] ? $('article h2 a')[i].children[0].data : ''
+        const tag = $('article .cat')[i] && $('article .cat')[i].children[0] && $('article .cat')[i].children[0].children[0] ? $('article .cat')[i].children[0].children[0].data : ''
+        const desc = $('article .entry-content p')[i] && $('article .entry-content p')[i].children[0] ? $('article .entry-content p')[i].children[0].data : ''
+        const link = $('article h2 a')[i] && $('article h2 a')[i].children[0] ? $('article h2 a')[i].attribs.href : ''
+        const img = $('article .penci-image-holder')[i] ? $('article .penci-image-holder')[i].attribs['data-src'] : ''
         const item = {title, link, desc, img, tag, site: 'Adala-news', pubDate: date.setMinutes(-i)}
         array = [...array, item]
     }
