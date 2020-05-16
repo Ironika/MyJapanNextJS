@@ -64,7 +64,7 @@ const Profile = (props) => {
             {
                 checked === 'scans' &&
                 <div className="card-container">
-                    { scans.length > 0 && scans.map(scan => <CardScanVa data={scan} isInProfile={true} />) }
+                    { scans.length > 0 && scans.map((scan, key) => <CardScanVa key={key} data={scan} isInProfile={true} />) }
                 </div>
             }
             {
