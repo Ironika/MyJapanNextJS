@@ -1,4 +1,4 @@
-const { getScans } = require('../../apiHelpers/Scans');
+import getScans from '../../apiHelpers/Scans'
 
 export default async(req, res) => {
     const scans = await getScans()

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { getApiDatas } from '../helpers'
 import { ListPaginate, CardScan, CardScansSkeleton } from '../components'
+import jsHttpCookie from 'cookie'
 
 export const List = (props) => {
     const itemToDisplay = 6
@@ -53,7 +54,7 @@ const Scans = (props) => {
                     <List datas={props.scans} title={'Scantrad'} type={'scans'} />
                 </div>
                 <div className="right">
-                    <ListPaginate datas={props.scansVa} title={'MangaKakalot'} type={'scansva'} />
+                    <ListPaginate datas={props.scansVa} title={'MangaKakalot'} type={'scansva'} withChoice={true} />
                 </div>
             </div>
         </div>
@@ -63,7 +64,11 @@ const Scans = (props) => {
 Scans.getInitialProps = async ({req}) => {
     if(req) {
         const scans = await getApiDatas('scans')
-        const scansVa = await getApiDatas('scansva', 4)
+        // const scansVa = await getApiDatas('scansva', 4)
+        const cookiesJSON = jsHttpCookie.parse(req.headers.cookie);
+        const _user = cookiesJSON.user ? JSON.parse(cookiesJSON.user) : null
+        const uid = _user ? _user.id : null
+        const scansVa = await getApiDatas('scansva', 1, null, uid)
         return {scans, scansVa}
     }
     return {}

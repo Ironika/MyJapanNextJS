@@ -12,7 +12,10 @@ const Profile = (props) => {
     const [animes, setAnimes] = useState([])
 
     useEffect(() => {
-        if(!user) Router.push('/account')
+        if(!user) {
+            Router.push('/account')
+            return
+        }
 
         const fetchDatas = async() => {
             const response = await getApiDatas(`users/${user.id}`)
@@ -33,7 +36,7 @@ const Profile = (props) => {
             setAnimes(_animes)
         } else if(checked === 'scans') {
             const _scans = await getApiDatas(`users/${user.id}`)
-            setScans(_scans)
+            setScans(_scans.bookmark.scans)
         }
         setChecked(checked)
     }
@@ -61,7 +64,7 @@ const Profile = (props) => {
             {
                 checked === 'scans' &&
                 <div className="card-container">
-                    { scans.length > 0 && scans.map(scan => <CardScanVa data={scan}/>) }
+                    { scans.length > 0 && scans.map(scan => <CardScanVa data={scan} isInProfile={true} />) }
                 </div>
             }
             {

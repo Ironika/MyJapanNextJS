@@ -7,21 +7,25 @@ import { useUser } from '../hooks'
 
 const ListPaginate = (props) => {
     const { user } = useUser()
-    const callPageBy = props.type === 'scansva' ? 4 : 2
-    const limit = props.type === 'scansva' ? 100 : 50
-    const [currentPage, setCurrentPage] = useState(props.type === 'scansva' ? 4 : 1)
+    const [onlyBookmark, setOnlyBookmark] = useState(props.onlyBookmark ? true : false)
+    const callPageBy = onlyBookmark ? 4 : 1
+    const limit = props.type === 'scansva' ? 500 : 50
+    const [currentPage, setCurrentPage] = useState(onlyBookmark ? 4 : 1)
     const [datas, setDatas] = useState(props.datas || [])
     const [hasMore, setHasMore] = useState(true)
     const [loader, setLoader] = useState(props.datas ? false : true)
     const [loadMore, setLoadMore] = useState(false)
     const [isOpen, setIsOpen] = useState(true)
+    const [flag, setFlag] = useState(false)
 
     useEffect(() => {
+        setLoader(true)
         const fetchDatas = async (uid) => {
             let _datas = props.datas
-            const onlyBookmark = props.onlyBookmark ? true : false
-            if(!props.datas)
+            if(!props.datas || flag) {
                 _datas = await getApiDatas(props.type, currentPage, null, uid, onlyBookmark)
+                setFlag(false)
+            }
             if(_datas.length === 0) {
                 const _currentPage = currentPage + callPageBy
                 _datas = await getApiDatas(props.type, _currentPage, currentPage, uid, onlyBookmark)
@@ -32,11 +36,10 @@ const ListPaginate = (props) => {
         }
         const uid = user ? user.id : null
         fetchDatas(uid)
-    }, [user])
+    }, [user, onlyBookmark])
 
     const loadItems = async() => {
-        const onlyBookmark = props.onlyBookmark ? true : false
-        if(datas.length >= limit || (onlyBookmark && currentPage > 3)) {
+        if(datas.length >= limit || (props.type === 'animes' && onlyBookmark && currentPage > 3) || (props.type === 'scansva' && onlyBookmark && currentPage > 20)) {
             setHasMore(false)
         } else {
             setLoadMore(true)
@@ -64,11 +67,23 @@ const ListPaginate = (props) => {
         setIsOpen(!isOpen)
     }
 
+    const handleClickOnlyBookmark = (value) => {
+        setCurrentPage(1)
+        setFlag(true)
+        setOnlyBookmark(value)
+    }
+
     const fakeArray = Array(props.type === 'scansva' ? 8 : 10).fill(8)
 
     return (
         <>
             {props.title && <h2 onClick={handleClickOpen}>{props.title}<i className={isOpen ? "fa fa-chevron-down" : "fa fa-chevron-right"}></i></h2>}
+            {(props.withChoice && user) &&
+                <ul className="list-filters">
+                    <li className={onlyBookmark ? '' : 'filter-active'} onClick={() => handleClickOnlyBookmark(false)}>All</li>
+                    <li className={onlyBookmark ? 'filter-active' : ''} onClick={() => handleClickOnlyBookmark(true)}>Only Bookmarks</li>
+                </ul>
+            }
             <div className={isOpen ? "card-container open" : "card-container"}>
                 {loader ?
                     fakeArray.map((item, index) =>
