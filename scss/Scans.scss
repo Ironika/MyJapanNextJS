@@ -73,3 +73,53 @@
         }
     }
 }
+
+.ReactModalPortal {
+    .nav-modal {
+        padding: 20px;
+        text-align: left;
+    }
+    .reader {
+        overflow: scroll;
+        height: 90%;
+        img {
+            width: 100%;
+        }
+    }
+    .custom-select__single-value {
+        width: 100%
+    }
+    .select-container {
+        display: inline-block;
+        width: 200px;
+        margin-right: 20px;
+    }
+    .close {
+        position: absolute;
+        right: 30px;
+        cursor: pointer;
+        i {
+            margin-left: 5px;
+            font-size: 23px;
+            position: relative;
+            top: 3px;
+        }
+    }
+    .addBookmark {
+        padding: 9px;
+        background-color: #f6bfbc;
+        color: white;
+        padding-left: 35px;
+        position: relative;
+        font-size: 14px;
+        font-weight: bold;
+        cursor: pointer;
+        i {
+            color: gold;
+            font-size: 30px;
+            position: absolute;
+            left: 3px;
+            top: 3px;
+        }
+    }
+}

@@ -28,7 +28,8 @@ function formatJsonMangaKakalot(json, bookmarks, onlyBookmark) {
     for(let i = 0; i < items.length; i++) {
         const title = ($(items[i]).find('h3 > a')[0] && $(items[i]).find('h3 > a')[0].attribs) ? $(items[i]).find('h3 > a')[0].attribs.title : ''
         const img = ($(items[i]).find('img')[0] && $(items[i]).find('img')[0].attribs) ? $(items[i]).find('img')[0].attribs.src : ''
-        const chapt = ($(items[i]).find('.list-story-item-wrap-chapter')[0] && $(items[i]).find('.list-story-item-wrap-chapter')[0].children[0]) ? $(items[i]).find('.list-story-item-wrap-chapter')[0].children[0].data : ''
+        let chapt = ($(items[i]).find('.list-story-item-wrap-chapter')[0] && $(items[i]).find('.list-story-item-wrap-chapter')[0].children[0]) ? $(items[i]).find('.list-story-item-wrap-chapter')[0].children[0].data : ''
+        chapt = chapt.substring(chapt.indexOf('Chapter'))
         const link = ($(items[i]).find('.list-story-item-wrap-chapter')[0] && $(items[i]).find('.list-story-item-wrap-chapter')[0].attribs) ? $(items[i]).find('.list-story-item-wrap-chapter')[0].attribs.href : ''
         let item = {title, chapt, link, img, site: 'MangaKakalot', lang: 'VA'}
         if(bookmarks) {
