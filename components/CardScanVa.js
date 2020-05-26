@@ -109,12 +109,12 @@ const CardScanVa = (props) => {
             onRequestClose={() => setIsOpen(false)}
             style={customStyles}
             >
+            <span className="close" onClick={() => setIsOpen(false)}>Close<i className="fa fa-remove"></i></span>
             <div className="nav-modal">
                 <div className="select-container">
                     <Select value={selectedChapter} options={options} onChange={handleChangeOptions} classNamePrefix='custom-select' />
                 </div>
-                <span className="close" onClick={() => setIsOpen(false)}>Close<i className="fa fa-remove"></i></span>
-                { user && <button onClick={handleClickBookmarkModal} className="addBookmark" disabled={(isBookmarked && props.data.chapt.split(' ')[1] === selectedChapter.value) ? true : false}><i className={(isBookmarked && props.data.chapt.split(' ')[1] === selectedChapter.value) ? 'fa fa-star' : 'fa fa-star-o'}></i> Add to Bookmark</button>}
+                { user && <button onClick={handleClickBookmarkModal} className="addBookmark" disabled={(isBookmarked && props.data.chapt.split(' ')[1] === selectedChapter.value) ? true : false}><i className={(isBookmarked && props.data.chapt.split(' ')[1] === selectedChapter.value) ? 'fa fa-star' : 'fa fa-star-o'}></i><span>Add to Bookmark</span></button>}
             </div>
             {loader ?
                 <Loader/> :

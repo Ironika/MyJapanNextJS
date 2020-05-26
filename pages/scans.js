@@ -5,7 +5,7 @@ import { ListPaginate, CardScan, CardScansSkeleton } from '../components'
 import jsHttpCookie from 'cookie'
 
 export const List = (props) => {
-    const itemToDisplay = 6
+    const itemToDisplay = 9
     const [loader, setLoader] = useState(props.datas ? false : true)
     const [datas, setDatas] = useState([])
     const [isOpen, setIsOpen] = useState(true)
@@ -25,7 +25,7 @@ export const List = (props) => {
         setIsOpen(!isOpen)
     }
 
-    const fakeArray = Array(6).fill(6)
+    const fakeArray = Array(9).fill(9)
 
     return (
         <>
@@ -54,7 +54,7 @@ const Scans = (props) => {
                     <List datas={props.scans} title={'Scantrad'} type={'scans'} />
                 </div>
                 <div className="right">
-                    <ListPaginate datas={props.scansVa} title={'MangaKakalot'} type={'scansva'} withChoice={true} />
+                    <ListPaginate datas={props.scansVa} title={'MangaKakalot'} type={'scansva'} />
                 </div>
             </div>
         </div>

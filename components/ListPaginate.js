@@ -7,10 +7,9 @@ import { useUser } from '../hooks'
 
 const ListPaginate = (props) => {
     const { user } = useUser()
-    const [onlyBookmark, setOnlyBookmark] = useState(props.onlyBookmark ? true : false)
-    const callPageBy = onlyBookmark ? 4 : 1
+    const callPageBy = 1
     const limit = props.type === 'scansva' ? 500 : 50
-    const [currentPage, setCurrentPage] = useState(onlyBookmark ? 4 : 1)
+    const [currentPage, setCurrentPage] = useState(1)
     const [datas, setDatas] = useState(props.datas || [])
     const [hasMore, setHasMore] = useState(true)
     const [loader, setLoader] = useState(props.datas ? false : true)
@@ -23,12 +22,12 @@ const ListPaginate = (props) => {
         const fetchDatas = async (uid) => {
             let _datas = props.datas
             if(!props.datas || flag) {
-                _datas = await getApiDatas(props.type, currentPage, null, uid, onlyBookmark)
+                _datas = await getApiDatas(props.type, currentPage, null, uid, props.onlyBookmark)
                 setFlag(false)
             }
             if(_datas.length === 0) {
                 const _currentPage = currentPage + callPageBy
-                _datas = await getApiDatas(props.type, _currentPage, currentPage, uid, onlyBookmark)
+                _datas = await getApiDatas(props.type, _currentPage, currentPage, uid, props.onlyBookmark)
                 setCurrentPage(_currentPage)
             }
             setDatas(_datas)
@@ -36,16 +35,16 @@ const ListPaginate = (props) => {
         }
         const uid = user ? user.id : null
         fetchDatas(uid)
-    }, [user, onlyBookmark])
+    }, [user])
 
     const loadItems = async() => {
-        if(datas.length >= limit || (props.type === 'animes' && onlyBookmark && currentPage > 3) || (props.type === 'scansva' && onlyBookmark && currentPage > 20)) {
+        if(datas.length >= limit || (props.type === 'animes' && props.onlyBookmark && currentPage > 2)) {
             setHasMore(false)
         } else {
             setLoadMore(true)
             const _currentPage = currentPage + callPageBy
             const uid = user ? user.id : null
-            const _datas = await getApiDatas(props.type, _currentPage, currentPage, uid, onlyBookmark)
+            const _datas = await getApiDatas(props.type, _currentPage, currentPage, uid, props.onlyBookmark)
             const newDatas = [...datas, ..._datas]
             setDatas(newDatas)
             setCurrentPage(_currentPage)
@@ -67,23 +66,11 @@ const ListPaginate = (props) => {
         setIsOpen(!isOpen)
     }
 
-    const handleClickOnlyBookmark = (value) => {
-        setCurrentPage(1)
-        setFlag(true)
-        setOnlyBookmark(value)
-    }
-
     const fakeArray = Array(props.type === 'scansva' ? 8 : 10).fill(8)
 
     return (
         <>
             {props.title && <h2 onClick={handleClickOpen}>{props.title}<i className={isOpen ? "fa fa-chevron-down" : "fa fa-chevron-right"}></i></h2>}
-            {(props.withChoice && user) &&
-                <ul className="list-filters">
-                    <li className={onlyBookmark ? '' : 'filter-active'} onClick={() => handleClickOnlyBookmark(false)}>All</li>
-                    <li className={onlyBookmark ? 'filter-active' : ''} onClick={() => handleClickOnlyBookmark(true)}>Only Bookmarks</li>
-                </ul>
-            }
             <div className={isOpen ? "card-container open" : "card-container"}>
                 {loader ?
                     fakeArray.map((item, index) =>

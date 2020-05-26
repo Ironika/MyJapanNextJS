@@ -54,7 +54,9 @@ BookmarksHandler.put(async (req, res) =>  {
     const bookmark = await req.db.collection('bookmarks').findOne({ user_id: uid })
     let newDatas = type === 'scans' ? bookmark.scans : bookmark.animes
     if(type === 'scans') {
-        newDatas.splice(newDatas.indexOf(datas), 1);
+        for(let i = 0; i < newDatas.length; i++)
+            if(newDatas[i].title === datas.title)
+                newDatas.splice(i, 1);
     } else {
         newDatas.splice(newDatas.indexOf(datas.title), 1);
     }

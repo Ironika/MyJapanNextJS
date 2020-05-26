@@ -49,6 +49,9 @@
             i {
                 margin-left: 20px;
                 font-size: 25px;
+                // @media screen and (min-width: $md) {
+                //     display: none;
+                // }
             }
         }
         .card-container {
@@ -76,7 +79,7 @@
 
 .ReactModalPortal {
     .nav-modal {
-        padding: 20px;
+        padding: 20px 0;
         text-align: left;
     }
     .reader {
@@ -93,11 +96,16 @@
         display: inline-block;
         width: 200px;
         margin-right: 20px;
+        @media screen and (max-width: $md) {
+            margin-top: 20px;
+        }
     }
     .close {
         position: absolute;
-        right: 30px;
+        right: 20px;
+        top: 25px;
         cursor: pointer;
+        color: $third-color;
         i {
             margin-left: 5px;
             font-size: 23px;
@@ -107,13 +115,22 @@
     }
     .addBookmark {
         padding: 9px;
-        background-color: #f6bfbc;
-        color: white;
+        background-color: transparent;
+        border: none;
+        color: $third-color;
         padding-left: 35px;
         position: relative;
         font-size: 14px;
         font-weight: bold;
         cursor: pointer;
+        @media screen and (max-width: $md) {
+            top: -12px;
+        }
+        span {
+            @media screen and (max-width: $md) {
+                display: none;
+            }
+        }
         i {
             color: gold;
             font-size: 30px;
