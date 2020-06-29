@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Tilt from 'react-tilt'
 import PropTypes from 'prop-types'
 import { useUser } from '../hooks'
@@ -9,7 +9,7 @@ import Select from 'react-select';
 import { Loader } from '../components'
 
 const CardScanVa = (props) => {
-    const [data, setData] = useState(props.data)
+    const [data, setData] = useState({...props.data})
     const [isBookmarked, setIsBookmarked] = useState(data.isBookmarked ? data.isBookmarked : false)
     const { user } = useUser()
     const [isOpen, setIsOpen] = useState(false)
@@ -19,6 +19,19 @@ const CardScanVa = (props) => {
     const [loader, setLoader] = useState(false)
     const [accessDenied, setAccessDenied] = useState(false)
     const [currentLink, setCurrentLink] = useState(data.link)
+
+    useEffect(() => {
+        const fetchDatas = async() => {
+            const result = await getApiDatas('scansva', null, null, null, null, data.link)
+            let scan = {...data}
+            scan.chaptMax = result.options[0].value
+            scan.chapt = 'Chapter ' + scan.chapt.split(' ')[1].replace(':', '')
+            setData(scan)
+        }
+        if(props.isInProfile) {
+            fetchDatas()
+        }
+    }, []);
 
     const customStyles = {
         content : {
@@ -96,14 +109,14 @@ const CardScanVa = (props) => {
 
     return (
         <>
-        <Tilt className={props.isInProfile ? "tilt tilt-va card-profile" : "tilt tilt-va"}>
-            <div className="card-scans-va" style={style} onClick={handleClick}>
-                {user && <i title="Click to bookmark" className={isBookmarked ? 'fa fa-star' : 'fa fa-star-o'} onClick={(e) => handleClickBookmark(e, data)}></i> }
-                <a href={data.link} className="card-scans-va-content" target="_blank" rel="noopener noreferrer">
-                    <p className="date">{data.chapt}</p>
-                    <h3>{data.title}</h3>
-                    <button>{data.lang}</button>
-                </a>
+            <Tilt className={props.isInProfile ? "tilt tilt-va card-profile" : "tilt tilt-va"}>
+                <div className="card-scans-va" style={style} onClick={handleClick}>
+                    {user && <i title="Click to bookmark" className={isBookmarked ? 'fa fa-star' : 'fa fa-star-o'} onClick={(e) => handleClickBookmark(e, data)}></i> }
+                    <a href={data.link} className="card-scans-va-content" target="_blank" rel="noopener noreferrer">
+                        <p className="date">{props.isInProfile ? `${data.chapt} / ${data.chaptMax}` : data.chapt}</p>
+                        <h3>{data.title}</h3>
+                        <button>{data.lang}</button>
+                    </a>
             </div>
         </Tilt>
         {isOpen && <Modal
