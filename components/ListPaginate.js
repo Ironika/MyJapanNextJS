@@ -81,6 +81,7 @@ const ListPaginate = (props) => {
         } else {
             const uid = user ? user.id : null
             _datas = await getApiDatas(props.type, currentPage, null, uid, props.onlyBookmark)
+            setHasMore(true)
         }
         setDatas(_datas)
         setLoader(false)

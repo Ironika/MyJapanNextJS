@@ -12,8 +12,7 @@ export default async function SearchScans(search) {
         let chapt = ($(items[i]).find('.story_chapter > a')[0] && $(items[i]).find('.story_chapter > a')[0].children[0]) ? $(items[i]).find('.story_chapter > a')[0].children[0].data : ''
         chapt = chapt.substring(chapt.indexOf('Chapter'))
         chapt = chapt.split(':')[0]
-        const link = ($(items[i]).find('.story_name > a')[0] && $(items[i]).find('.story_name > a')[0].attribs) ? $(items[i]).find('.story_name > a')[0].attribs.href : ''
-        // const link = ($(items[i]).find('.list-story-item-wrap-chapter')[0] && $(items[i]).find('.list-story-item-wrap-chapter')[0].attribs) ? $(items[i]).find('.list-story-item-wrap-chapter')[0].attribs.href : ''
+        const link = ($(items[i]).find('.story_chapter > a')[0] && $(items[i]).find('.story_chapter > a')[0].attribs) ? $(items[i]).find('.story_chapter > a')[0].attribs.href : ''
         let item = {title, chapt, link, img, site: 'MangaKakalot', lang: 'VA'}
         array = [...array, item]
     }
