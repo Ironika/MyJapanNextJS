@@ -9,15 +9,16 @@ import Select from 'react-select';
 import { Loader } from '../components'
 
 const CardScanVa = (props) => {
-    const [isBookmarked, setIsBookmarked] = useState(props.data.isBookmarked ? props.data.isBookmarked : false)
+    const [data, setData] = useState(props.data)
+    const [isBookmarked, setIsBookmarked] = useState(data.isBookmarked ? data.isBookmarked : false)
     const { user } = useUser()
     const [isOpen, setIsOpen] = useState(false)
     const [reader, setReader] = useState([])
-    const [selectedChapter, setSelectedChapter] = useState({label: 'Chapter ' + props.data.chapt.split(' ')[1].replace(':', ''), value: props.data.chapt.split(' ')[1].replace(':', '')})
+    const [selectedChapter, setSelectedChapter] = useState({label: 'Chapter ' + data.chapt.split(' ')[1].replace(':', ''), value: data.chapt.split(' ')[1].replace(':', '')})
     const [options, setOptions] = useState([])
     const [loader, setLoader] = useState(false)
     const [accessDenied, setAccessDenied] = useState(false)
-    const [currentLink, setCurrentLink] = useState('')
+    const [currentLink, setCurrentLink] = useState(data.link)
 
     const customStyles = {
         content : {
@@ -40,8 +41,8 @@ const CardScanVa = (props) => {
 
     const handleClick = async(e) => {
         e.preventDefault()
-        // window.open(props.data.link, '_blank')
-        const reader = await getApiDatas('scansva', null, null, null, null, props.data.link)
+        // window.open(data.link, '_blank')
+        const reader = await getApiDatas('scansva', null, null, null, null, data.link)
         setReader(reader.scans)
         setOptions(reader.options)
         setIsOpen(true)
@@ -63,19 +64,20 @@ const CardScanVa = (props) => {
     }
 
     const handleClickBookmarkModal = async() => {
-        let newScan = {...props.data}
+        setIsBookmarked(true)
+        let newScan = {...data}
         newScan.chapt = selectedChapter.label
         newScan.link = currentLink
         newScan.isBookmarked = true
         const datas = { datas: newScan, type: 'scans' }
         await postApiDatas(`users/${user.id}`, datas)
-        setIsBookmarked(true)
+        setData(newScan)
     }
 
     const handleChangeOptions = async(selectedOpt) => {
         setLoader(true)
-        const chapt = '_' + props.data.chapt.split(' ')[1].replace(':', '')
-        const newLink = props.data.link.replace(chapt, '_' + selectedOpt.value)
+        const chapt = '_' + data.chapt.split(' ')[1].replace(':', '')
+        const newLink = data.link.replace(chapt, '_' + selectedOpt.value)
         setSelectedChapter(selectedOpt)
         const reader = await getApiDatas('scansva', null, null, null, null, newLink)
         setCurrentLink(newLink)
@@ -90,17 +92,17 @@ const CardScanVa = (props) => {
         setAccessDenied(true)
     }
 
-    const style = { backgroundImage: 'url(' + props.data.img + ')' }
+    const style = { backgroundImage: 'url(' + data.img + ')' }
 
     return (
         <>
         <Tilt className={props.isInProfile ? "tilt tilt-va card-profile" : "tilt tilt-va"}>
             <div className="card-scans-va" style={style} onClick={handleClick}>
-                {user && <i title="Click to bookmark" className={isBookmarked ? 'fa fa-star' : 'fa fa-star-o'} onClick={(e) => handleClickBookmark(e, props.data)}></i> }
-                <a href={props.data.link} className="card-scans-va-content" target="_blank" rel="noopener noreferrer">
-                    <p className="date">{props.data.chapt}</p>
-                    <h3>{props.data.title}</h3>
-                    <button>{props.data.lang}</button>
+                {user && <i title="Click to bookmark" className={isBookmarked ? 'fa fa-star' : 'fa fa-star-o'} onClick={(e) => handleClickBookmark(e, data)}></i> }
+                <a href={data.link} className="card-scans-va-content" target="_blank" rel="noopener noreferrer">
+                    <p className="date">{data.chapt}</p>
+                    <h3>{data.title}</h3>
+                    <button>{data.lang}</button>
                 </a>
             </div>
         </Tilt>
@@ -114,7 +116,7 @@ const CardScanVa = (props) => {
                 <div className="select-container">
                     <Select value={selectedChapter} options={options} onChange={handleChangeOptions} classNamePrefix='custom-select' />
                 </div>
-                { user && <button onClick={handleClickBookmarkModal} className="addBookmark" disabled={(isBookmarked && props.data.chapt.split(' ')[1] === selectedChapter.value) ? true : false}><i className={(isBookmarked && props.data.chapt.split(' ')[1] === selectedChapter.value) ? 'fa fa-star' : 'fa fa-star-o'}></i><span>Add to Bookmark</span></button>}
+                { user && <button onClick={handleClickBookmarkModal} className="addBookmark" disabled={(isBookmarked && data.chapt.split(' ')[1] === selectedChapter.value) ? true : false}><i className={(isBookmarked && data.chapt.split(' ')[1] === selectedChapter.value) ? 'fa fa-star' : 'fa fa-star-o'}></i><span>Add to Bookmark</span></button>}
             </div>
             {loader ?
                 <Loader/> :
