@@ -54,7 +54,6 @@ const CardScanVa = (props) => {
 
     const handleClick = async(e) => {
         e.preventDefault()
-        // window.open(data.link, '_blank')
         const reader = await getApiDatas('scansva', null, null, null, null, data.link)
         setReader(reader.scans)
         setOptions(reader.options)
@@ -113,7 +112,7 @@ const CardScanVa = (props) => {
                 <div className="card-scans-va" style={style} onClick={handleClick}>
                     {user && <i title="Click to bookmark" className={isBookmarked ? 'fa fa-star' : 'fa fa-star-o'} onClick={(e) => handleClickBookmark(e, data)}></i> }
                     <a href={data.link} className="card-scans-va-content" target="_blank" rel="noopener noreferrer">
-                        <p className="date">{props.isInProfile ? `${data.chapt} / ${data.chaptMax}` : data.chapt}</p>
+                        <p className="date">{props.isInProfile && data.chaptMax ? `${data.chapt} / ${data.chaptMax}` : data.chapt}</p>
                         <h3>{data.title}</h3>
                         <button>{data.lang}</button>
                     </a>

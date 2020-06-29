@@ -1,6 +1,6 @@
 import Axios from 'axios';
 
-export const getApiDatas = async(path, page, prevPage, uid, onlyBookmark, link) => {
+export const getApiDatas = async(path, page, prevPage, uid, onlyBookmark, link, search) => {
     let url = `${process.env.api}${path}`
     if(page)
         url = `${url}?page=${page}`
@@ -12,6 +12,8 @@ export const getApiDatas = async(path, page, prevPage, uid, onlyBookmark, link) 
         url = `${url}&onlybookmark=${onlyBookmark}`
     if(link)
         url = `${url}?link=${link}`
+    if(search)
+        url = `${url}?search=${search}`
     try {
         const { data } = await Axios.get(url)
         return data

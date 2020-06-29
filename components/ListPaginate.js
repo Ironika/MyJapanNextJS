@@ -16,6 +16,7 @@ const ListPaginate = (props) => {
     const [loadMore, setLoadMore] = useState(false)
     const [isOpen, setIsOpen] = useState(true)
     const [flag, setFlag] = useState(false)
+    const [search, setSearch] = useState('')
 
     useEffect(() => {
         setLoader(true)
@@ -66,11 +67,36 @@ const ListPaginate = (props) => {
         setIsOpen(!isOpen)
     }
 
+    const handleChangeSearch = (e) => {
+        setSearch(e.target.value)
+    }
+
+    const handleSubmit = async(e) => {
+        e.preventDefault()
+        setLoader(true)
+        let _datas = []
+        if(search) {
+            _datas = await getApiDatas('scansva', null, null, null, null, null, search)
+            setHasMore(false)
+        } else {
+            const uid = user ? user.id : null
+            _datas = await getApiDatas(props.type, currentPage, null, uid, props.onlyBookmark)
+        }
+        setDatas(_datas)
+        setLoader(false)
+    }
+
     const fakeArray = Array(props.type === 'scansva' ? 8 : 10).fill(8)
 
     return (
         <>
-            {props.title && <h2 onClick={handleClickOpen}>{props.title}<i className={isOpen ? "fa fa-chevron-down" : "fa fa-chevron-right"}></i></h2>}
+            {props.title && <h2><span onClick={handleClickOpen}>{props.title}</span><i onClick={handleClickOpen} className={isOpen ? "fa fa-chevron-down" : "fa fa-chevron-right"}></i></h2>}
+            {props.search &&
+                <form className="search" onSubmit={handleSubmit}>
+                    <input value={search} onChange={handleChangeSearch} placeholder="Search ..."/>
+                    <i onClick={handleSubmit} className="fa fa-search"></i>
+                </form>
+            }
             <div className={isOpen ? "card-container open" : "card-container"}>
                 {loader ?
                     fakeArray.map((item, index) =>

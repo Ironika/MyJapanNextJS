@@ -38,15 +38,66 @@
         @media screen and (min-width: $md) {
             display: flex;
         }
+        margin-bottom: 100px;
+        .search {
+            text-align: center;
+            position: relative;
+            @media screen and (max-width: $md) {
+                input {
+                    width: 300px;
+                    margin-bottom: 20px;
+                }
+                i {
+                    right: 30px;
+                    top: 11px;
+                }
+            }
+            @media screen and (min-width: $md) and (max-width: $lg) {
+                input {
+                    width: 300px;
+                    margin-bottom: 20px;
+                }
+                i {
+                    right: 110px;
+                    top: 11px;
+                }
+            }
+            @media screen and (min-width: $lg) {
+                position: absolute;
+                top: -80px;
+                right: 0;
+                input {
+                    width: 200px;
+                    margin-right: 20px;
+                }
+                i {
+                    right: 30px;
+                    top: 11px;
+                }
+            }
+            input {
+                padding: 10px 20px;
+                border-color: $third-color;
+                color: $third-color;
+            }
+            i {
+                position: absolute;
+                color: $third-color;
+                cursor: pointer;
+            }
+        }
         h2 {
             color: $third-color;
+            text-align: center;
             font-weight: bold;
             font-size: 34px;
-            text-align: center;
             text-shadow: black 0.5px 0.5px;
-            cursor: pointer;
             margin-top: 0;
+            span {
+                cursor: pointer;
+            }
             i {
+                cursor: pointer;
                 margin-left: 20px;
                 font-size: 25px;
                 // @media screen and (min-width: $md) {

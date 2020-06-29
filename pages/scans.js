@@ -54,7 +54,7 @@ const Scans = (props) => {
                     <List datas={props.scans} title={'Scantrad'} type={'scans'} />
                 </div>
                 <div className="right">
-                    <ListPaginate datas={props.scansVa} title={'MangaKakalot'} type={'scansva'} />
+                    <ListPaginate datas={props.scansVa} title={'MangaKakalot'} type={'scansva'} search={true}/>
                 </div>
             </div>
         </div>

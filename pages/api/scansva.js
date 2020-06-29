@@ -2,12 +2,18 @@ import nextConnect from 'next-connect'
 import middleware from '../../middleware/database'
 import getScansVa from '../../apiHelpers/ScansVa'
 import getScansReader from '../../apiHelpers/ScansReader'
+import getSearch from '../../apiHelpers/SearchScans'
 
 const ScansVaHandler = nextConnect();
 ScansVaHandler.use(middleware);
 
 ScansVaHandler.get(async (req, res) =>  {
-    const { query: { page, prevpage, uid, onlybookmark, link } } = req
+    const { query: { page, prevpage, uid, onlybookmark, link, search } } = req
+
+    if(search) {
+        const scansListSearched = await getSearch(search)
+        res.json(scansListSearched)
+    }
 
     if(link) {
         const reader = await getScansReader(link)
