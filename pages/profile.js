@@ -64,7 +64,7 @@ const Profile = (props) => {
             {
                 checked === 'scans' &&
                 <div className="card-container">
-                    { scans.length > 0 && scans.map((scan, key) => <CardScanVa key={key} data={scan} isInProfile={true} />) }
+                    { scans.length > 0 && scans.sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()).map((scan, key) => <CardScanVa key={key} data={scan} isInProfile={true} />) }
                 </div>
             }
             {

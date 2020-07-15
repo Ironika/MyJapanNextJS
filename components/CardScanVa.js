@@ -24,7 +24,7 @@ const CardScanVa = (props) => {
         const fetchDatas = async() => {
             const result = await getApiDatas('scansva', null, null, null, null, data.link)
             let scan = {...data}
-            scan.chaptMax = result.options[0].value
+            scan.chaptMax = result.options[0] ? result.options[0].value : scan.chapt.replace('Chapter ', '')
             scan.chapt = 'Chapter ' + scan.chapt.split(' ')[1].replace(':', '')
             setData(scan)
         }
@@ -81,6 +81,7 @@ const CardScanVa = (props) => {
         newScan.chapt = selectedChapter.label
         newScan.link = currentLink
         newScan.isBookmarked = true
+        newScan.updatedAt = new Date()
         const datas = { datas: newScan, type: 'scans' }
         await postApiDatas(`users/${user.id}`, datas)
         setData(newScan)
@@ -99,8 +100,6 @@ const CardScanVa = (props) => {
     }
 
     const handleAccessDeniedImg = () => {
-        if(!accessDenied)
-            window.open(currentLink, '_blank')
         setAccessDenied(true)
     }
 
@@ -116,8 +115,8 @@ const CardScanVa = (props) => {
                         <h3>{data.title}</h3>
                         <button>{data.lang}</button>
                     </a>
-            </div>
-        </Tilt>
+                </div>
+            </Tilt>
         {isOpen && <Modal
             isOpen={isOpen}
             onRequestClose={() => setIsOpen(false)}
@@ -133,7 +132,7 @@ const CardScanVa = (props) => {
             {loader ?
                 <Loader/> :
                 accessDenied ?
-                <div>Access Denied by Magakakalot, <a href={currentLink} target="_blank">go to website</a></div> :
+                <div>Access Denied by Magakakalot, <a href={currentLink} target="_blank">Go to website</a></div> :
                 <div className="reader">
                     { reader.map((img, i) =>
                         <LazyLoad key={i}>
