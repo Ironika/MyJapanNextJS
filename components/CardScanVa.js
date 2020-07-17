@@ -65,6 +65,7 @@ const CardScanVa = (props) => {
         e.stopPropagation();
 
         scan.isBookmarked = true
+        scan.updatedAt = new Date()
         const datas = { datas: scan, type: 'scans' }
 
         if(isBookmarked)
