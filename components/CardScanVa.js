@@ -14,7 +14,7 @@ const CardScanVa = (props) => {
     const { user } = useUser()
     const [isOpen, setIsOpen] = useState(false)
     const [reader, setReader] = useState([])
-    const [selectedChapter, setSelectedChapter] = useState({label: 'Chapter ' + data.chapt.split(' ')[1].replace(':', ''), value: data.chapt.split(' ')[1].replace(':', '')})
+    const [selectedChapter, setSelectedChapter] = useState({label: data.chapt ? 'Chapter ' + data.chapt.split(' ')[1].replace(':', '') : '', value: data.chapt ? data.chapt.split(' ')[1].replace(':', '') : ''})
     const [options, setOptions] = useState([])
     const [loader, setLoader] = useState(false)
     const [accessDenied, setAccessDenied] = useState(false)
