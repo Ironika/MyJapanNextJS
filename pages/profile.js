@@ -1,7 +1,7 @@
 import React, { useState, useEffect} from 'react'
 import Router from 'next/router'
 import { getApiDatas } from '../helpers'
-import { ListPaginate, CardScanVa } from '../components'
+import { ListPaginate, CardScanVa, CardScansVaSkeleton } from '../components'
 import jsCookie from 'js-cookie'
 import { useUser } from '../hooks'
 
@@ -10,6 +10,7 @@ const Profile = (props) => {
     const [checked, setChecked] = useState('scans')
     const [scans, setScans] = useState([])
     const [animes, setAnimes] = useState([])
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         if(!user) {
@@ -20,6 +21,7 @@ const Profile = (props) => {
         const fetchDatas = async() => {
             const response = await getApiDatas(`users/${user.id}`)
             setScans(response.bookmark.scans)
+            setLoading(false)
         }
 
         fetchDatas()
@@ -40,6 +42,8 @@ const Profile = (props) => {
         }
         setChecked(checked)
     }
+
+    const fakeArray = Array(10).fill(10)
 
     return (
         <div className="Profile">
@@ -64,7 +68,9 @@ const Profile = (props) => {
             {
                 checked === 'scans' &&
                 <div className="card-container">
-                    { scans.length > 0 && scans.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt)).map((scan, key) => <CardScanVa key={key} data={scan} isInProfile={true} />) }
+                    { loading ?
+                        fakeArray.map((item, index) => <CardScansVaSkeleton key={index} /> ) :
+                        scans.length > 0 && scans.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt)).map((scan, key) => <CardScanVa key={key} data={scan} isInProfile={true} />) }
                 </div>
             }
             {
