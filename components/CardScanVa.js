@@ -38,10 +38,10 @@ const CardScanVa = (props) => {
         data.link
       );
       let scan = { ...data };
-      scan.chaptMax = result.options[0]
-        ? result.options[0].value
-        : scan.chapt.replace("Chapter ", "");
-      scan.chapt = "Chapter " + scan.chapt.split(" ")[1].replace(":", "");
+      scan.chaptMax = result?.options?.[0]
+        ? result?.options?.[0]?.value
+        : scan?.chapt?.replace("Chapter ", "");
+      scan.chapt = "Chapter " + scan?.chapt?.split(" ")[1].replace(":", "");
       setData(scan);
     };
     if (props.isInProfile) {
@@ -220,7 +220,7 @@ const CardScanVa = (props) => {
             </div>
           ) : (
             <div className="reader">
-              {reader.map((img, i) => (
+              {reader?.map((img, i) => (
                 <LazyLoad key={i}>
                   <img src={img} alt="scans" onError={handleAccessDeniedImg} />
                 </LazyLoad>
