@@ -1,5 +1,13 @@
 import Axios from "axios";
 
+const apiUrl = (path, server = false) => {
+  if (!server) return `/api/${path}`;
+  const origin = process.env.VERCEL_URL
+    ? `https://${process.env.VERCEL_URL}`
+    : `http://127.0.0.1:${process.env.PORT || 3000}`;
+  return `${origin}/api/${path}`;
+};
+
 export const getApiDatas = async (
   path,
   page,
@@ -7,9 +15,10 @@ export const getApiDatas = async (
   uid,
   onlyBookmark,
   link,
-  search
+  search,
+  server = false
 ) => {
-  let url = `${process.env.api}${path}`;
+  let url = apiUrl(path, server);
   if (page) url = `${url}?page=${page}`;
   if (prevPage) url = `${url}&prevpage=${prevPage}`;
   if (uid) url = `${url}&uid=${uid}`;
@@ -17,18 +26,17 @@ export const getApiDatas = async (
   if (link) url = `${url}?link=${link}`;
   if (search) url = `${url}?search=${search}`;
   try {
-    console.log(url);
-    const { data } = await Axios.get(url);
+    const { data } = await Axios.get(url, server ? { timeout: 15000 } : undefined);
     return data;
   } catch (e) {
-    console.log(e);
+    console.error("API GET request failed:", e.message);
   }
 
-  return [];
+  return server ? undefined : [];
 };
 
 export const getScanReader = async (link, title, chapter) => {
-  const { data } = await Axios.get(`${process.env.api}scansva`, {
+  const { data } = await Axios.get(apiUrl("scansva"), {
     params: { link, title, chapter },
     timeout: 50000,
   });
@@ -39,7 +47,7 @@ export const getScanReader = async (link, title, chapter) => {
 };
 
 export const postApiDatas = async (path, datas) => {
-  let url = `${process.env.api}${path}`;
+  let url = apiUrl(path);
   try {
     const { data } = await Axios.post(url, datas);
     return data;
@@ -53,7 +61,7 @@ export const postApiDatas = async (path, datas) => {
 };
 
 export const putApiDatas = async (path, datas) => {
-  let url = `${process.env.api}${path}`;
+  let url = apiUrl(path);
   try {
     const { data } = await Axios.put(url, datas);
     return data;

@@ -17,7 +17,7 @@ Animes.getInitialProps = async ({req}) => {
         const cookiesJSON = jsHttpCookie.parse(req.headers.cookie || '');
         const _user = cookiesJSON.user ? JSON.parse(cookiesJSON.user) : null
         const uid = _user ? _user.id : null
-        const animes = await getApiDatas('animes', 1, null, uid);
+        const animes = await getApiDatas('animes', 1, null, uid, null, null, null, true);
         return { animes }
     }
     return {}

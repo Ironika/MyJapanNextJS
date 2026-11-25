@@ -68,12 +68,12 @@ const Scans = (props) => {
 
 Scans.getInitialProps = async ({ req }) => {
   if (req) {
-    const scans = await getApiDatas("scans");
+    const scans = await getApiDatas("scans", null, null, null, null, null, null, true);
     // const scansVa = await getApiDatas('scansva', 4)
     const cookiesJSON = jsHttpCookie.parse(req.headers.cookie || "");
     const _user = cookiesJSON.user ? JSON.parse(cookiesJSON.user) : null;
     const uid = _user ? _user.id : null;
-    const scansVa = await getApiDatas("scansva", 1, null, uid);
+    const scansVa = await getApiDatas("scansva", 1, null, uid, null, null, null, true);
     return { scans, scansVa };
   }
   return {};
