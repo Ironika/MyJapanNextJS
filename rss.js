@@ -19,7 +19,7 @@ export const SCANTRAD = "https://scantrad.net/";
 export const JAPSCAN = "https://www.japscan.lol/";
 // export const MANGAFOX = 'http://fanfox.net/releases/';
 export const MANGAKAKALOT =
-  "https://mangakakalot.com/manga_list?type=latest&category=all&state=all&page=";
+  "https://manganato.xyz/newest?page=";
 
 // ANIME
 // export const ANIME_SAIKOU = 'https://anime-saikou.com/page/';

@@ -1,6 +1,6 @@
 import nextConnect from "next-connect";
 import middleware from "../../middleware/database";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import nodeMailer from "nodemailer";
 
 const AuthHandler = nextConnect();
@@ -18,8 +18,10 @@ AuthHandler.post(async (req, res) => {
   const {
     body: { email, password },
   } = req;
+  if (!email || !password)
+    return res.json({ err: "Email & password are required", status: 400 });
   const user = await req.db.collection("users").findOne({ email });
-  if (user.email) {
+  if (user) {
     const matchPwd = await bcrypt.compare(password, user.pwd_hash);
     if (matchPwd)
       return res.json({

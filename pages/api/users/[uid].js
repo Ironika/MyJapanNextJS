@@ -1,5 +1,6 @@
 import nextConnect from 'next-connect';
 import middleware from '../../../middleware/database';
+import { isSameScanBookmark } from '../../../helpers/scanBookmarks';
 
 const BookmarksHandler = nextConnect();
 BookmarksHandler.use(middleware);
@@ -21,10 +22,10 @@ BookmarksHandler.post(async (req, res) =>  {
         let newDatas = []
         let bookmarkToUpdate = {}
         if(type === 'scans') {
-            const isAlreadyInBookmark = isInBookmarks(datas.title, bookmark.scans)
+            const isAlreadyInBookmark = bookmark.scans.some((scan) => isSameScanBookmark(datas, scan))
             if(isAlreadyInBookmark) {
                 for(let i = 0; i < bookmark.scans.length; i++) {
-                    if(datas.title.includes(bookmark.scans[i].title)) {
+                    if(isSameScanBookmark(datas, bookmark.scans[i])) {
                         bookmark.scans[i] = datas
                     }
                 }
@@ -42,7 +43,7 @@ BookmarksHandler.post(async (req, res) =>  {
     } else {
         const bookmarkToInsert = type === 'scans' ? { user_id: uid, scans: [datas], animes: [] } : { user_id: uid, scans: [], animes: [datas.title] }
         const response = await req.db.collection('bookmarks').insertOne(bookmarkToInsert)
-        if(response && response.matchedCount) return res.json({status: 200})
+        if(response && response.insertedCount === 1) return res.json({status: 200})
     }
     return res.json({status: 400, err: 'An error Occured !'})
 });
@@ -55,7 +56,7 @@ BookmarksHandler.put(async (req, res) =>  {
     let newDatas = type === 'scans' ? bookmark.scans : bookmark.animes
     if(type === 'scans') {
         for(let i = 0; i < newDatas.length; i++)
-            if(newDatas[i].title === datas.title)
+            if(datas.title === newDatas[i].title && isSameScanBookmark(datas, newDatas[i]))
                 newDatas.splice(i, 1);
     } else {
         newDatas.splice(newDatas.indexOf(datas.title), 1);
@@ -65,12 +66,5 @@ BookmarksHandler.put(async (req, res) =>  {
     if(response && response.matchedCount) return res.json({status: 200})
     return res.json({status: 400, err: 'An error Occured !'})
 });
-
-function isInBookmarks(title, bookmarks) {
-    for(let i = 0; i < bookmarks.length; i++)
-        if(title.includes(bookmarks[i].title))
-            return true
-    return false
-}
 
 export default BookmarksHandler;

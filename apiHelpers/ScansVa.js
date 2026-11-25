@@ -2,6 +2,7 @@ import axios from "axios";
 import cheerio from "cheerio";
 import { makeArrayPage } from "./Shared";
 import { MANGAKAKALOT } from "../rss";
+import { isSameScanBookmark } from "../helpers/scanBookmarks";
 
 export default async function getScansVA(
   page,
@@ -11,8 +12,13 @@ export default async function getScansVA(
 ) {
   const arrayMap = makeArrayPage(page, prevPage);
   const responseDatas = await Promise.all(
-    // arrayMap.map((item) => axios.get(`${MANGAFOX}${item}.html`)),
-    arrayMap.map((item) => axios.get(`${MANGAKAKALOT}${item}`))
+    arrayMap.map((item) =>
+      axios.get(`${MANGAKAKALOT}${item}`, {
+        timeout: 15000,
+        headers: { "User-Agent": "Mozilla/5.0" },
+        validateStatus: (status) => status >= 200 && status < 400,
+      })
+    )
   );
 
   let scansVa = [];
@@ -31,39 +37,30 @@ export default async function getScansVA(
 function formatJsonMangaKakalot(json, bookmarks, onlyBookmark) {
   let array = [];
   const $ = cheerio.load(json.data);
-  const items = $(".list-truyen-item-wrap");
+  const items = $(".nt-item");
   for (let i = 0; i < items.length; i++) {
-    const title =
-      $(items[i]).find("h3 > a")[0] && $(items[i]).find("h3 > a")[0].attribs
-        ? $(items[i]).find("h3 > a")[0].attribs.title
-        : "";
-    const img =
-      $(items[i]).find("img")[0] && $(items[i]).find("img")[0].attribs
-        ? $(items[i]).find("img")[0].attribs.src
-        : "";
-    let chapt =
-      $(items[i]).find(".list-story-item-wrap-chapter")[0] &&
-      $(items[i]).find(".list-story-item-wrap-chapter")[0].children[0]
-        ? $(items[i]).find(".list-story-item-wrap-chapter")[0].children[0].data
-        : "";
-    if (chapt) {
-      chapt = chapt.substring(chapt.indexOf("Chapter"));
-      chapt = chapt.split(":")[0];
-    }
-    const link =
-      $(items[i]).find(".list-story-item-wrap-chapter")[0] &&
-      $(items[i]).find(".list-story-item-wrap-chapter")[0].attribs
-        ? $(items[i]).find(".list-story-item-wrap-chapter")[0].attribs.href
-        : "";
+    const titleLink = $(items[i]).find(".nt-item__title")[0];
+    const title = titleLink?.attribs?.title || "";
+    const img = $(items[i]).find(".nt-item__cover img")[0]?.attribs?.src || "";
+    const chapterLink = $(items[i]).find(".nt-item__chapters a")[0];
+    let chapt = chapterLink?.attribs?.title || chapterLink?.children?.[0]?.data || "";
+    chapt = chapt
+      .replace(/^Chap\s*/i, "Chapter ")
+      .replace(/\s+(?:EN|ES-LA|VI|KO|FR|DE|IT|PT-BR)$/, "")
+      .split(":")[0];
+    const chapterPath = chapterLink?.attribs?.href || "";
+    const link = chapterPath
+      ? `https://manganato.xyz${chapterPath.startsWith("/") ? chapterPath : `/${chapterPath}`}`
+      : "";
     let item = { title, chapt, link, img, site: "MangaKakalot", lang: "VA" };
     if (bookmarks) {
       if (onlyBookmark) {
-        if (isInBookmarks(title.toUpperCase(), bookmarks)) {
+        if (isInBookmarks(item, bookmarks)) {
           item.isBookmarked = true;
           array = [...array, item];
         }
       } else {
-        if (isInBookmarks(title.toUpperCase(), bookmarks, chapt)) {
+        if (isInBookmarks(item, bookmarks, chapt)) {
           item.isBookmarked = true;
         }
         array = [...array, item];
@@ -75,16 +72,16 @@ function formatJsonMangaKakalot(json, bookmarks, onlyBookmark) {
   return array;
 }
 
-function isInBookmarks(title, bookmarks, chapt) {
+function isInBookmarks(scan, bookmarks, chapt) {
   for (let i = 0; i < bookmarks.length; i++)
     if (chapt) {
       if (
-        title.includes(bookmarks[i].title.toUpperCase()) &&
+        isSameScanBookmark(scan, bookmarks[i]) &&
         chapt === bookmarks[i].chapt
       )
         return true;
     } else {
-      if (title.includes(bookmarks[i].title.toUpperCase())) return true;
+      if (isSameScanBookmark(scan, bookmarks[i])) return true;
     }
   return false;
 }

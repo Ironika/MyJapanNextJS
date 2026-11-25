@@ -53,10 +53,7 @@ const Scans = (props) => {
   return (
     <div className="Scans">
       <div className="container">
-        <div className="left">
-          <List datas={props.scans} title={"JapScans"} type={"scans"} />
-        </div>
-        <div className="right">
+        <div className="center">
           <ListPaginate
             datas={props.scansVa}
             title={"MangaKakalot"}
@@ -73,7 +70,7 @@ Scans.getInitialProps = async ({ req }) => {
   if (req) {
     const scans = await getApiDatas("scans");
     // const scansVa = await getApiDatas('scansva', 4)
-    const cookiesJSON = jsHttpCookie.parse(req.headers.cookie);
+    const cookiesJSON = jsHttpCookie.parse(req.headers.cookie || "");
     const _user = cookiesJSON.user ? JSON.parse(cookiesJSON.user) : null;
     const uid = _user ? _user.id : null;
     const scansVa = await getApiDatas("scansva", 1, null, uid);

@@ -1,6 +1,6 @@
 import nextConnect from 'next-connect';
 import middleware from '../../../middleware/database';
-import bcrypt from 'bcrypt'
+import bcrypt from 'bcryptjs'
 
 const UsersHandler = nextConnect();
 UsersHandler.use(middleware);

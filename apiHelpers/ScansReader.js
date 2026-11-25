@@ -2,42 +2,38 @@ import axios from "axios";
 import cheerio from "cheerio";
 
 export default async function getScansReader(link) {
-  let json = await axios.get(link);
+  const json = await axios.get(link, {
+    timeout: 15000,
+    headers: { "User-Agent": "Mozilla/5.0" },
+  });
 
-  if (!json) {
-    if (link.includes("readmanganato")) {
-      link.replace("readmanganato", "chapmanganato");
-      json = await axios.get(link);
-      if (!json) {
-        return null;
-      }
-    } else {
-      return null;
-    }
-  }
   const $ = cheerio.load(json?.data);
-  let container = $("#vungdoc img");
+  let container = $(".chapter-reader img");
   if (container.length === 0) {
-    container = $(".container-chapter-reader img");
+    container = $("#vungdoc img, .container-chapter-reader img");
   }
-  if (!container || container.length === 0) {
+  if (container.length === 0) {
     return null;
   }
 
   let reader = [];
-  const items = container;
-  for (let i = 0; i < items.length; i++) {
-    reader = [...reader, items[i].attribs.src];
+  for (let i = 0; i < container.length; i++) {
+    reader = [...reader, container[i].attribs.src];
   }
+
   let options = [];
-  const select = $(".navi-change-chapter")[0];
-  const opts = $(select).find("option");
+  const select = $(".nt-reader__select, .navi-change-chapter").first();
+  const opts = select.find("option");
   for (let i = 0; i < opts.length; i++) {
+    const path = opts[i].attribs.value || "";
+    const match = path.match(/chapter[-_]([0-9]+(?:\.[0-9]+)?)/i);
+    const chapterNumber = opts[i].attribs["data-c"] || match?.[1];
+    if (!chapterNumber || !path) continue;
     options = [
       ...options,
       {
-        label: "Chapter " + opts[i].attribs["data-c"],
-        value: opts[i].attribs["data-c"],
+        label: `Chapter ${chapterNumber}`,
+        value: new URL(path, json.request?.res?.responseUrl || link).href,
       },
     ];
   }
